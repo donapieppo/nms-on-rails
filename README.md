@@ -12,7 +12,7 @@ Provides integration to:
 
 ## Getting started
 
-After you have cloned and bundle installed everything
+After you have cloned and "bundle installed" everything
 you can load the database schema
 
 ```console
@@ -28,7 +28,7 @@ bundle exec rake db:load
 * conn_proto: can be ssh/rdp/http (used to connect witha click to the pc)
 * notify: boolean you set when you whant to be notified when the pc in reachable.
 
-Ips ha a one_to_many relation with the tables arps, facts.
+Ips has one_to_many relation with the arps, infos and facts tables.
 
 ### Arps
 
