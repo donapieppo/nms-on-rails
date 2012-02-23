@@ -1,0 +1,10 @@
+<div id="ips"></div>
+<div id="modaleditor" class="modal hide fade"></div>
+
+<script type="text/javascript">
+  $(function() {
+    window.router = new NmsOnRails.Routers.HomeRouter({net_id : <%= Net.first.id %>});
+    Backbone.history.start();
+  });
+</script>
+

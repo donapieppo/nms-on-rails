@@ -1,0 +1,32 @@
+<h1>Facts</h1>
+
+<table class="tablesorter zebra-striped">
+<thead>
+  <tr>
+    <th>ip</th>
+    <th>name</th>
+    <th>memorysize</th>
+    <th>lsbdistrelease</th>
+    <th>lsbdistid</th>
+    <th>#proc</th>
+    <th>processor</th>
+    <th>kernel</th>
+  </tr>
+</thead>
+
+<tbody>
+<% @facts.each do |f| %>
+  <tr>
+    <td><%= f.ip.ip %></td>
+    <td><%= f.ip.info and f.ip.info.name %></td>
+    <td><%= f.memorysize %></td>
+    <td><%= f.lsbdistrelease %></td>
+    <td><%= f.lsbdistid %></td>
+    <td><%= f.processorcount %></td>
+    <td><small><%= f.processor %></small></td>
+    <td><small><%= f.kernelrelease %></small></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
