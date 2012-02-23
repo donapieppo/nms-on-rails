@@ -4,7 +4,11 @@ class NmsOnRails.Models.Info extends Backbone.Model
 
   defaults:
     name:    null
-    dnsname: null
     comment: null
+
+  attributes:
+    name: null
+    comment: null
+
 
 

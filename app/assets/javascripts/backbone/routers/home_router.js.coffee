@@ -1,16 +1,9 @@
 class NmsOnRails.Routers.HomeRouter extends Backbone.Router
   routes:
     ""    : "index"
-    "134" : "index"
-    "135" : "index135"
-    "132" : "index132"
+    ":net_id" : "index"
 
-  index: ->
-    @view = new NmsOnRails.Views.Home.IndexView(net : 134)
+  index: (net_id) ->
+    @view = new NmsOnRails.Views.Home.IndexView({net_id: net_id})
 
-  index135: ->
-    @view = new NmsOnRails.Views.Home.IndexView(net : 135)
-
-  index132: ->
-    @view = new NmsOnRails.Views.Home.IndexView(net : 132)
 

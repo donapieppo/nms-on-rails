@@ -11,8 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
 ActiveRecord::Schema.define(:version => 0) do
+
+  create_table "nets", :force => true do |t| 
+    t.string  "name"
+  end
+
+  create_table "ips", :force => true do |t|
+    t.string  "ip",           :limit => 15, :default => "", :null => false
+    t.integer "net_id"
+    t.integer "last_arp_id"
+    t.integer "last_info_id"
+    t.string  "conn_proto",   :limit => 5
+    t.boolean "notify"
+  end
+
+  add_index "ips", ["ip"], :name => "ip", :unique => true
 
   create_table "arps", :force => true do |t|
     t.integer   "ip_id",               :default => 0, :null => false
@@ -47,16 +61,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "infos", "ip_id"
   add_index "infos", ["ip_id", "date"], :name => "ip_id", :unique => true
-
-  create_table "ips", :force => true do |t|
-    t.string  "ip",           :limit => 15, :default => "", :null => false
-    t.integer "last_arp_id"
-    t.integer "last_info_id"
-    t.string  "conn_proto",   :limit => 5
-    t.boolean "notify"
-  end
-
-  add_index "ips", ["ip"], :name => "ip", :unique => true
 
   create_table "users", :force => true do |t|
     t.string "login", :limit => 120

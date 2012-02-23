@@ -35,7 +35,7 @@ class NmsOnRails.Views.Ips.View extends Backbone.View
 
   newinfo: (e) ->
     e.preventDefault()
-    if confirm('Sei sicuro di voler resettare le informazioni su questo ip?')
+    if confirm('Are you absolutely sure you want to reset infos for this ip (they will be kept in history)?')
       info = new NmsOnRails.Models.Info(ip_id : @model.get('id'), dnsname : @model.get('info').get('dnsname'))
       info.save()
       @model.set(info: info)

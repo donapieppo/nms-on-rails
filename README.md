@@ -16,7 +16,7 @@ After you have cloned and "bundle installed" everything
 you can load the database schema
 
 ```console
-bundle exec rake db:load
+bundle exec rake db:schema:load
 ```
 
 ## Database structure

@@ -3,8 +3,8 @@ class IpsController < ApplicationController
   respond_to :rdp, :ssh, :html, :only => :connect 
 
   def index
-    net = params[:net] ? params[:net].to_i : 134
-    respond_with(Ip.net(net).order(:id).includes(:arp, :info), :include => [:info, :arp])
+    net = Net.find(params[:net_id])
+    respond_with(net.ips.order(:id).includes(:arp, :info), :include => [:info, :arp])
   end
 
   def show

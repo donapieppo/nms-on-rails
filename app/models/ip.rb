@@ -6,6 +6,7 @@ class Ip < ActiveRecord::Base
 
   has_one  :fact
 
+  belongs_to :net
   belongs_to :arp,  :foreign_key => :last_arp_id
   belongs_to :info, :foreign_key => :last_info_id
 

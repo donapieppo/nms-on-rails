@@ -11,8 +11,6 @@ class InfosController < ApplicationController
     end
   end
 
-  # old in html {"id"=>"3", "value"=>"welles", "attribute"=>"name"}
-  # new in place "info"=>{"name"=>"webmail4"}
   def update
     @info = Info.find(params.delete(:id))
     params[:info].delete(:id)

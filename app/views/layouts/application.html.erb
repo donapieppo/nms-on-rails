@@ -7,8 +7,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="#">DM Network</a>
+        <ul class="nav pull-left">
+          <%= Net.all.each do |net| %>  
+            <li><%= link_to net, "/##{net.id}" %></li>
+          <% end %>
+          <li><%= link_to 'facts', facts_path %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<%= yield %>
-
+  <div class="container">
+    <%= yield %>
+  </div>
 </body>
 </html>
