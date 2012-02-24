@@ -9,7 +9,7 @@ class NmsOnRails.Views.Home.IndexView extends Backbone.View
   initialize: (options) ->
     @net = options.net_id
     @ips = new NmsOnRails.Collections.IpsCollection()
-    @ips.bind 'reset', @render
+    @ips.on('reset', @render)
     @ips.url = "/nets/#{@net}/ips"
     @ips.fetch()
 
