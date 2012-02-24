@@ -12,7 +12,7 @@
       <div class="container">
         <a class="brand" href="#">DM Network</a>
         <ul class="nav pull-left">
-          <%= Net.all.each do |net| %>  
+          <% Net.all.each do |net| %>  
             <li><%= link_to net, "/##{net.id}" %></li>
           <% end %>
           <li><%= link_to 'facts', facts_path %></li>

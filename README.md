@@ -19,6 +19,8 @@ you can load the database schema
 bundle exec rake db:schema:load
 ```
 
+and fire rails.
+
 ## Database structure
 
 ### Ips
