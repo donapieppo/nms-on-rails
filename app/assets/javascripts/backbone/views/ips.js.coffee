@@ -54,13 +54,16 @@ class NmsOnRails.Views.Ips.Edit extends Backbone.View
     "click #ip-submit" : "close"
 
   render: =>
-    $(@el).html(@ipEditTemplate(@model.toJSON())).modal('show')
-    @
+    $(@el).html(@ipEditTemplate(@model.toJSON())).modal('show').on('hide', =>
+      console.log("SONO OFF")
+      # @model.off()
+      $(@el).off()
+    )
 
   close: (e) =>
     e.preventDefault()
     @model.get('info').save(name: $("#info-name").val(), comment: $("#info-comment").val(), ip_id : @model.get('id'))
                       .fail((x) => alert(x))
-                      .done( => @model.trigger('change'); $(@el).modal('hide'); $(@el).off())
+                      .done( => @model.trigger('change'); $(@el).modal('hide'))
 
 
