@@ -34,6 +34,7 @@ class NmsOnRails.Models.Ip extends Backbone.Model
 
   toggle_protocol: ->
     protocol = switch @get('conn_proto')
+                 when null   then 'ssh'
                  when 'ssh'  then 'rdp'
                  when 'rdp'  then 'http'
                  when 'http' then 'ssh'
