@@ -5,6 +5,8 @@ gem 'rails', '3.2.1'
 gem 'mysql2'
 gem "rails-backbone"
 gem 'twitter-bootstrap-rails', :git => 'http://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'net-ping'
+gem 'puppet'
 
 # Gems used only for assets and not required
 # in production environments by default.
