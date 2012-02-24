@@ -13,7 +13,7 @@ class NmsOnRails.Views.Ips.View extends Backbone.View
   tagName: "tr"
   
   initialize: ->
-    @model.bind('change', @render)
+    @model.on('change', @render)
 
   render: =>
     $(@el).html(@ipViewTemplate(@model.toJSON()))
@@ -60,7 +60,7 @@ class NmsOnRails.Views.Ips.Edit extends Backbone.View
   close: (e) =>
     e.preventDefault()
     @model.get('info').save(name: $("#info-name").val(), comment: $("#info-comment").val(), ip_id : @model.get('id'))
-                      .fail((x) => new NmsOnRails.Models.Error(x).display())
-                      .done( => @model.change(); $(@el).modal('hide'); $(@el).unbind())
+                      .fail((x) => alert(x))
+                      .done( => @model.trigger('change'); $(@el).modal('hide'); $(@el).off())
 
 
