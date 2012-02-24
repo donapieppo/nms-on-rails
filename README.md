@@ -2,13 +2,17 @@ NMS on Rails
 =================
 
 A basic Network Management System built with
-Ruby on Rails, Backbone and styled with Bootstrap.
+Ruby on Rails, Backbone (styled with Bootstrap).
 
 Provides integration to:
 
-* arpwatch (when last seen ip)
+* arpwatch (http://ee.lbl.gov/)
 * puppet (https://github.com/puppetlabs/puppet)
 * wakeonlan
+
+and gives simple web interface to manage informations
+about your network ips and to connect to clients using
+ssh/rdp/hhtp.
 
 ## Getting started
 
@@ -19,7 +23,39 @@ you can load the database schema
 bundle exec rake db:schema:load
 ```
 
-and fire rails.
+```console
+bundle exec rake NmsOnRails:create_network
+```
+
+and then fire rails.
+
+## Rake
+
+```console
+ bundle exec rake -T NmsOnRails
+```
+
+The database can be populated with data from arpwatch and
+puppet 
+
+### Arpwatch
+
+```console
+bundle exec rake NmsOnRails:arpwatch
+```
+
+reads arpwatch data and updates the database. 
+Accordingly the web interface shows how many days ago the ip was used.
+
+### Puppet
+
+```
+bundle exec rake NmsOnRails:facts:load
+```
+
+reads puppet data (facts in puppet language) and updates the database.
+Provides information about the hardware and operating
+system of the computers managed with puppet.
 
 ## Database structure
 
