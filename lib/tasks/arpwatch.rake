@@ -1,5 +1,3 @@
-require 'puppet'
-
 namespace :NmsOnRails do
   def read_arpfile(file)
     debug = 1 
@@ -25,8 +23,9 @@ namespace :NmsOnRails do
 
   desc "Load times from arpwatch"
   task :arpwatch => :environment do
-    read_arpfile('/home/rails/rete/doc/arp_ciram.dat')
-    read_arpfile('/var/lib/arpwatch/arp.dat')
+    NmsOnRails::Application.config.arpwatch_files.each do |file|
+      read_arpfile(file)
+    end
   end
 end
 
