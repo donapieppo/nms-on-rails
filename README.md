@@ -4,11 +4,12 @@ NMS on Rails
 A basic Network Management System built with
 Ruby on Rails, Backbone (styled with Bootstrap).
 
-Provides integration to:
+Provides basic integration to:
 
 * arpwatch (http://ee.lbl.gov/)
 * puppet (https://github.com/puppetlabs/puppet)
 * wakeonlan
+* bind (reads domain with dig domani.net axfr)
 
 and gives simple web interface to manage informations
 about your network ips and to connect to clients using
@@ -26,6 +27,8 @@ bundle exec rake db:schema:load
 ```console
 bundle exec rake NmsOnRails:create_network
 ```
+
+edit the file config/initializers/nms-on-rails.rb
 
 and then fire rails.
 
