@@ -29,4 +29,9 @@ class Ip < ActiveRecord::Base
     ((Time.zone.now.to_i - self.arp.date.to_i) / 86400).to_i + 1
   end
 
+  def self.clean!(ip)
+    ip =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ or raise "wrong ip format #{ip.inspect}"
+    ip
+  end
+
 end
