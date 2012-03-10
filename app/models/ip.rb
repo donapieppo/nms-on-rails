@@ -1,6 +1,4 @@
 class Ip < ActiveRecord::Base
-  @@nets = ['137.204.134', '137.204.135']
-
   has_many :arps
   has_many :infos
 
