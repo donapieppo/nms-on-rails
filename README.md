@@ -13,7 +13,7 @@ Provides basic integration to:
 
 and gives simple web interface to manage informations
 about your network ips and to connect to clients using
-ssh/rdp/hhtp.
+ssh/rdp/http.
 
 ## Getting started
 
@@ -28,7 +28,7 @@ bundle exec rake db:schema:load
 bundle exec rake NmsOnRails:create_network
 ```
 
-edit the file config/initializers/nms-on-rails.rb
+edit the file config/initializers/nms-on-rails.rb 
 
 and then fire rails.
 
@@ -39,7 +39,7 @@ and then fire rails.
 ```
 
 The database can be populated with data from arpwatch and
-puppet 
+puppet. Usually with cron jobs.
 
 ### Arpwatch
 
@@ -47,7 +47,7 @@ puppet
 bundle exec rake NmsOnRails:arpwatch
 ```
 
-reads arpwatch data and updates the database. 
+reads arpwatch data (directly from arpwatch files) and updates the database. 
 Accordingly the web interface shows how many days ago the ip was used.
 
 ### Puppet
@@ -59,6 +59,20 @@ bundle exec rake NmsOnRails:facts:load
 reads puppet data (facts in puppet language) and updates the database.
 Provides information about the hardware and operating
 system of the computers managed with puppet.
+
+### Bind
+
+``` 
+bundle exec rake NmsOnRails:dns:update
+```
+reads domain records with axfr query (the dns server has to allow them).
+
+### SNMP
+
+```
+bundle exec rake NmsOnRails:snmp:snmpwalk
+```
+updates mac-address with port on the switch (uses snmpwalk -On -v 2c -c #{community} #{clean_ip} .1.3.6.1.2.1.1.5.0)
 
 ## Database structure
 
