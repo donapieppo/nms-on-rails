@@ -1,8 +1,9 @@
 require 'resolv'
 
 namespace :NmsOnRails do
+namespace :dns do
   desc "Read DNS direct"
-  task :dns => :environment do
+  task :update => :environment do
     # to be filled with ip as key and name as value
     # TODO CNAMES or multiple domain name for single ip
     dns = Hash.new
@@ -26,9 +27,8 @@ namespace :NmsOnRails do
   end
 
   desc "Read DNS reverse"
-  task :dns2 => :environment do
+  task :update_reverse => :environment do
     res = Resolv.new()
-    # FIXME solo ultimi
     Info.find(:all).each do |info|
       sleep 1
       begin
@@ -43,4 +43,4 @@ namespace :NmsOnRails do
     end
   end
 end
-
+end
