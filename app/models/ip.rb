@@ -8,8 +8,6 @@ class Ip < ActiveRecord::Base
   belongs_to :arp,  :foreign_key => :last_arp_id
   belongs_to :info, :foreign_key => :last_info_id
 
-  scope :net, lambda { |net| where("ips.ip LIKE '%137.204.#{net.to_i}%'").limit(500) }
-
   validates :conn_proto, :inclusion => { :in => %w(ssh rdp http), :message => "%{value} is not a valid protocol", :allow_nil => true }
 
   def update_last_arp
