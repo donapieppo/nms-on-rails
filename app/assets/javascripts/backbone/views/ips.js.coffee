@@ -8,6 +8,7 @@ class NmsOnRails.Views.Ips.View extends Backbone.View
     "click .protocol" : "toggle_protocol"
     "click .connect"  : "fire_connection"
     "click .notify"   : "toggle_notify"
+    "click .wol"      : "fire_wol"
     "click .ip-reset" : "newinfo"
       
   tagName: "tr"
@@ -42,6 +43,10 @@ class NmsOnRails.Views.Ips.View extends Backbone.View
 
   fire_connection: ->
     window.open(@model.conn_link(), 'new')
+
+  fire_wol: ->
+    link = "/ips/#{@model.get('id')}/wake.wol"
+    window.open(link, 'new')
   
 
 class NmsOnRails.Views.Ips.Edit extends Backbone.View
