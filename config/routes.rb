@@ -3,6 +3,7 @@ NmsOnRails::Application.routes.draw do
     put :protocol, :on => :member
     put :notify,   :on => :member
     get :connect,  :on => :member
+    get :wake,     :on => :member
     resource :infos
   end
 
