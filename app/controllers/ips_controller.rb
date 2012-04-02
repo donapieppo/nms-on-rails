@@ -43,4 +43,10 @@ class IpsController < ApplicationController
     end
   end
 
+  def wake
+    @ip = Ip.find(params[:id])
+    respond_to do |format|
+      format.wol {}
+    end
+  end
 end
