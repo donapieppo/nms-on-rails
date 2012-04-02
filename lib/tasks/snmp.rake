@@ -1,4 +1,5 @@
 namespace :NmsOnRails do
+namespace :snmp do
   def number_of_ports(ip, community)
     clean_ip = Ip.clean!(ip)
     shell_command = "snmpwalk -On -v 2c -c #{community} #{clean_ip} .1.3.6.1.2.1.17.2.7.0"
@@ -14,7 +15,6 @@ namespace :NmsOnRails do
     line =~ /.1.3.6.1.2.1.1.5.0 = STRING: (\w+)/ or raise "wrong format for name in switch"
     $1
   end
-
 
   desc "Snmpwalk switches"
   task :snmpwalk => :environment do
@@ -39,4 +39,4 @@ namespace :NmsOnRails do
     end
   end
 end
-
+end

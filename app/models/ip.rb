@@ -1,6 +1,4 @@
 class Ip < ActiveRecord::Base
-  @@nets = ['137.204.134', '137.204.135']
-
   has_many :arps
   has_many :infos
 
@@ -9,8 +7,6 @@ class Ip < ActiveRecord::Base
   belongs_to :net
   belongs_to :arp,  :foreign_key => :last_arp_id
   belongs_to :info, :foreign_key => :last_info_id
-
-  scope :net, lambda { |net| where("ips.ip LIKE '%137.204.#{net.to_i}%'").limit(500) }
 
   validates :conn_proto, :inclusion => { :in => %w(ssh rdp http), :message => "%{value} is not a valid protocol", :allow_nil => true }
 
