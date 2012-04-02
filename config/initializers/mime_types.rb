@@ -5,4 +5,5 @@
 # Mime::Type.register_alias "text/html", :iphone
 Mime::Type.register "application/x-rdp", :rdp
 Mime::Type.register "application/x-ssh", :ssh
+Mime::Type.register "application/x-wol", :wol
 
