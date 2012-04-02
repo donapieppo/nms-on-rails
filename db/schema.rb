@@ -13,32 +13,16 @@
 
 ActiveRecord::Schema.define(:version => 0) do
 
-  create_table "nets", :force => true do |t| 
-    t.string  "name"
-  end
-
-  create_table "ips", :force => true do |t|
-    t.string  "ip",           :limit => 15, :default => "", :null => false
-    t.integer "net_id"
-    t.integer "last_arp_id"
-    t.integer "last_info_id"
-    t.string  "conn_proto",   :limit => 5
-    t.boolean "notify"
-  end
-
-  add_index "ips", ["ip"], :name => "ip", :unique => true
-
   create_table "arps", :force => true do |t|
     t.integer   "ip_id",               :default => 0, :null => false
     t.string    "mac",   :limit => 17
     t.timestamp "date",                               :null => false
   end
 
-  add_index "arps", "ip_id"
-  add_index "arps", "mac"
+  add_index "arps", ["ip_id", "mac", "date"], :name => "ip_id", :unique => true
 
   create_table "facts", :force => true do |t|
-    t.integer "ip_id", :null => false
+    t.integer "ip_id",                         :null => false
     t.integer "memorysize"
     t.string  "processor",      :limit => 50
     t.integer "processorcount"
@@ -46,8 +30,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string  "lsbdistid",      :limit => 20
     t.string  "kernelrelease",  :limit => 100
   end
-
-  add_index "facts", "ip_id"
 
   create_table "infos", :force => true do |t|
     t.integer   "ip_id",   :default => 0, :null => false
@@ -59,12 +41,32 @@ ActiveRecord::Schema.define(:version => 0) do
     t.boolean   "dhcp"
   end
 
-  add_index "infos", "ip_id"
   add_index "infos", ["ip_id", "date"], :name => "ip_id", :unique => true
 
+  create_table "ips", :force => true do |t|
+    t.string  "ip",           :limit => 15, :default => "", :null => false
+    t.integer "last_arp_id"
+    t.integer "last_info_id"
+    t.string  "conn_proto",   :limit => 5
+    t.boolean "notify"
+    t.integer "net_id"
+  end
+
+  add_index "ips", ["ip"], :name => "ip", :unique => true
+
+  create_table "nets", :force => true do |t|
+    t.string "name", :limit => 250
+  end
+
+  create_table "switches", :force => true do |t|
+    t.string "ip",        :limit => 20
+    t.string "name",      :limit => 250
+    t.string "community", :limit => 100
+  end
+
   create_table "users", :force => true do |t|
-    t.string "login", :limit => 120
-    t.string "gecos", :limit => 120
+    t.string "login", :limit => 15
+    t.text   "gecos"
   end
 
 end
