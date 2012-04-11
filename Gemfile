@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.2'
+gem 'rails', '3.2.3'
 
 gem 'mysql2'
 gem "rails-backbone"
-gem 'twitter-bootstrap-rails', :git => 'http://github.com/seyhunak/twitter-bootstrap-rails.git'
-gem 'net-ping'
+gem 'twitter-bootstrap-rails'
+#gem 'twitter-bootstrap-rails', :git => 'http://github.com/seyhunak/twitter-bootstrap-rails.git'
+#gem 'net-ping'
 gem 'puppet'
 
 # Gems used only for assets and not required
@@ -21,4 +22,6 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'simple_form'
+
 
