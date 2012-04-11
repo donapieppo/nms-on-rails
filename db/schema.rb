@@ -49,12 +49,12 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer "last_info_id"
     t.string  "conn_proto",   :limit => 5
     t.boolean "notify"
-    t.integer "net_id"
+    t.integer "network_id"
   end
 
   add_index "ips", ["ip"], :name => "ip", :unique => true
 
-  create_table "nets", :force => true do |t|
+  create_table "networks", :force => true do |t|
     t.string "name", :limit => 250
   end
 

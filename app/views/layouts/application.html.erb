@@ -12,7 +12,7 @@
       <div class="container">
         <a class="brand" href="#">NMS on Rails</a>
         <ul class="nav pull-left">
-          <% Net.all.each do |net| %>  
+          <% Network.all.each do |net| %>  
             <li><%= link_to net, "/##{net.id}" %></li>
           <% end %>
           <li><%= link_to 'facts', facts_path %></li>
