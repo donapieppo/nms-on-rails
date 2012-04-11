@@ -3,8 +3,13 @@ class IpsController < ApplicationController
   respond_to :rdp, :ssh, :html, :only => :connect 
 
   def index
-    net = Net.find(params[:net_id])
-    respond_with(net.ips.order(:id).includes(:arp, :info), :include => [:info, :arp])
+    if params[:network_id]
+      network = Network.find(params[:network_id])
+      @ips = network.ips.order(:id).includes(:arp, :info)
+    elsif params[:search]
+      @ips = Ip.where('ip LIKE ?', "%#{params[:search]}%").order(:id).includes(:arp, :info)
+    end
+    respond_with(@ips, :include => [:info, :arp])
   end
 
   def show

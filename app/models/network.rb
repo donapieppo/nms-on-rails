@@ -1,4 +1,4 @@
-class Net < ActiveRecord::Base
+class Network < ActiveRecord::Base
   has_many :ips
 
   def to_s

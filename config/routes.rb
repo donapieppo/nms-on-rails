@@ -7,7 +7,7 @@ NmsOnRails::Application.routes.draw do
     resource :infos
   end
 
-  resources :nets do 
+  resources :networks do 
     resources :ips
   end
 

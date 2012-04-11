@@ -1,15 +1,15 @@
 class NmsOnRails.Routers.HomeRouter extends Backbone.Router
   routes:
-    ""        : "default"
-    ":net_id" : "index"
+    ""            : "default"
+    ":network_id" : "index"
 
-  initialize: (net_id) ->
-    @default_net_id = net_id
+  initialize: (network_id) ->
+    @default_network_id = network_id
 
   default: ->
-    @view = new NmsOnRails.Views.Home.IndexView({net_id: @default_net_id})
+    @view = new NmsOnRails.Views.Home.IndexView({network_id: @default_network_id})
 
-  index: (net_id) ->
-    @view = new NmsOnRails.Views.Home.IndexView({net_id: net_id})
+  index: (network_id) ->
+    @view = new NmsOnRails.Views.Home.IndexView({network_id: network_id})
 
 
