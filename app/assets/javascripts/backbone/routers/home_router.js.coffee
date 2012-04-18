@@ -13,3 +13,4 @@ class NmsOnRails.Routers.HomeRouter extends Backbone.Router
     @view = new NmsOnRails.Views.Home.IndexView({network_id: network_id})
 
 
+

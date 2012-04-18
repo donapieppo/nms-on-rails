@@ -16,3 +16,5 @@
 
 /app/backbone
 /config/database.yml
+public/assets
+Gemfile.lock

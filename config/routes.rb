@@ -13,7 +13,7 @@ NmsOnRails::Application.routes.draw do
 
   resources :arps
   resources :facts
-  resources :infos
+  resources :infos 
 
   root :to => 'home#index'
 end

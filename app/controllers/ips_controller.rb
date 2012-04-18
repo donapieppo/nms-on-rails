@@ -5,9 +5,13 @@ class IpsController < ApplicationController
   def index
     if params[:network_id]
       network = Network.find(params[:network_id])
-      @ips = network.ips.order(:id).includes(:arp, :info)
-    elsif params[:search]
-      @ips = Ip.where('ip LIKE ?', "%#{params[:search]}%").order(:id).includes(:arp, :info)
+      @ips = network.ips.order(:id).includes(:arp, :info).limit(5)
+    elsif params[:search_string]
+      if params[:search_string] =~ /^[[0-9]\.]$/
+        @ips = Ip.where('ip LIKE ?', "%#{params[:search_string]}%").order(:id).includes(:arp, :info)
+      else
+        @ips = Ip.joins(:info).where('infos.name LIKE ?', "%#{params[:search_string]}%").order('ips.id').includes(:arp, :info)
+      end
     end
     respond_with(@ips, :include => [:info, :arp])
   end

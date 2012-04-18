@@ -5,6 +5,10 @@
   $(function() {
     window.router = new NmsOnRails.Routers.HomeRouter(<%= Network.first.id %>);
     Backbone.history.start();
+    $("#search").submit(function() {
+      window.router.view.show_search($("input[name=search_string]").val());
+      return false;
+    });
   });
 </script>
 

@@ -17,6 +17,9 @@
           <% end %>
           <li><%= link_to 'facts', facts_path %></li>
         </ul>
+        <%= form_tag '', :class => "navbar-form pull-right", :id => 'search' do %>
+          <input type="text" name="search_string" class="search-query" placeholder="Search" />  
+        <% end %>
       </div>
     </div>
   </div>

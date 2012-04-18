@@ -19,6 +19,8 @@ class NmsOnRails.Models.Ip extends Backbone.Model
       "/ips/#{@get('id')}/connect.#{proto}"
     else 
       ""
+  wake_link: ->
+    "/ips/#{@get('id')}/wake.wol"
 
   display_error: (error) ->
     # console.log(jQuery.parseJSON(error))
@@ -47,7 +49,6 @@ class NmsOnRails.Models.Ip extends Backbone.Model
 class NmsOnRails.Collections.IpsCollection extends Backbone.Collection
   model: NmsOnRails.Models.Ip
   url: '/ips'
-
 
 
      
