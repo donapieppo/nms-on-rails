@@ -15,5 +15,7 @@ NmsOnRails::Application.routes.draw do
   resources :facts
   resources :infos 
 
+  resources :switches
+
   root :to => 'home#index'
 end
