@@ -1,0 +1,9 @@
+<h2>Switches</h2>
+
+<ul>
+  <% @switches.each do |switch| %>  
+    <li><%= switch.name %>  (<%= switch.ip %>) </li>
+  <% end %>
+</ul>
+
+<%= link_to "new switch", new_switch_path %>  
