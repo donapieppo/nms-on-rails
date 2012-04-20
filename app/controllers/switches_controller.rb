@@ -14,7 +14,7 @@ class SwitchesController < ApplicationController
   def create
     @switch = Switch.new(params[:switch])
     if @switch.save
-      redirect_to(@switch, :notice => 'Switch was successfully created.') 
+      redirect_to switches_url
     else
       render :action => "new" 
     end
@@ -32,6 +32,6 @@ class SwitchesController < ApplicationController
   def destroy
     @switch = Switch.find(params[:id])
     @switch.destroy
-    redirect_to switchs_path
+    redirect_to switchs_url
   end
 end

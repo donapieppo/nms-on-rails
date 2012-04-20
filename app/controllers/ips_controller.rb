@@ -7,10 +7,13 @@ class IpsController < ApplicationController
       network = Network.find(params[:network_id])
       @ips = network.ips.order(:id).includes(:arp, :info)
     elsif params[:search_string]
-      if params[:search_string] =~ /^[[0-9]\.]$/
-        @ips = Ip.where('ip LIKE ?', "%#{params[:search_string]}%").order(:id).includes(:arp, :info)
+      like_str = "%#{params[:search_string]}%"
+      if params[:search_string] =~ /^[0-9\.]+$/
+        @ips = Ip.where('ip LIKE ?', like_str).order(:id).includes(:arp, :info)
+      elsif params[:search_string] =~ /\w{1,2}:\w{1,2}:\w{1,2}/
+        @ips = Ip.joins(:arps).where('arps.mac LIKE ?', like_str).order('ips.id').includes(:arp, :info)
       else
-        @ips = Ip.joins(:info).where('infos.name LIKE ?', "%#{params[:search_string]}%").order('ips.id').includes(:arp, :info)
+        @ips = Ip.joins(:info).where('infos.name LIKE ? OR infos.comment LIKE ?', like_str, like_str).order('ips.id').includes(:arp, :info)
       end
     end
     respond_with(@ips, :include => [:info, :arp])

@@ -7,7 +7,7 @@
   <td><%= info.get('comment') %></td>
   <td><%= arp.last_seen() %></td>
   <td><%= info.get('dnsname') %></td>
-  <td><%= arp.get('mac') %></td>
+  <td><a href="/macs/<%= arp.get('mac') %>"><%= arp.get('mac') %></a></td>
   <td><%= info.get('dhcp') && 'dhcp' %></td>
   <td><span class="protocol"><%= conn_proto || '?' %></span></td>
 

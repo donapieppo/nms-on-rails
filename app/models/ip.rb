@@ -20,6 +20,10 @@ class Ip < ActiveRecord::Base
     last and self.update_attribute(:last_info_id, last.id)
   end
 
+  def last_arp
+    self.arps.order('date desc').first
+  end
+
   def last_seen
     self.arp or return 1000
     ((Time.zone.now.to_i - self.arp.date.to_i) / 86400).to_i + 1

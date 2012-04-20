@@ -18,24 +18,20 @@ namespace :snmp do
 
   desc "Snmpwalk switches"
   task :snmpwalk => :environment do
-    NmsOnRails::Application.config.snmp_targets.each do |ip|
-      # FIXME to move in config
-      community = 'public'
-      max_interesting_port_number = number_of_ports(ip, community) - 2
-      hostname = device_hostname(ip, community)
-      clean_ip = Ip.clean!(ip)
-      shell_command = "snmpwalk -On -v 2c -c #{community} #{clean_ip} BRIDGE-MIB::dot1dTpFdbPort"
+    Switch.all.each do |switch|
+      max_interesting_port_number = number_of_ports(switch.ip, switch.community) - 2
+      hostname = device_hostname(switch.ip, switch.community)
+      clean_ip = Ip.clean!(switch.ip)
+      shell_command = "snmpwalk -On -v 2c -c #{switch.community} #{clean_ip} BRIDGE-MIB::dot1dTpFdbPort"
       IO.popen(shell_command).readlines.each do |line|
         line =~ /(\d+?).(\d+?).(\d+?).(\d+?).(\d+?).(\d+?) = INTEGER: (\d+)?/ or raise line
-        port = $7.to_i
-        next unless (port <= max_interesting_port_number)
-        mac  = sprintf("%x:%x:%x:%x:%x:%x", $1, $2, $3, $4, $5, $6)
-
-        p mac
-        p hostname
-        p port
+        port_number = $7.to_i
+        next unless (port_number > 0 and port_number <= max_interesting_port_number)
+        mac = sprintf("%x:%x:%x:%x:%x:%x", $1, $2, $3, $4, $5, $6)
+        port = Port.where(:switch_id => switch.id).where(:port => port_number).order('date desc').first
+        next if (port and port.mac == mac)
+        p Port.create!(:switch_id => switch.id, :port => port_number, :mac => mac, :date => Time.now)
       end
-      exit
     end
   end
 end

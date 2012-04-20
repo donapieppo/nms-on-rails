@@ -11,11 +11,11 @@ NmsOnRails::Application.routes.draw do
     resources :ips
   end
 
-  resources :arps
   resources :facts
   resources :infos 
 
   resources :switches
 
+  match 'macs/:address' => 'macs#show'
   root :to => 'home#index'
 end

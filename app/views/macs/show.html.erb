@@ -1,0 +1,14 @@
+<h2><%= @mac %>  </h2>
+
+<ul>
+<% @ports.each do |port| %>  
+  <li><%= port %></li>
+<% end %>
+</ul>
+
+<ul>
+  <% @arps.each do |arp| %> 
+    <li><%= arp.ip.ip %> <%= l arp.date %>  </li>
+  <% end %>
+</ul>
+

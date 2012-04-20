@@ -8,7 +8,6 @@ class NmsOnRails.Views.Home.IndexView extends Backbone.View
 
   initialize: (options) ->
     @network = options.network_id
-    @search_string = options.search_string
     @ips = new NmsOnRails.Collections.IpsCollection()
     @ips.on('reset', @render)
     @ips.url = "/networks/#{@network}/ips"
@@ -16,7 +15,6 @@ class NmsOnRails.Views.Home.IndexView extends Backbone.View
 
   # FIXME validate search_string
   show_search: (search_string) ->
-    console.log("searching #{search_string}")
     @ips.url = "/ips?search_string=#{search_string}"
     @ips.fetch()
 
