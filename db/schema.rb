@@ -58,6 +58,16 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string "name", :limit => 250
   end
 
+  create_table "ports", :force => true do |t|
+    t.integer  "switch_id"
+    t.integer  "port"
+    t.string   "mac",       :limit => 17
+    t.datetime "date"
+  end
+
+  add_index "ports", ["mac"], :name => "index_ports_on_mac"
+  add_index "ports", ["switch_id"], :name => "index_ports_on_switch_id"
+
   create_table "switches", :force => true do |t|
     t.string "ip",        :limit => 20
     t.string "name",      :limit => 250
