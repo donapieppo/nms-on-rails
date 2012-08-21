@@ -7,6 +7,7 @@ module NmsOnRails
       # Arpwatch
       config.arpwatch_files = ['/var/lib/arpwatch/arp.dat', '/home/donatini/arp_ciram.dat']
       # Facts
+      config.facts_dir = "/var/lib/puppet/yaml/facts"
     end
   end
 end

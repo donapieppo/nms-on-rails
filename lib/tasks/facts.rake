@@ -7,8 +7,7 @@ namespace :NmsOnRails do
     task :load => :environment do
       # FIXME (now start from clean database)
       ActiveRecord::Base.connection.instance_variable_get(:@connection).query("DELETE FROM facts")
-      # FIXME move path in configuration
-      Dir["/var/lib/puppet/yaml/facts/*.yaml"].each do |file|
+      Dir[NmsOnRails::Application.config.facts_dir + "/*.yaml"].each do |file|
         a = YAML::load_file(file)
         if ip = Ip.find_by_ip(a.values['ipaddress_eth0'])
           fact = ip.fact || ip.build_fact
