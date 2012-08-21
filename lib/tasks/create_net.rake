@@ -7,7 +7,7 @@ namespace :NmsOnRails do
     puts "Give me first ip (ex 11)";            netstart = STDIN.gets.chomp
     puts "Give me last ip (ex 16)";             netend   = STDIN.gets.chomp
 
-    net = Net.create!(:name => netname)
+    net = Network.create!(:name => netname)
 
     (netstart..netend).each do |i|
       begin
