@@ -18,13 +18,9 @@
           <li><%= link_to 'facts', facts_path %></li>
           <li><%= link_to "switches", switches_path %></li>
         </ul>
-        <ul class="nav pull-right">
-          <li>
-             <%= form_tag '', :class => "navbar-search", :id => 'search' do %>
-               <input type="text" name="search_string" class="search-query" placeholder="Search" />  
-             <% end %>
-          </li>
-        </ul>
+        <%= form_tag '', :class => "navbar-search pull-right", :id => 'search' do %>
+          <input type="text" name="search_string" class="search-query" placeholder="Search" />  
+        <% end %>
       </div>
     </div>
   </div>
