@@ -1,12 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.8'
 
 gem 'mysql2'
+gem 'sqlite3'
 gem "rails-backbone"
 gem 'twitter-bootstrap-rails'
-#gem 'twitter-bootstrap-rails', :git => 'http://github.com/seyhunak/twitter-bootstrap-rails.git'
-#gem 'net-ping'
 gem 'puppet'
 
 # Gems used only for assets and not required
