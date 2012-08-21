@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.timestamp "date",                               :null => false
   end
 
-  add_index "arps", ["ip_id", "mac", "date"], :name => "ip_id", :unique => true
+  add_index "arps", ["ip_id", "mac", "date"], :unique => true
 
   create_table "facts", :force => true do |t|
     t.integer "ip_id",                         :null => false
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.boolean   "dhcp"
   end
 
-  add_index "infos", ["ip_id", "date"], :name => "ip_id", :unique => true
+  add_index "infos", ["ip_id", "date"], :unique => true
 
   create_table "ips", :force => true do |t|
     t.string  "ip",           :limit => 15, :default => "", :null => false
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer "network_id"
   end
 
-  add_index "ips", ["ip"], :name => "ip", :unique => true
+  add_index "ips", ["ip"], :unique => true
 
   create_table "networks", :force => true do |t|
     t.string "name", :limit => 250
