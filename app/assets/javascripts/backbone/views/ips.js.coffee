@@ -27,9 +27,9 @@ class NmsOnRails.Views.Ips.View extends Backbone.View
 
   toggle_menu: (e) ->
     menu = "<ul class='dropdown-menu'>" +
-           "<li><a href='#{@model.conn_link()}' target='new'><i class='icon-eye-open'></i> Connect</a></li>" +
-           "<li><a href='#{@model.wake_link()}' taget='new'><i class='icon-off'></i> Wake up</a></li>" 
-
+           "<li><a href='#{@model.conn_link()}' target='new'><i class='icon-eye-open'></i> Connect</a></li>" 
+    if (@model.get('arp').get('mac'))
+      menu = menu + "<li><a href='#{@model.wake_link()}' taget='new'><i class='icon-off'></i> Wake up</a></li>" 
     if (! @model.get('notify'))
       menu = menu + "<li><a href='#' class='notify'><i class='icon-time'></i> Notify when online</a></li>" 
 
