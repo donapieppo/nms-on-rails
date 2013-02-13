@@ -28,7 +28,7 @@ bundle exec rake db:schema:load
 bundle exec rake NmsOnRails:create_network
 ```
 
-edit the file config/initializers/nms-on-rails.rb 
+edit the file `config/initializers/nms-on-rails.rb`
 
 and then fire rails.
 
@@ -72,7 +72,7 @@ reads domain records with axfr query (the dns server has to allow them).
 ```
 bundle exec rake NmsOnRails:snmp:snmpwalk
 ```
-updates mac-address with port on the switch (uses snmpwalk -On -v 2c -c #{community} #{clean_ip} .1.3.6.1.2.1.1.5.0)
+updates mac-address with port on the switch (uses `snmpwalk -On -v 2c -c #{community} #{clean_ip} .1.3.6.1.2.1.1.5.0`)
 
 ## Database structure
 
