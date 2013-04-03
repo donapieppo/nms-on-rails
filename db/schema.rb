@@ -55,7 +55,8 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "ips", ["ip"], :unique => true
 
   create_table "networks", :force => true do |t|
-    t.string "name", :limit => 250
+    t.string "name", :limit => 30
+    t.string "description", :limit => 250
   end
 
   create_table "ports", :force => true do |t|

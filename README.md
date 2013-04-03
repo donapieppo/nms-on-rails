@@ -2,7 +2,8 @@ NMS on Rails
 =================
 
 A basic Network Management System built with
-Ruby on Rails, Backbone (styled with Bootstrap).
+Ruby on Rails, Backbone (and Bootstrap style)
+in early stage.
 
 Provides basic integration to:
 

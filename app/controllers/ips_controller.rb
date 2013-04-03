@@ -61,4 +61,8 @@ class IpsController < ApplicationController
       format.wol {}
     end
   end
+
+  def new
+    @network = Network.find(params[:network_id])
+  end
 end
