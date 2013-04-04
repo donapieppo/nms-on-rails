@@ -2,7 +2,7 @@ class Info < ActiveRecord::Base
   belongs_to :user
   belongs_to :ip
 
-  attr_accessible :name, :comment, :ip_id
+  attr_accessible :name, :comment, :ip_id, :dnsname
 
   # validates :name, :format => { :with => /\A[a-zA-Z]+\z/, :message => "Only letters allowed" }
   before_save  :set_date
