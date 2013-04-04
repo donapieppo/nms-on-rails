@@ -33,7 +33,7 @@ class IpsController < ApplicationController
   def protocol
     @ip = Ip.find(params[:id])
     if params[:protocol] 
-      @ip.update_attributes(:conn_proto => params[:protocol])
+      @ip.update_attribute(:conn_proto,params[:protocol])
       respond_with(@ip)
     else 
     end
@@ -65,4 +65,14 @@ class IpsController < ApplicationController
   def new
     @network = Network.find(params[:network_id])
   end
+
+  def create
+    @network = Network.find(params[:network_id])
+    base = "#{params[:n1].to_i}.#{params[:n2].to_i}.#{params[:n3].to_i}"
+    (params[:start].to_i ... params[:end].to_i).each do |i|
+      @network.ips.create!(:ip => "#{base}.#{i}")
+    end
+    redirect_to root_path
+  end
+
 end

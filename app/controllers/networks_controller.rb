@@ -1,6 +1,6 @@
 class NetworksController < ApplicationController
   def index
-    @networks = Netwok.all
+    @networks = Network.all
   end
 
   def new
@@ -8,11 +8,10 @@ class NetworksController < ApplicationController
   end
 
   def create
-    @network = Network.new
-    @network.name = params[:network][:name]
+    @network = Network.new(params[:network])
     if @network.save
       flash[:notice] = 'Network created'
-      redirect_to home_path
+      redirect_to new_network_ip_path(@network)
     else
       render :action => :new
     end

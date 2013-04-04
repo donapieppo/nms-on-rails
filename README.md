@@ -25,13 +25,20 @@ you can load the database schema
 bundle exec rake db:schema:load
 ```
 
-```console
-bundle exec rake NmsOnRails:create_network
-```
-
 edit the file `config/initializers/nms-on-rails.rb`
-
 and then fire rails.
+
+When you connect for the first time you are asked 
+for a network (name, description) and then for a range
+of ips for the new network.
+
+## Editing
+
+Double click on the name/description opens a window 
+for editing.
+
+Click on the 'proto' switches connection protocol
+between ssh/rdp/http
 
 ## Rake
 
@@ -48,8 +55,9 @@ puppet. Usually with cron jobs.
 bundle exec rake NmsOnRails:arpwatch
 ```
 
-reads arpwatch data (directly from arpwatch files) and updates the database. 
-Accordingly the web interface shows how many days ago the ip was used.
+reads arpwatch data (directly from arpwatch files as listed in config/initializers/nms-on-rails.rb) 
+and updates the database. 
+Accordingly the web interface shows how many days ago the ip was used and the last mac address.
 
 ### Puppet
 
@@ -66,7 +74,10 @@ system of the computers managed with puppet.
 ``` 
 bundle exec rake NmsOnRails:dns:update
 ```
-reads domain records with axfr query (the dns server has to allow them).
+
+reads domain records with axfr query (the dns server has to answer
+`dig axfr`, for example in bind your rails server should be in 
+`allow-recursion` hosts).
 
 ### SNMP
 

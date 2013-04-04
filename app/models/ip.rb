@@ -8,6 +8,11 @@ class Ip < ActiveRecord::Base
   belongs_to :arp,  :foreign_key => :last_arp_id
   belongs_to :info, :foreign_key => :last_info_id
 
+  attr_accessible :ip
+
+  IP_REGEXP = /\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/
+
+  validates :ip, :format => { :with => IP_REGEXP, :message => "wrong ip format" }
   validates :conn_proto, :inclusion => { :in => %w(ssh rdp http), :message => "%{value} is not a valid protocol", :allow_nil => true }
 
   def update_last_arp
@@ -30,7 +35,7 @@ class Ip < ActiveRecord::Base
   end
 
   def self.clean!(ip)
-    ip =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ or raise "wrong ip format #{ip.inspect}"
+    ip =~ IP_REGEXP or raise "wrong ip format #{ip.inspect}"
     ip
   end
 

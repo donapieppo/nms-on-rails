@@ -1,0 +1,9 @@
+<h2>Networks</h2>
+
+<ul>
+  <% @networks.each do |network| %>
+    <li><%= network.name %> (<%= network.description %>) <%= link_to '<i class="icon-plus"></i> add ips'.html_safe, new_network_ip_path(network) %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'NEW', new_network_path, :class => :btn %>
