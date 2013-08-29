@@ -18,8 +18,11 @@ ssh/rdp/http.
 
 ## Getting started
 
-After you have cloned and "bundle installed" everything
-you can load the database schema
+Clone the repository, "bundle install" everything and
+configure the database (`config/database.yml`, for example
+copy from `doc/database.yml`) as for a common rails project.
+
+Then you can load the database schema
 
 ```console
 bundle exec rake db:schema:load
