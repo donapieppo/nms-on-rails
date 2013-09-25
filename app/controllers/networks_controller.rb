@@ -8,7 +8,7 @@ class NetworksController < ApplicationController
   end
 
   def create
-    @network = Network.new(params[:network])
+    @network = Network.new(params.require(:network).permit(:name, :description))
     if @network.save
       flash[:notice] = 'Network created'
       redirect_to new_network_ip_path(@network)

@@ -1,11 +1,12 @@
 class IpsController < ApplicationController
+  # attr_accessible :ip
   respond_to :json
   respond_to :rdp, :ssh, :html, :only => :connect 
 
   def index
     if params[:network_id]
       network = Network.find(params[:network_id])
-      @ips = network.ips.order(:id).includes(:arp, :info)
+      @ips = network.ips.order(:id).includes(:arp, :info).limit(10)
     elsif params[:search_string]
       like_str = "%#{params[:search_string]}%"
       if params[:search_string] =~ /^[0-9\.]+$/

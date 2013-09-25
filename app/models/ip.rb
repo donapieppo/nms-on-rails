@@ -8,8 +8,6 @@ class Ip < ActiveRecord::Base
   belongs_to :arp,  :foreign_key => :last_arp_id
   belongs_to :info, :foreign_key => :last_info_id
 
-  attr_accessible :ip
-
   IP_REGEXP = /\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/
 
   validates :ip, :format => { :with => IP_REGEXP, :message => "wrong ip format" }

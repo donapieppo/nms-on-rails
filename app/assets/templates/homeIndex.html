@@ -1,0 +1,34 @@
+<h1 class="text-center">My blog</h1>
+
+<table class="table-striped table-condensed" id="main">
+  <thead>
+    <tr>
+      <th>ip</th>
+      <th>nome</th>
+      <th>descrizione</th>
+      <th>days</th>
+      <th>dns</th>
+      <th>mac</th>
+      <th>dhcp</th>
+      <th>proto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="ip in ips">
+      <td>
+        <show_ip_menu localip="ip"></show_ip_menu>
+      </td>
+      <td>{{ ip.name }}</td>
+      <td>{{ ip.info.comment }}</td>
+      <td>{{ ip.arp.last_seen() }} </td>
+      <td> info.get('dnsname') </td>
+      <td><a href="/macs/{{ ip.arp.mac %>">{{ ip.arp.mac }}</a></td>
+      <td>{{ ip.info.dhcp && 'dhcp' }}</td>
+      <td><span class="protocol">{{ ip.conn_proto || '?' }}</span></td>
+
+    </tr>
+  </tbody>
+</table>
+
+<script>
+

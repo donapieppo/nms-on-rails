@@ -16,6 +16,6 @@ NmsOnRails::Application.routes.draw do
 
   resources :switches
 
-  match 'macs/:address' => 'macs#show'
+  get 'macs/:address' => 'macs#show'
   root :to => 'home#index'
 end
