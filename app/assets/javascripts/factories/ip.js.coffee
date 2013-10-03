@@ -4,8 +4,8 @@ angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', ($re
       { update: { method: 'PUT' }})
 
   r.prototype.conn_link = ->
-    if this.conn_proto
-      proto = this.conn_proto
+    if @conn_proto
+      proto = @conn_proto
       proto = 'html' if proto == 'http'
       "/ips/#{@id}/connect.#{proto}"
     else
@@ -14,11 +14,15 @@ angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', ($re
   r.prototype.wake_link = ->
     "/ips/#{@id}/wake.wol"
 
-  r.prototype.get_info = ->
-    new nmsInfo(this.info)
+  r.prototype.nmsinfo = ->
+    if ! @singleton_info
+      @singleton_info = new nmsInfo(@info)
+    @singleton_info
 
-  r.prototype.get_arp = ->
-    new nmsArp(this.arp)
+  r.prototype.nmsarp = ->
+    if ! @singleton_arp
+      @singleton_arp = new nmsArp(@arp)
+    @singleton_arp
 
   r
 ])

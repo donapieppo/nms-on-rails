@@ -5,30 +5,30 @@
 </div>
 <div class="modal-body">
   <div id="ip-form">
-    <form>
+    <form ng-submit="submit_info(editable_ip, editable_info)">
       <div class="clearfix">
         <label>Nome</label>
         <div class="input">
-          <input type="text" value="{{editable_ip.get_info().name}}" id="info-name" /><br/>
+          <input type="text" ng-model="editable_info.name" name="name" /><br/>
         </div>
       </div>
       <div class="clearfix">
         <label>Descrizione</label>
         <div class="input">
-          <textarea id="info-comment">{{ editable_ip.get_info().comment }}</textarea>
+          <textarea id="info-comment" ng-model="editable_info.comment" name="comment"></textarea>
         </div>
       </div>
       <div class="clearfix">
         <div class="input">
-          <input type="submit" id="ip-submit" class="btn primary" value="invia"/>
+          <input type="submit" class="btn primary" value="invia"/>
         </div>
       </div>
     </form>
   </div>
 </div>
 <div class="modal-footer">
-  Ultima volta visto attivo {{ editable_ip.get_arp().last_seen() }} giorni fa. <br/>
-  Dns: "<%= info.get('dnsname') %>".
+  Ultima volta visto attivo {{ editable_ip.nmsaarp().last_seen() }} giorni fa. <br/>
+  Dns: "{{ editable_ip.nmsinfo().dnsname }}".
 </div>
 </div>
 
@@ -46,16 +46,16 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="ip in ips" ng-dblclick="edit_ip(ip)">
+    <tr ng-repeat="ip in ips" ng-dblclick="edit_ip(ip)" >
       <td>
         <show_ip_menu localip="ip"></show_ip_menu>
       </td>
-      <td>{{ ip.get_info().name }}</td>
-      <td>{{ ip.get_info().comment }}</td>
-      <td>{{ ip.get_arp().last_seen() }} </td>
-      <td>{{ ip.get_info().dnsname }} </td>
-      <td><a href="/macs/{{ ip.get_arp().mac %>">{{ ip.get_arp().mac }}</a></td>
-      <td>{{ ip.get_info().dhcp && 'dhcp' }}</td>
+      <td ng-init="nmsinfo = ip.nmsinfo(); nmsaarp = ip.nmsaarp()">{{ nmsinfo.name }}</td>
+      <td>{{ nmsinfo.comment }}</td>
+      <td>{{ nmsarp.last_seen() }} </td>
+      <td>{{ nmsinfo.dnsname }} </td>
+      <td><a href="/macs/{{ nmsarp.mac %>">{{ nmsarp.mac }}</a></td>
+      <td>{{ nmsinfo.dhcp && 'dhcp' }}</td>
       <td><span class="protocol">{{ ip.conn_proto || '?' }}</span></td>
     </tr>
   </tbody>
