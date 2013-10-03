@@ -18,8 +18,8 @@
 //= require angular-route
 //= require bootstrap
 //= require main
-//= require ./models/info
-//= require ./models/arp
-//= require ./models/ip
+//= require ./factories/info
+//= require ./factories/arp
+//= require ./factories/ip
 //= require_tree ./directives 
 //= require_tree ./controllers 
