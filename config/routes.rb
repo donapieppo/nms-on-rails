@@ -1,6 +1,5 @@
 NmsOnRails::Application.routes.draw do
   resources :ips do
-    put :protocol, :on => :member
     put :notify,   :on => :member
     get :connect,  :on => :member
     get :wake,     :on => :member

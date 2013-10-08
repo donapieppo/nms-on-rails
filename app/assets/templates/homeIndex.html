@@ -27,7 +27,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  Ultima volta visto attivo {{ editable_ip.nmsaarp().last_seen() }} giorni fa. <br/>
+  Ultima volta visto attivo {{ editable_ip.nmsarp().last_seen() }} giorni fa. <br/>
   Dns: "{{ editable_ip.nmsinfo().dnsname }}".
 </div>
 </div>
@@ -48,15 +48,15 @@
   <tbody>
     <tr ng-repeat="ip in ips" ng-dblclick="edit_ip(ip)" >
       <td>
-        <show_ip_menu localip="ip"></show_ip_menu>
+        <show_ip_actions localip="ip"></show_ip_menu>
       </td>
-      <td ng-init="nmsinfo = ip.nmsinfo(); nmsaarp = ip.nmsaarp()">{{ nmsinfo.name }}</td>
+      <td ng-init="nmsinfo = ip.nmsinfo(); nmsarp = ip.nmsarp()">{{ nmsinfo.name }}</td>
       <td>{{ nmsinfo.comment }}</td>
       <td>{{ nmsarp.last_seen() }} </td>
       <td>{{ nmsinfo.dnsname }} </td>
-      <td><a href="/macs/{{ nmsarp.mac %>">{{ nmsarp.mac }}</a></td>
+      <td><a href="/nms-on-rails/macs/{{ nmsarp.mac }}">{{ nmsarp.mac }}</a></td>
       <td>{{ nmsinfo.dhcp && 'dhcp' }}</td>
-      <td><span class="protocol">{{ ip.conn_proto || '?' }}</span></td>
+      <td ng-click="toggle_protocol(ip)"><span class="protocol">{{ ip.conn_proto || '?' }}</span></td>
     </tr>
   </tbody>
 </table>

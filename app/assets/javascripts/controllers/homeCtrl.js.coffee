@@ -12,6 +12,9 @@
     info.$update();
     # FIXME
 
+  $scope.toggle_protocol = (ip) ->
+    ip.toggle_protocol()
+
   #$http.get('networks/1/ips.json').success( (data) ->
   #    $scope.ips = data.map (i) ->
   #      new nmsIp(i)

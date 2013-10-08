@@ -1,4 +1,4 @@
-angular.module('ngNms').directive( 'showIpMenu', -> 
+angular.module('ngNms').directive( 'showIpActions', -> 
   return {
     restrict: 'E',
     scope: { localip: "=" },

@@ -31,13 +31,10 @@ class IpsController < ApplicationController
     render :layout => false
   end
 
-  def protocol
+  def update
     @ip = Ip.find(params[:id])
-    if params[:protocol] 
-      @ip.update_attribute(:conn_proto,params[:protocol])
-      respond_with(@ip)
-    else 
-    end
+    @ip.update_attribute(:conn_proto, params[:conn_proto])
+    respond_with(@ips)
   end
 
   def notify
