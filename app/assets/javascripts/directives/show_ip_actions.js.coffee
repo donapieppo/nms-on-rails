@@ -18,10 +18,6 @@ angular.module('ngNms').directive( 'showIpActions', ->
         if (! scope.localip.notify)
           menu = menu + '<li><a href="#" class="notify"><i class="icon-time"></i> Notify when online</a></li>' 
 
-        # informations 
-        if (scope.localip.fact)
-          menu = menu + '<li><a href="/nms-on-rails/facts/' + scope.localip.fact.id + '" class="notify"><i class="icon-info"></i> Maggiori informazioni</a></li>' 
-
         menu = menu + "<li class='divider'></li>"
         # reset
         menu = menu + "<li><a href='#' class='ip-reset'><i class='icon-remove'></i> Reset</a></li>"

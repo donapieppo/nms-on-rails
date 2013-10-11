@@ -1,35 +1,50 @@
-<div id="modaleditor" class="modal hide fade">
-<div class="modal-header">
-  <a class="close" data-dismiss="modal">&times;</a>
-  <h3>Modifica {{ editable_ip.ip }}</h3>
-</div>
-<div class="modal-body">
-  <div id="ip-form">
-    <form ng-submit="submit_info(editable_ip, editable_info)">
-      <div class="clearfix">
-        <label>Nome</label>
-        <div class="input">
-          <input type="text" ng-model="editable_info.name" name="name" /><br/>
-        </div>
-      </div>
-      <div class="clearfix">
-        <label>Descrizione</label>
-        <div class="input">
-          <textarea id="info-comment" ng-model="editable_info.comment" name="comment"></textarea>
-        </div>
-      </div>
-      <div class="clearfix">
-        <div class="input">
-          <input type="submit" class="btn primary" value="invia"/>
-        </div>
-      </div>
-    </form>
+<div id="modalfacts" class="modal hide fade">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>{{editable_ip.info.name }}</h3>
+  </div>
+  <div class="modal-body">
+    <h4>{{actual_facts.lsbdistid}} {{actual_facts.lsbdistrelease}}</h4>
+     <dl class="dl-horizontal">
+       <dt>ip</dt><dd>{{editable_ip.ip}}</dd>
+       <dt>kernel</dt><dd>{{actual_facts.kernelrelease}}</dd>
+       <dt>mem</dt><dd>{{actual_facts.memorysize}}</dd>
+       <dt>proc</dt><dd>{{actual_facts.processorcount}} {{actual_facts.processor}}</dd>
+     </dl>
   </div>
 </div>
-<div class="modal-footer">
-  Ultima volta visto attivo {{ editable_ip.nmsarp().last_seen() }} giorni fa. <br/>
-  Dns: "{{ editable_ip.nmsinfo().dnsname }}".
-</div>
+<div id="modaleditor" class="modal hide fade">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Modifica {{ editable_ip.ip }}</h3>
+  </div>
+  <div class="modal-body">
+    <div id="ip-form">
+      <form ng-submit="submit_info(editable_ip, editable_info)">
+        <div class="clearfix">
+          <label>Nome</label>
+          <div class="input">
+            <input type="text" ng-model="editable_info.name" name="name" /><br/>
+          </div>
+        </div>
+        <div class="clearfix">
+          <label>Descrizione</label>
+          <div class="input">
+            <textarea id="info-comment" ng-model="editable_info.comment" name="comment"></textarea>
+          </div>
+        </div>
+        <div class="clearfix">
+          <div class="input">
+            <input type="submit" class="btn primary" value="invia"/>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    Ultima volta visto attivo {{ editable_ip.nmsarp().last_seen() }} giorni fa. <br/>
+    Dns: "{{ editable_ip.nmsinfo().dnsname }}".
+  </div>
 </div>
 
 <table class="table-striped table-condensed" id="main">
@@ -43,6 +58,7 @@
       <th>mac</th>
       <th>dhcp</th>
       <th>proto</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -57,6 +73,7 @@
       <td><a href="/nms-on-rails/macs/{{ nmsarp.mac }}">{{ nmsarp.mac }}</a></td>
       <td>{{ nmsinfo.dhcp && 'dhcp' }}</td>
       <td ng-click="toggle_protocol(ip)"><span class="protocol">{{ ip.conn_proto || '?' }}</span></td>
+      <td><i class="icon-info" ng-if="ip.fact.id" ng-click="show_facts(ip)"></i></td>
     </tr>
   </tbody>
 </table>

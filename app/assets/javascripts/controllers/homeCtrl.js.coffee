@@ -1,7 +1,8 @@
-@HomeCtrl = ($routeParams, $scope, $location, nmsIp, nmsInfo, nmsArp) ->
+@HomeCtrl = ($routeParams, $scope, $location, $http, nmsIp, nmsInfo, nmsArp) ->
   console.log("richiesto network #{$routeParams.network_id}")
 
-  $scope.ips = nmsIp.query(network_id: $routeParams.network_id || 1)
+  network_id =  $routeParams.network_id || 1
+  $scope.ips = nmsIp.query(network_id: network_id)
 
   $scope.edit_ip = (ip) ->
     $scope.editable_ip = ip
@@ -16,6 +17,14 @@
 
   $scope.toggle_protocol = (ip) ->
     ip.toggle_protocol()
+
+  $scope.show_facts = (ip) ->
+    $http.get('ips/' + ip.id + '/facts.json').success( (data) ->
+      $("#modalfacts").modal('show')
+      $scope.editable_ip = ip
+      $scope.actual_facts = data
+      console.log(data)
+    )
 
   #$http.get('networks/1/ips.json').success( (data) ->
   #    $scope.ips = data.map (i) ->

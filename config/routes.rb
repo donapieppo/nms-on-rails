@@ -4,6 +4,7 @@ NmsOnRails::Application.routes.draw do
     get :connect,  :on => :member
     get :wake,     :on => :member
     resource :infos
+    resource :facts
   end
 
   resources :networks do 
