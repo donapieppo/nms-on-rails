@@ -2,6 +2,9 @@
 <html ng-app="ngNms">
 <head>
   <title>NmsOnRails</title>
+  <script>
+    window.BASEURL = '/nms-on-rails'
+  </script>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -13,7 +16,7 @@
         <%= link_to 'NMS on Rails', root_path, :class => "brand" %>
         <ul class="nav pull-left">
           <% Network.all.each do |net| %>  
-            <li><%= link_to net, "/##{net.id}" %></li>
+            <li><%= link_to net, root_path(:anchor => net.id) %></li>
           <% end %>
         </ul>
         <%= form_tag '', :class => "navbar-search pull-right", :id => 'search' do %>

@@ -6,7 +6,7 @@ class IpsController < ApplicationController
   def index
     if params[:network_id]
       network = Network.find(params[:network_id])
-      @ips = network.ips.order(:id).includes(:arp, :info).limit(10)
+      @ips = network.ips.order(:id).includes(:arp, :info).limit(20)
     elsif params[:search_string]
       like_str = "%#{params[:search_string]}%"
       if params[:search_string] =~ /^[0-9\.]+$/
@@ -17,7 +17,7 @@ class IpsController < ApplicationController
         @ips = Ip.joins(:info).where('infos.name LIKE ? OR infos.comment LIKE ?', like_str, like_str).order('ips.id').includes(:arp, :info)
       end
     end
-    respond_with(@ips, :include => [:info, :arp])
+    respond_with(@ips, :include => [:info, :arp, :fact => { :only => [:id] }])
   end
 
   def show
@@ -27,14 +27,14 @@ class IpsController < ApplicationController
       @ip.info.save
       @ip.update_last_info
     end
-    @users_json = User.select([:id, :login]).all.inject(" {") {|t, u| t += "'#{u.id}':'#{u.login}', "} + "}"
-    render :layout => false
+    # @users_json = User.select([:id, :login]).all.inject(" {") {|t, u| t += "'#{u.id}':'#{u.login}', "} + "}"
+    respond_with(@ip)
   end
 
   def update
     @ip = Ip.find(params[:id])
     @ip.update_attribute(:conn_proto, params[:conn_proto])
-    respond_with(@ips)
+    respond_with(@ip)
   end
 
   def notify

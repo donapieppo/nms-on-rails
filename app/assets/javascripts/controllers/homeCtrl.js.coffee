@@ -1,5 +1,7 @@
-@HomeCtrl = ($scope, $location, nmsIp, nmsInfo, nmsArp) ->
-  $scope.ips = nmsIp.query()
+@HomeCtrl = ($routeParams, $scope, $location, nmsIp, nmsInfo, nmsArp) ->
+  console.log("richiesto network #{$routeParams.network_id}")
+
+  $scope.ips = nmsIp.query(network_id: $routeParams.network_id || 1)
 
   $scope.edit_ip = (ip) ->
     $scope.editable_ip = ip

@@ -1,11 +1,10 @@
-# Creates new Angular module 
 angular.module('ngNms', ['ngRoute', 'ngResource']).config( ($routeProvider, $locationProvider, $httpProvider) ->
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 
   $routeProvider
     # Route for '/post'
-    .when('/post', { templateUrl: '/nms-on-rails/assets/mainPost.html', controller: 'PostCtrl' })
+    .when('/:network_id', { templateUrl: window.BASEURL + '/assets/homeIndex.html', controller: 'HomeCtrl' })
     # Default
-    .otherwise({ templateUrl: '/nms-on-rails/assets/homeIndex.html', controller: 'HomeCtrl' })
+    .otherwise({ templateUrl: window.BASEURL + '/assets/homeIndex.html', controller: 'HomeCtrl' })
 )
 

@@ -1,5 +1,6 @@
 angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', ($resource, nmsInfo, nmsArp) -> 
-  r = $resource('/nms-on-rails/networks/1/ips/:id.json', 
+
+  r = $resource(window.BASEURL + '/networks/:network_id/ips/:id.json', 
       { id:'@id' }, 
       { update: { method: 'PUT' }}
   )
@@ -27,12 +28,12 @@ angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', ($re
     if @conn_proto
       proto = @conn_proto
       proto = 'html' if proto == 'http'
-      "/nms-on-rails/ips/#{@id}/connect.#{proto}"
+      window.BASEURL + "/ips/#{@id}/connect.#{proto}"
     else
       ""
 
   r.prototype.wake_link = ->
-    "/nms-on-rails/ips/#{@id}/wake.wol"
+    window.BASEURL + "/ips/#{@id}/wake.wol"
 
   r
 ])
