@@ -1,5 +1,5 @@
 angular.module('ngNms').factory('nmsInfo', ['$resource', ($resource) -> 
-  r = $resource('/nms-on-rails/infos/:id.json', 
+  r = $resource(window.BASEURL + '/infos/:id.json', 
       { id:'@id' }, 
       { update: { method: 'PUT' }})
 

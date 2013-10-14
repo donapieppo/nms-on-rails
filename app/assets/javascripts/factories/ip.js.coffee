@@ -1,6 +1,7 @@
 angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', ($resource, nmsInfo, nmsArp) -> 
 
-  r = $resource(window.BASEURL + '/networks/:network_id/ips/:id.json', 
+  # r = $resource(window.BASEURL + '/networks/:network_id/ips/:id.json?search_string=wilder', 
+  r = $resource(window.BASEURL + '/ips.json', 
       { id:'@id' }, 
       { update: { method: 'PUT' }}
   )

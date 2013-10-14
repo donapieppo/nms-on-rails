@@ -1,12 +1,11 @@
 <div id="modalfacts" class="modal hide fade">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">&times;</a>
-    <h3>{{editable_ip.info.name }}</h3>
+    <h3>{{editable_ip.info.name}} ({{editable_ip.ip }})</h3>
   </div>
   <div class="modal-body">
     <h4>{{actual_facts.lsbdistid}} {{actual_facts.lsbdistrelease}}</h4>
      <dl class="dl-horizontal">
-       <dt>ip</dt><dd>{{editable_ip.ip}}</dd>
        <dt>kernel</dt><dd>{{actual_facts.kernelrelease}}</dd>
        <dt>mem</dt><dd>{{actual_facts.memorysize}}</dd>
        <dt>proc</dt><dd>{{actual_facts.processorcount}} {{actual_facts.processor}}</dd>
@@ -70,7 +69,7 @@
       <td>{{ nmsinfo.comment }}</td>
       <td>{{ nmsarp.last_seen() }} </td>
       <td>{{ nmsinfo.dnsname }} </td>
-      <td><a href="/nms-on-rails/macs/{{ nmsarp.mac }}">{{ nmsarp.mac }}</a></td>
+      <td><a href="{{BASEURL + '/macs/' + nmsarp.mac}}">{{ nmsarp.mac }}</a></td>
       <td>{{ nmsinfo.dhcp && 'dhcp' }}</td>
       <td ng-click="toggle_protocol(ip)"><span class="protocol">{{ ip.conn_proto || '?' }}</span></td>
       <td><i class="icon-info" ng-if="ip.fact.id" ng-click="show_facts(ip)"></i></td>
