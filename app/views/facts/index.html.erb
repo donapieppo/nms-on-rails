@@ -11,11 +11,12 @@
     <th>#proc</th>
     <th>processor</th>
     <th>kernel</th>
+    <th>days</th>
   </tr>
 </thead>
 
 <tbody>
-<% @facts.each do |f| %>
+<% today = Time.now.to_i; @facts.each do |f| %>
   <tr>
     <td><%= f.ip.ip %></td>
     <td><%= f.ip.info and f.ip.info.name %></td>
@@ -25,6 +26,7 @@
     <td><%= f.processorcount %></td>
     <td><small><%= f.processor %></small></td>
     <td><small><%= f.kernelrelease %></small></td>
+    <td><%= (today - f.date.to_i)/86400 %></td>
   </tr>
 <% end %>
 </tbody>
