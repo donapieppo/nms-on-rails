@@ -16,6 +16,7 @@ namespace :NmsOnRails do
           fact.lsbdistrelease = a.values['lsbdistrelease']
           fact.lsbdistid      = a.values['lsbdistid']
           fact.kernelrelease  = a.values['kernelrelease']
+          fact.date           = a.values[:_timestamp]
           # memorysize: 1.97 GB
           # memorysize: 874.00 MB
           a.values['memorysize'] =~ /(\d+\.?\d*)\s(\w\w)/ or raise "memorysize=#{a.values['memorysize']}"

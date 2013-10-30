@@ -7,12 +7,11 @@ en:
     links:
       back: "Back"
       cancel: "Cancel"
-      confirm: "Are you sure?"
+      confirm: "Confirm"
       destroy: "Delete"
       new: "New"
-      edit: "Edit"
     titles:
-      edit: "Edit %{model}"
-      save: "Save %{model}"
-      new: "New %{model}"
-      delete: "Delete %{model}"
+      edit: "Edit"
+      save: "Save"
+      new: "New"
+      delete: "Delete"

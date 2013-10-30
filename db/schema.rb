@@ -22,13 +22,14 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "arps", ["ip_id", "mac", "date"], name: "ip_id", unique: true, using: :btree
 
   create_table "facts", force: true do |t|
-    t.integer "ip_id",                      null: false
-    t.integer "memorysize"
-    t.string  "processor",      limit: 50
-    t.integer "processorcount"
-    t.string  "lsbdistrelease", limit: 20
-    t.string  "lsbdistid",      limit: 20
-    t.string  "kernelrelease",  limit: 100
+    t.integer   "ip_id",                      null: false
+    t.integer   "memorysize"
+    t.string    "processor",      limit: 50
+    t.integer   "processorcount"
+    t.string    "lsbdistrelease", limit: 20
+    t.string    "lsbdistid",      limit: 20
+    t.string    "kernelrelease",  limit: 100
+    t.timestamp "date",                       null: false
   end
 
   create_table "infos", force: true do |t|
