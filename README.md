@@ -116,6 +116,6 @@ gathered by facter (https://http://puppetlabs.com/puppet/related-projects/facter
 
 ### Licence
 
-NMS on Rails is released under the [[http://www.opensource.org/licenses/MIT|MIT License]].
+NMS on Rails is released under the [MIT License](http://www.opensource.org/licenses/MIT).
 
 
