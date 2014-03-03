@@ -114,3 +114,8 @@ is associated to other informations.
 Facts come from pc controlled by puppet (https://github.com/puppetlabs/puppet) and are 
 gathered by facter (https://http://puppetlabs.com/puppet/related-projects/facter/).
 
+### Licence
+
+NMS on Rails is released under the [[http://www.opensource.org/licenses/MIT|MIT License]].
+
+
