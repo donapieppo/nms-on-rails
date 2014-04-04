@@ -11,9 +11,13 @@
   )
 
   $scope.edit_ip = (ip) ->
-    $scope.editable_ip = ip
-    $scope.editable_info = ip.nmsinfo()
-    $("#modaleditor").modal('show')
+    $http.get('ips/' + ip.id + '.json').success( (data) ->
+      console.log(data)
+      $scope.editable_ip = ip
+      $scope.editable_info = ip.nmsinfo()
+      $scope.alldata = data
+      $("#modaleditor").modal('show')
+    )
 
   $scope.submit_info = (ip, info) ->
     console.log(info)
