@@ -21,6 +21,10 @@ class Ip < ActiveRecord::Base
     self.infos.order('date desc').first
   end
 
+  def last_port
+    Port.includes(:switch).where(:mac => self.last_arp.mac).order('last desc').first
+  end
+
   def update_last_arp
     last = self.last_arp
     last and self.update_attribute(:last_arp_id, last.id)
