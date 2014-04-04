@@ -64,7 +64,8 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer  "switch_id"
     t.integer  "port"
     t.string   "mac",       limit: 17
-    t.datetime "date"
+    t.datetime "last"
+    t.datetime "start"
   end
 
   add_index "ports", ["mac"], name: "index_ports_on_mac", using: :btree
