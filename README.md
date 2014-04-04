@@ -125,4 +125,10 @@ gathered by facter (https://http://puppetlabs.com/puppet/related-projects/facter
 
 Information for switch/port and mac address association. 
 
+=======
+
+### Licence
+
+NMS on Rails is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+
 
