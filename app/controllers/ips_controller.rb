@@ -21,14 +21,14 @@ class IpsController < ApplicationController
   end
 
   def show
-    @ip = Ip.includes(:info).find(params[:id])
+    @ip = Ip.includes(:info, :arp).find(params[:id])
     if ! @ip.info 
       @ip.info = @ip.infos.new
       @ip.info.save
       @ip.update_last_info
     end
     # @users_json = User.select([:id, :login]).all.inject(" {") {|t, u| t += "'#{u.id}':'#{u.login}', "} + "}"
-    respond_with(@ip)
+    respond_with(@ip, :include => {:info => {}, :arp => {}, :last_port => {:include => :switch}})
   end
 
   def update
