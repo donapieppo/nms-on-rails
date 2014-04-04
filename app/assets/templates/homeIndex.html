@@ -42,7 +42,8 @@
   </div>
   <div class="modal-footer">
     Ultima volta visto attivo {{ editable_ip.nmsarp().last_seen() }} giorni fa. <br/>
-    Dns: "{{ editable_ip.nmsinfo().dnsname }}".
+    Dns: "{{ editable_ip.nmsinfo().dnsname }}". <br/>
+    Switch: {{ alldata.last_port.switch.name }}:{{ alldata.last_port.port}}"
   </div>
 </div>
 
