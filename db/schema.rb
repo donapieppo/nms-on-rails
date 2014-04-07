@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(version: 0) do
     t.timestamp "date",                       null: false
   end
 
+  create_table "oss", force: true do |t|
+    t.integer   "ip_id", default: 0, null: false
+    t.string    "name",  null: false
+    t.timestamp "date"
+  end
+
+  add_index "oss", ["ip_id"], name: "index_oss_on_ip_id", using: :btree
+
   create_table "infos", force: true do |t|
     t.integer   "ip_id",   default: 0, null: false
     t.timestamp "date",                null: false
@@ -40,6 +48,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.text      "comment"
     t.integer   "user_id", default: 0, null: false
     t.boolean   "dhcp"
+    t.integer   "_id",   default: 0, null: false
   end
 
   add_index "infos", ["ip_id", "date"], name: "ip_id", unique: true, using: :btree
@@ -48,6 +57,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.string  "ip",           limit: 15, default: "", null: false
     t.integer "last_arp_id"
     t.integer "last_info_id"
+    t.integer "last_os_id"
     t.string  "conn_proto",   limit: 5
     t.boolean "notify"
     t.integer "network_id"

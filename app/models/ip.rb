@@ -1,12 +1,14 @@
 class Ip < ActiveRecord::Base
   has_many :arps
   has_many :infos
+  has_many :oss
 
   has_one  :fact
 
   belongs_to :network
   belongs_to :arp,  :foreign_key => :last_arp_id
   belongs_to :info, :foreign_key => :last_info_id
+  belongs_to :os,   :foreign_key => :last_os_id
 
   IP_REGEXP = /\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/
 
@@ -19,6 +21,10 @@ class Ip < ActiveRecord::Base
 
   def last_info
     self.infos.order('date desc').first
+  end
+
+  def last_os
+    self.oss.order('date desc').first
   end
 
   def last_port
@@ -35,8 +41,9 @@ class Ip < ActiveRecord::Base
     last and self.update_attribute(:last_info_id, last.id)
   end
 
-  def last_arp
-    self.arps.order('date desc').first
+  def update_last_os
+    last = self.last_os
+    last and self.update_attribute(:last_os_id, last.id)
   end
 
   def last_seen
@@ -49,4 +56,7 @@ class Ip < ActiveRecord::Base
     ip
   end
 
+  def to_s
+    self.ip
+  end
 end
