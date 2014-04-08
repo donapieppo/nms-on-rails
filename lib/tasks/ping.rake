@@ -3,7 +3,7 @@
 namespace :NmsOnRails do
   desc "Notify requested pingable pc"
   task :ping => :environment do
-    Ip.where(:notify => true).includes(:info).all.each do |ip|
+    Ip.where(:notify => true).includes(:info).each do |ip|
       clean_ip = ip.ip
       clean_ip =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ or raise "wrong ip format #{ip.inspect}"
       `ping -q -c 1 #{clean_ip}`

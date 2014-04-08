@@ -1,7 +1,6 @@
+# record the last seen association of mac address and ip
 class Arp < ActiveRecord::Base
   belongs_to    :ip
-
-  # attr_accessible :mac, :date
 
   def to_s
     "#{self.ip.ip} #{self.date}"

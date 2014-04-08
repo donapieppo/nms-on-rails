@@ -1,23 +1,23 @@
 class IpsController < ApplicationController
-  # attr_accessible :ip
   respond_to :json
   respond_to :rdp, :ssh, :html, :only => :connect 
 
   def index
-    if params[:network_id]
-      network = Network.find(params[:network_id])
-      @ips = network.ips.order(:id).includes(:arp, :info, :fact)
-    elsif params[:search_string]
+    if params[:search_string]
       like_str = "%#{params[:search_string]}%"
       if params[:search_string] =~ /^[0-9\.]+$/
-        @ips = Ip.where('ip LIKE ?', like_str).order(:id).includes(:arp, :info)
+        @ips = Ip.where('ip LIKE ?', like_str).order(:id)
       elsif params[:search_string] =~ /\w{1,2}:\w{1,2}:\w{1,2}/
-        @ips = Ip.joins(:arps).where('arps.mac LIKE ?', like_str).order('ips.id').includes(:arp, :info)
+        @ips = Ip.joins(:arps).where('arps.mac LIKE ?', like_str).order('ips.id')
       else
-        @ips = Ip.joins(:info).where('infos.name LIKE ? OR infos.comment LIKE ?', like_str, like_str).order('ips.id').includes(:arp, :info)
+        @ips = Ip.joins(:info).where('infos.name LIKE ? OR infos.comment LIKE ?', like_str, like_str).order('ips.id')
       end
+    else 
+      network = params[:network_id] ? Network.find(params[:network_id]) : Network.first
+      @ips = network.ips.order(:id)
     end
-    respond_with(@ips, :include => [:info, :arp, :fact => { :only => [:id] }])
+    @ips = @ips.includes(:arp, :info, :fact, :os)
+    respond_with(@ips, :include => [:info, :arp, :os, :fact => { :only => [:id] }])
   end
 
   def show
@@ -33,7 +33,15 @@ class IpsController < ApplicationController
 
   def update
     @ip = Ip.find(params[:id])
-    @ip.update_attribute(:conn_proto, params[:conn_proto])
+    if params[:conn_proto]
+      @ip.update_attribute(:conn_proto, params[:conn_proto])
+    # we overwrite FIXME
+    elsif params[:os]
+      os = @ip.last_os
+      os ||= @ip.oss.new
+      os.name = params[:os]
+      os.save!
+    end
     respond_with(@ip)
   end
 
@@ -71,6 +79,14 @@ class IpsController < ApplicationController
       @network.ips.create!(:ip => "#{base}.#{i}")
     end
     redirect_to root_path
+  end
+
+  # in order to reset it is sufficient to create new arp and info
+  def reset
+    @ip = Ip.find(params[:id])
+    @ip.infos.create!
+    @ip.arps.create!
+    @ip.oss.create!
   end
 
 end

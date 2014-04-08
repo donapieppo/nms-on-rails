@@ -23,7 +23,7 @@ namespace :NmsOnRails do
           fact.memorysize = ($2 == 'GB') ? ($1.to_f * 1024) : $1
           fact.save!
         else
-          puts "Missiong %50s with eth0 %15s" % [a.name, a.values['ipaddress_eth0']]
+          puts "Missiong '%50s' with eth0 '%15s'" % [a.name, a.values['ipaddress_eth0']]
         end
       end
     end
