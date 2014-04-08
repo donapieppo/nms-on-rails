@@ -1,6 +1,6 @@
 class Ip < ActiveRecord::Base
-  has_many :arps
   has_many :infos
+  has_many :arps
   has_many :oss
 
   has_one  :fact

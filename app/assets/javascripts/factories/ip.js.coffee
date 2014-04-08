@@ -1,4 +1,4 @@
-angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', ($resource, nmsInfo, nmsArp) -> 
+angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', 'nmsOs', ($resource, nmsInfo, nmsArp, nmsOs) -> 
 
   # r = $resource(window.BASEURL + '/networks/:network_id/ips/:id.json?search_string=wilder', 
   r = $resource(window.BASEURL + '/ips.json', 
@@ -15,6 +15,11 @@ angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', ($re
     if ! @singleton_arp
       @singleton_arp = new nmsArp(@arp)
     @singleton_arp
+
+  r.prototype.nmsos = ->
+    if ! @singleton_os
+      @singleton_os = new nmsOs(@os)
+    @singleton_os
 
   r.prototype.toggle_protocol = ->
     @conn_proto = switch @conn_proto

@@ -1,4 +1,4 @@
-angular.module('ngNms').directive( 'showIpActions', -> 
+angular.module('ngNms').directive( 'showIpActions', ($compile) -> 
   return {
     restrict: 'E',
     scope: { localip: "=" },
@@ -18,16 +18,24 @@ angular.module('ngNms').directive( 'showIpActions', ->
         if (! scope.localip.notify)
           menu = menu + '<li><a href="#" class="notify"><i class="icon-time"></i> Notify when online</a></li>' 
 
+        # oss
         menu = menu + "<li class='divider'></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'linux')\"><i class='icon-linux'></i> Linux</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'wint')\"><i class='icon-windows'></i> Win7</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'xp')\"><i class='icon-windows'></i> XP</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'macOS')\"><i class='icon-apple'></i> MacOs</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'printer')\"><i class='icon-print'></i> printer</a></li>"
+
         # reset
-        menu = menu + "<li><a href='#' class='ip-reset'><i class='icon-remove'></i> Reset</a></li>"
+        menu = menu + "<li class='divider'></li>"
+        menu = menu + "<li><a ng-click=\"$parent.reset(localip)\"><i class='icon-remove'></i> Reset</a></li>"
 
         menu = menu + "</ul>"
 
-        element.find("ul.dropdown-menu").html(menu)
+        elmnt = $compile( menu )( scope )
+
+        element.find("ul.dropdown-menu").html(elmnt)
       )
   }
-);
-
-
+)
 

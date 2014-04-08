@@ -52,6 +52,7 @@
     <tr>
       <th>ip</th>
       <th>nome</th>
+      <th>os</th>
       <th>descrizione</th>
       <th>days</th>
       <th>dns</th>
@@ -66,8 +67,9 @@
       <td>
         <show_ip_actions localip="ip"></show_ip_menu>
       </td>
-      <td ng-init="nmsinfo = ip.nmsinfo(); nmsarp = ip.nmsarp()">{{ nmsinfo.name }}</td>
-      <td>{{ nmsinfo.comment }}</td>
+      <td ng-init="nmsinfo = ip.nmsinfo(); nmsarp = ip.nmsarp(); nmsos = ip.nmsos()">{{ nmsinfo.name }}</td>
+      <td>{{ nmsos.name }}</td>
+      <td>{{ nmsinfo.comment}}</td>
       <td>{{ nmsarp.last_seen() }} </td>
       <td>{{ nmsinfo.dnsname }} </td>
       <td><a href="{{BASEURL + '/macs/' + nmsarp.mac}}">{{ nmsarp.mac }}</a></td>
