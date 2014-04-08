@@ -16,9 +16,13 @@ class InfosController < ApplicationController
   end
 
   def update
+    logger.info(params.inspect)
     @info = Info.find(params[:id])
-    @info.name    = params[:info][:name] 
-    @info.comment = params[:info][:comment]
+    # do not work anymore FIXME
+    #@info.name    = params[:info][:name] 
+    #@info.comment = params[:info][:comment]
+    @info.name    = params[:name] 
+    @info.comment = params[:comment]
     if @info.save
       render :json => @info
     else
