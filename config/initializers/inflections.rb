@@ -17,5 +17,6 @@
 
 # we choose os plural in oss
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.irregular 'os', 'oss'
+  inflect.plural 'os', 'oss'
+  inflect.singular 'oss', 'os'
 end
