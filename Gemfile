@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.4'
+gem 'rails', '4.1.0.rc2'
 gem 'mysql2'
+
+gem 'thin'
 
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
@@ -17,7 +19,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder', '~> 2.0'
 
 gem 'angularjs-rails', :git => 'git://github.com/hiravgandhi/angularjs-rails.git'
 gem 'twitter-bootstrap-rails'
