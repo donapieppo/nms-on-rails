@@ -28,34 +28,50 @@ namespace :NmsOnRails do
       Regexp.new('Running: Microsoft Windows XP', Regexp::MULTILINE).match(res)
     end
 
-    def set_os(ip, os)
-      puts "#{ip} #{os}"
+    # Device type: print server
+    # Device type: printer
+    # Device type: printer|general purpose|webcam
+    # 
+    def printer?(res)
+      Regexp.new('Device type:\s+.*print', Regexp::MULTILINE).match(res)
+    end
 
-      last_os = ip.last_os
-      puts "last_os = #{last_os.inspect}"
+    def macos?(res)
+      Regexp.new('Running: Apple', Regexp::MULTILINE).match(res)
+    end
 
-      if last_os and last_os.name == os
+    def set_system(ip, system)
+      puts "#{ip} #{system}"
+
+      last_system = ip.last_system
+      puts "last_system = #{last_system.inspect}"
+
+      if last_system and last_system.name == system
         return
       else
-        ip.oss.create!(name: os)
+        ip.systems.create!(name: system)
       end
     end
 
     desc "Os discover"
-    task :os => :environment do
-      Ip.includes(:os).where(:last_os_id => nil).each do |ip|
+    task :system => :environment do
+      Ip.includes(:system).where(:last_system_id => nil).each do |ip|
         res = `#{NMAP_OS_DISCOVER} #{ip.ip}`
 
         HOST_DOWN_MATCH.match(res) and next
 
         if unknown?(res)
-          set_os(ip, '?')
+          set_system(ip, '?')
         elsif linux?(res)
-          set_os(ip, 'linux')
+          set_system(ip, 'linux')
         elsif win7?(res)
-          set_os(ip, 'Win7')
+          set_system(ip, 'Win7')
         elsif xp?(res)
-          set_os(ip, 'Xp')
+          set_system(ip, 'Xp')
+        elsif macos?(res)
+          set_system(ip, 'macos')
+        elsif printer?(res)
+          set_system(ip, 'printer')
         else
           puts res
         end 

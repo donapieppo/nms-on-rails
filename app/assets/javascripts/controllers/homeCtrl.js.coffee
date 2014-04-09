@@ -1,4 +1,4 @@
-@HomeCtrl = ($routeParams, $scope, $location, $http, nmsIp, nmsInfo, nmsArp, nmsFact, nmsOs) ->
+@HomeCtrl = ($routeParams, $scope, $location, $http, nmsIp, nmsInfo, nmsArp, nmsFact, nmsSystem) ->
   console.log("richiesto network #{$routeParams.network_id}")
   $scope.BASEURL = window.BASEURL
 
@@ -28,14 +28,14 @@
   $scope.toggle_protocol = (ip) ->
     ip.toggle_protocol()
 
-  $scope.set_os = (ip, os_string) ->
-    $http.put('ips/' + ip.id + '.json', { os: os_string}).success( (data) ->
-      ip.nmsos().name = os_string
+  $scope.set_system = (ip, system_string) ->
+    $http.put('ips/' + ip.id + '.json', { system: system_string}).success( (data) ->
+      ip.nmssystem().name = system_string
     )
 
   $scope.reset = (ip) ->
     $http.put('ips/' + ip.id + 'reset.json').success( (data) ->
-      ip.nmsos().name = "?"
+      ip.nmssystem().name = "?"
       ip.nmsinfo().name = ""
       ip.nmsinfo().coment = ""
     )

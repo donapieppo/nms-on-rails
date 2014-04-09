@@ -16,8 +16,8 @@ class IpsController < ApplicationController
       network = params[:network_id] ? Network.find(params[:network_id]) : Network.first
       @ips = network.ips.order(:id)
     end
-    @ips = @ips.includes(:arp, :info, :fact, :os)
-    respond_with(@ips, :include => [:info, :arp, :os, :fact => { :only => [:id] }])
+    @ips = @ips.includes(:arp, :info, :fact, :system)
+    respond_with(@ips, :include => [:info, :arp, :system, :fact => { :only => [:id] }])
   end
 
   def show
@@ -36,11 +36,11 @@ class IpsController < ApplicationController
     if params[:conn_proto]
       @ip.update_attribute(:conn_proto, params[:conn_proto])
     # we overwrite FIXME
-    elsif params[:os]
-      os = @ip.last_os
-      os ||= @ip.oss.new
-      os.name = params[:os]
-      os.save!
+    elsif params[:system]
+      system = @ip.last_system
+      system ||= @ip.systems.new
+      system.name = params[:system]
+      system.save!
     end
     respond_with(@ip)
   end
@@ -86,7 +86,7 @@ class IpsController < ApplicationController
     @ip = Ip.find(params[:id])
     @ip.infos.create!
     @ip.arps.create!
-    @ip.oss.create!
+    @ip.systems.create!
   end
 
 end

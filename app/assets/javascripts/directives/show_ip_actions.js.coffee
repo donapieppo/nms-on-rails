@@ -18,13 +18,13 @@ angular.module('ngNms').directive( 'showIpActions', ($compile) ->
         if (! scope.localip.notify)
           menu = menu + '<li><a href="#" class="notify"><i class="icon-time"></i> Notify when online</a></li>' 
 
-        # oss
+        # systems
         menu = menu + "<li class='divider'></li>"
-        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'linux')\"><i class='icon-linux'></i> Linux</a></li>"
-        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'wint')\"><i class='icon-windows'></i> Win7</a></li>"
-        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'xp')\"><i class='icon-windows'></i> XP</a></li>"
-        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'macOS')\"><i class='icon-apple'></i> MacOs</a></li>"
-        menu = menu + "<li><a ng-click=\"$parent.set_os(localip, 'printer')\"><i class='icon-print'></i> printer</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'linux')\"><i class='icon-linux'></i> Linux</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'wint')\"><i class='icon-windows'></i> Win7</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'xp')\"><i class='icon-windows'></i> XP</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'macOS')\"><i class='icon-apple'></i> MacOs</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'printer')\"><i class='icon-print'></i> printer</a></li>"
 
         # reset
         menu = menu + "<li class='divider'></li>"

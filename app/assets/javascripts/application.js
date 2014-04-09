@@ -22,6 +22,6 @@
 //= require ./factories/arp
 //= require ./factories/ip
 //= require ./factories/fact
-//= require ./factories/os
+//= require ./factories/system
 //= require_tree ./directives 
 //= require_tree ./controllers 
