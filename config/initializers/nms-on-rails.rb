@@ -11,6 +11,8 @@ module NmsOnRails
       config.facts_dir = "/var/lib/puppet/yaml/facts"
       # snmpwalk
       config.snmpwalkexe = '/usr/bin/snmpwalk'
+      # nmap
+      config.nmapexe = '/usr/bin/nmap'
     end
   end
 end

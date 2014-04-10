@@ -20,7 +20,7 @@ namespace :dns do
       end
     end
 
-    Ip.includes(:info).all.each do |ip|
+    Ip.includes(:info).each do |ip|
       # if has info we update (even with null)
       if ip.info
         ip.info.update_attribute(:dnsname, dns[ip.ip])
@@ -35,7 +35,7 @@ namespace :dns do
   desc "Read DNS reverse"
   task :update_reverse => :environment do
     res = Resolv.new()
-    Info.find(:all).each do |info|
+    Info.all.each do |info|
       sleep 1
       begin
         thisname = res.getname(info.ip.ip)

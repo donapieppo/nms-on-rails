@@ -58,7 +58,6 @@
       <th>dns</th>
       <th>mac</th>
       <th>dhcp</th>
-      <th>proto</th>
       <th></th>
     </tr>
   </thead>
@@ -74,7 +73,6 @@
       <td>{{ nmsinfo.dnsname }} </td>
       <td><a href="{{BASEURL + '/macs/' + nmsarp.mac}}">{{ nmsarp.mac }}</a></td>
       <td>{{ nmsinfo.dhcp && 'dhcp' }}</td>
-      <td ng-click="toggle_protocol(ip)"><span class="protocol">{{ ip.conn_proto || '?' }}</span></td>
       <td><i class="icon-info" ng-if="ip.fact.id" ng-click="show_facts(ip)"></i></td>
     </tr>
   </tbody>
