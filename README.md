@@ -11,6 +11,7 @@ Provides basic integration to:
 * puppet (https://github.com/puppetlabs/puppet)
 * wakeonlan
 * bind (reads domain with dig domani.net axfr)
+* nmap (tries to discover operating system)
 
 and gives simple web interface to manage informations
 about your network ips and to connect to clients using
@@ -40,14 +41,17 @@ of ips for the new network.
 Double click on the name/description opens a window 
 for editing.
 
+Click on the name opens a submenu for actions.
+
 Click on the 'proto' switches connection protocol
-between ssh/rdp/http
+between ssh/rdp/http.
 
 ## Rake
 
 ```console
  bundle exec rake -T NmsOnRails
 ```
+shows all the possible tasks.
 
 The database can be populated with data from arpwatch and
 puppet. Usually with cron jobs.
@@ -82,17 +86,27 @@ reads domain records with axfr query (the dns server has to answer
 `dig axfr`, for example in bind your rails server should be in 
 `allow-recursion` hosts).
 
-### SNMP
+### Snmp
 
 ```
 bundle exec rake NmsOnRails:snmp:snmpwalk
 ```
 updates mac-address with port on the switch (uses `snmpwalk -On -v 2c -c #{community} #{clean_ip} .1.3.6.1.2.1.1.5.0`)
 
+### Nmap
+
+```
+bundle exec rake NmsOnRails:nmap:system
+```
+
+uses `/usr/bin/sudo /usr/bin/nmap -F --max-os-tries 1 -n -O ` to read operating system from the pcs. 
+The user should have sudo privileges. 
+
 ## Database structure
 
 ### Ips
 
+* ip: address (unique, for rails simplicity the key is id)
 * last_arp_id:  is the association to the last arp address seen with the ip (usually discovered by arpwatch)
 * last_info_id: is the association to the last info (name, dns...). Some fields in infos table are set by user.
 * conn_proto: can be ssh/rdp/http (used to connect to the pc with a click)
@@ -120,6 +134,10 @@ Are the information you give to the ip. You can update or reset when the ip is a
 
 Facts come from pc controlled by puppet (https://github.com/puppetlabs/puppet) and are 
 gathered by facter (https://http://puppetlabs.com/puppet/related-projects/facter/).
+
+### Systems
+
+OS 
 
 ### Ports
 
