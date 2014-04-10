@@ -1,6 +1,6 @@
 namespace :NmsOnRails do
   namespace :nmap do
-    NMAP_OS_DISCOVER='/usr/bin/sudo /usr/bin/nmap -F --max-os-tries 1 -n -O '
+    NMAP_OS_DISCOVER = '/usr/bin/sudo /usr/bin/nmap -F --max-os-tries 1 -n -O '
 
     HOST_DOWN_MATCH = Regexp.new 'Host seems down', Regexp::MULTILINE
     UNKNOWN_MATCH   = [ Regexp.new('Too many fingerprints', Regexp::MULTILINE) ]
@@ -61,13 +61,14 @@ namespace :NmsOnRails do
         HOST_DOWN_MATCH.match(res) and next
 
         if unknown?(res)
-          set_system(ip, '?')
+          puts "NON TROVATO #{ip} con res #{res}"
+          # set_system(ip, '?')
         elsif linux?(res)
           set_system(ip, 'linux')
         elsif win7?(res)
-          set_system(ip, 'Win7')
+          set_system(ip, 'win7')
         elsif xp?(res)
-          set_system(ip, 'Xp')
+          set_system(ip, 'xp')
         elsif macos?(res)
           set_system(ip, 'macos')
         elsif printer?(res)
