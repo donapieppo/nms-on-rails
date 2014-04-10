@@ -132,6 +132,7 @@ last time a ip/mac-address couple has been seen in network.
 | 1407 |     1 | 00:13:21:6b:a9:05 | 2012-03-29 13:32:20 |
 | 1406 |     1 | 00:13:21:6b:ad:99 | 2009-10-07 08:44:57 |
 
+means that at 2012-01-24 the pc with mac address 00:09:3d:14:c5:2f  had the ip addrees 192.168.1.1.
 
 ### Infos
 
