@@ -37,8 +37,7 @@ class IpsController < ApplicationController
       @ip.update_attribute(:conn_proto, params[:conn_proto])
     # we overwrite FIXME
     elsif params[:system]
-      system = @ip.last_system
-      system ||= @ip.systems.new
+      system = @ip.last_system || @ip.systems.new
       system.name = params[:system]
       system.save!
     end
@@ -84,9 +83,10 @@ class IpsController < ApplicationController
   # in order to reset it is sufficient to create new arp and info
   def reset
     @ip = Ip.find(params[:id])
-    @ip.infos.create!
-    @ip.arps.create!
-    @ip.systems.create!
+    logger.info("RESETTING #{@ip.inspect} from #{@ip.info.inspect}")
+    @ip.infos.create!(name: '-') unless @ip.info.name == '-'
+    @ip.update_attribute(:last_arp_id, nil)
+    render json: 'ok'
   end
 
 end
