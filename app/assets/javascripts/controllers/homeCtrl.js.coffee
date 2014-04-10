@@ -34,10 +34,9 @@
     )
 
   $scope.reset = (ip) ->
-    $http.put('ips/' + ip.id + 'reset.json').success( (data) ->
-      ip.nmssystem().name = "?"
-      ip.nmsinfo().name = ""
-      ip.nmsinfo().coment = ""
+    $http.put('ips/' + ip.id + '/reset.json').success( (data) ->
+      ip.nmsinfo().name = "-"
+      ip.nmsinfo().comment = ""
     )
 
   $scope.show_facts = (ip) ->
