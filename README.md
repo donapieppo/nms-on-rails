@@ -143,6 +143,12 @@ Are the information you give to the ip. You can update or reset when the ip is a
 * user_id: TODO
 * dhcp: boolean (FIXME)
 
+| id | ip_id | date                | name         | dnsname              | comment                  | dhcp |
+|----|-------|---------------------|--------------|----------------------|--------------------------|------|
+|  1 |     1 | 2014-04-10 07:26:29 | mypc         | mail.mydomain.it     | Server mail / dns / ldap | NULL |
+|  2 |     2 | 2014-04-10 07:26:29 | mypc2        | www.mydomain.it      | Server WEB               | NULL |
+
+
 ### Facts
 
 Facts come from pc controlled by puppet (https://github.com/puppetlabs/puppet) and are 
