@@ -113,12 +113,25 @@ The user should have sudo privileges.
 * notify: boolean you set when you whant to be notified when the pc in reachable.
 * network_id
 
-Ips has one_to_many relation with the arps, infos and facts tables.
+Ips has **one_to_many** relation with the **arps**, **infos**, **systems** and **facts** tables.
+
+| id | ip             | last_arp_id | last_info_id |  notify | network_id | last_system_id |
+|----|----------------|-------------|--------------|--------|-------------|----------------|
+|  1 | 192.168.1.1  |        4238 |            1 |      0 |          1  |             40 |
+|  2 | 192.168.1.2  |        2633 |            2 |      0 |          1  |             41 |
+|  3 | 192.168.1.3  |        4253 |            3 |      0 |          1  |             83 |
 
 ### Arps
 
 The arps table collects data from arpwatch (date and ip/mac-address association). In this table you find the
 last time a ip/mac-address couple has been seen in network.
+
+| id   | ip_id | mac               | date                |
+|------|-------|-------------------|---------------------|
+| 1405 |     1 | 00:09:3d:14:c5:2f | 2012-01-24 14:29:03 |
+| 1407 |     1 | 00:13:21:6b:a9:05 | 2012-03-29 13:32:20 |
+| 1406 |     1 | 00:13:21:6b:ad:99 | 2009-10-07 08:44:57 |
+
 
 ### Infos
 
