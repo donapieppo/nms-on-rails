@@ -7,7 +7,10 @@
 
   $scope.$watch('search_string', ->
     if ($scope.search_string and $scope.search_string.length > 2)
+      $scope.old_ips ||= $scope.ips
       $scope.ips = nmsIp.query(search_string: $scope.search_string)
+    else if $scope.old_ips
+      $scope.ips = $scope.old_ips 
   )
 
   $scope.edit_ip = (ip) ->

@@ -20,7 +20,8 @@
           <% end %>
         </ul>
         <%= form_tag '', :class => "navbar-search pull-right", :id => 'search' do %>
-          <input type="text" name="search_string" class="search-query" placeholder="Search" ng-model="search_string" />  
+          <input id="search_input" type="text" name="search_string" class="search-query" placeholder="Search" ng-model="search_string" />  
+          <a href="" ng-click="search_string=''; "><i class="icon-remove"></i></a>
         <% end %>
         <ul class="nav pull-right">
           <li><%= link_to 'facts', '/#facts' %></li>
