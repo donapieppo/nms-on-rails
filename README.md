@@ -163,6 +163,16 @@ OS
 
 Information for switch/port and mac address association. 
 
+|-----|-----------|------|-------------------|---------------------|---------------------|
+| id  | switch_id | port | mac               | last                | start               |
+|-----|-----------|------|-------------------|---------------------|---------------------|
+| 706 |         1 |   15 | 0:0:74:90:a9:a6   | 2014-04-11 15:17:06 | 2013-12-18 08:36:47 |
+| 707 |         1 |   10 | 0:c:76:e:f9:28    | 2014-04-10 15:17:07 | 2013-12-18 08:36:47 |
+
+keeps the first and the last time the mac address 0:0:74:90:a9:a6 was on seen on port 15 
+of the first switch.
+
+
 =======
 
 ### Licence
