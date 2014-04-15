@@ -1,5 +1,10 @@
 require 'resolv'
 
+# example.com
+REGEXP_FOR_DOMAIN = Regexp.new '\A(([a-z]|[a-z][a-z0-9\-]*[a-z0-9])\.)*([a-z]|[a-z][a-z0-9\-]*[a-z0-9])\z/'
+# tester.example.com. 39600 IN  A 137.204.134.31
+REGEXP_FOR_HOST   = Regexp.new '\A(.*?)\s+\d+\s+IN\s+A\s+(\d+\.\d+\.\d+\.\d+)'
+
 namespace :NmsOnRails do
 namespace :dns do
   desc "Read DNS direct"
@@ -12,10 +17,10 @@ namespace :dns do
       # FIMXE clear domain name. Important because used in in bash script
       clear_domain = domain.downcase
       clear_domain =~ /\A(([a-z]|[a-z][a-z0-9\-]*[a-z0-9])\.)*([a-z]|[a-z][a-z0-9\-]*[a-z0-9])\z/ or raise "Wrong dns domain name #{domain} in configuration"
-      server =~ /\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/ or raise "Wrong server name ip #{server} in configuration"
+      REGEXP_FOR_DOMAIN.match(server) or raise "Wrong server name ip #{server} in configuration"
       puts "Asking @#{server} #{clear_domain} axfr"
       IO.popen("/usr/bin/dig @#{server} #{clear_domain} axfr").each do |line|
-        line =~ /^(.*?)\s+\d+\s+IN\s+A\s+(\d+\.\d+\.\d+\.\d+)/ or next
+        REGEXP_FOR_HOST.match(line) or next
         dns[$2] = $1 unless $1.blank?
       end
     end
