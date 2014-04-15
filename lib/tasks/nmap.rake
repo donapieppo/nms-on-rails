@@ -1,6 +1,6 @@
 namespace :NmsOnRails do
   namespace :nmap do
-    NMAP_OS_DISCOVER = '/usr/bin/sudo /usr/bin/nmap -F --max-os-tries 1 -n -O -Pn '
+    NMAP_OS_DISCOVER = '/usr/bin/sudo /usr/bin/nmap -F --max-os-tries 1 -n -O '
 
     HOST_DOWN_MATCH = Regexp.new 'Host seems down', Regexp::MULTILINE
     UNKNOWN_MATCH   = [ Regexp.new('Too many fingerprints', Regexp::MULTILINE) ]
