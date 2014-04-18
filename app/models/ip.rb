@@ -10,9 +10,7 @@ class Ip < ActiveRecord::Base
   belongs_to :info,   :foreign_key => :last_info_id
   belongs_to :system, :foreign_key => :last_system_id
 
-  IP_REGEXP = /\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/
-
-  validates :ip, :format => { :with => IP_REGEXP, :message => "wrong ip format" }
+  validates :ip, :format => { :with => NmsOnRails::REGEXP_FOR_IP, :message => "wrong ip format" }
   validates :conn_proto, :inclusion => { :in => %w(ssh rdp http), :message => "%{value} is not a valid protocol", :allow_nil => true }
 
   def last_arp
@@ -52,9 +50,15 @@ class Ip < ActiveRecord::Base
   end
 
   def self.clean!(ip)
-    ip =~ IP_REGEXP or raise "wrong ip format #{ip.inspect}"
+    NmsOnRails::REGEXP_FOR_IP.match(ip) or raise "wrong ip format #{ip.inspect}"
     ip
   end
+
+  def clean_ip
+    NmsOnRails::REGEXP_FOR_IP.match(self.ip) or raise "wrong ip format #{self.ip.inspect}"
+    self.ip
+  end
+
 
   def to_s
     self.ip

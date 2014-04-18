@@ -37,7 +37,7 @@ angular.module('ngNms').factory('nmsIp', ['$resource', 'nmsInfo', 'nmsArp', 'nms
       when "printer" then "html"
       when "win7"    then "rdp"
       when "xp"      then "rdp"
-      else "http"
+      else "html"
     
     window.BASEURL + "/ips/#{@id}/connect.#{proto}"
     #if @conn_proto
