@@ -25,6 +25,7 @@ angular.module('ngNms').directive( 'showIpActions', ($compile) ->
         menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'xp')\"><i class='icon-windows'></i> XP</a></li>"
         menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'macos')\"><i class='icon-apple'></i> MacOs</a></li>"
         menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'printer')\"><i class='icon-print'></i> printer</a></li>"
+        menu = menu + "<li><a ng-click=\"$parent.set_system(localip, 'unset')\"><i class='icon-question'></i> unset</a></li>"
 
         # reset
         menu = menu + "<li class='divider'></li>"

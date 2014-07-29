@@ -38,7 +38,7 @@ class IpsController < ApplicationController
     # we overwrite FIXME
     elsif params[:system]
       system = @ip.last_system || @ip.systems.new
-      system.name = params[:system]
+      system.name = params[:system] == 'unset' ? nil : params[:system]
       system.save!
     end
     respond_with(@ip)
