@@ -27,7 +27,7 @@ class Ip < ActiveRecord::Base
 
   def last_port
     last = self.last_arp
-    last ? Port.includes(:switch).where(:mac => lastarp.mac).order('last desc').first : nil
+    last ? Port.includes(:switch).where(:mac => last).order('last desc').first : nil
   end
 
   def update_last_arp
