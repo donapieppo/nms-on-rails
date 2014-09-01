@@ -12,7 +12,7 @@ angular.module('ngNms').directive( 'showIpActions', ($compile) ->
         menu = '<li><a href="' + scope.localip.conn_link() + '" target="new"><i class="fa fa-eye"></i> Connect</a></li>' 
 
         # wake up
-        if (scope.localip.arp.mac)
+        if (scope.localip.arp)
           menu = menu + '<li><a href="' + scope.localip.wake_link() + '" taget="new"><i class="fa fa-bell-o"></i> Wake up</a></li>' 
         # notify
         if (! scope.localip.notify)
