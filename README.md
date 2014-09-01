@@ -29,8 +29,10 @@ Then you can load the database schema
 bundle exec rake db:schema:load
 ```
 
-edit the file `config/initializers/nms-on-rails.rb`
-and then fire rails.
+copy the example configuration file 
+`doc/nms-on-rails.rb.proto` to 
+`config/initializers/nms-on-rails.rb`, 
+edit it and then fire rails.
 
 When you connect for the first time you are asked 
 for a network (name, description) and then for a range

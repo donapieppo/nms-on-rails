@@ -3,8 +3,8 @@ module NmsOnRails
     config.before_initialize do 
       # Domains with server where you can get dig axfr
       # on your rails server should work `dig axfr domain_name`
-      config.dns_domains = {'dm.unibo.it'    => '137.204.134.1', 
-                            'ciram.unibo.it' => '137.204.132.20'}
+      config.dns_domains = {'example.it'  => '111.112.113.1', 
+                            'exmaple.com' => '111.112.112.2'}
       # Arpwatch
       config.arpwatch_files = ['/var/lib/arpwatch/arp.dat', '/tmp/arp_ciram.dat']
       # Facts
