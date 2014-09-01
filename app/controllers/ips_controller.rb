@@ -39,9 +39,11 @@ class IpsController < ApplicationController
     elsif params[:system]
       system = @ip.last_system || @ip.systems.new
       system.name = params[:system] == 'unset' ? nil : params[:system]
+      system.date = Time.now
       system.save!
     end
-    respond_with(@ip)
+    render json: 'ok'
+    # respond_with(@ip)
   end
 
   def notify
