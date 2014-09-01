@@ -1,0 +1,41 @@
+$navbar-height: 55px;
+$font-size-base: 13px;
+$navbar-inverse-bg: #616265;
+$navbar-inverse-color: #ffffff;
+$navbar-inverse-link-color: #ffffff;
+$navbar-inverse-link-hover-color: lighten(#000, 46.7%);
+$gemmared: #b10500;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+
+body {
+  padding-top: 50px;
+}
+
+table#main {
+  width: 100%;
+}
+
+.ip-reset {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.connect {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.error_label {
+  border: 1px solid red;
+}
+
+input[type=submit] {
+  @extend .btn;
+  @extend .btn-primary;
+}
+
