@@ -12,8 +12,8 @@ namespace :dns do
       # FIMXE clear domain name. Important because used in in bash script
       NmsOnRails::REGEXP_FOR_DOMAIN.match(domain.downcase) or raise "Wrong dns domain name #{domain} in configuration"
       NmsOnRails::REGEXP_FOR_IP.match(server) or raise "Wrong server name ip #{server} in configuration"
-      puts "Asking @#{server} #{clear_domain} axfr"
-      IO.popen("/usr/bin/dig @#{server} #{clear_domain} axfr").each do |line|
+      puts "Asking @#{server} #{domain} axfr"
+      IO.popen("/usr/bin/dig @#{server} #{domain} axfr").each do |line|
         NmsOnRails::REGEXP_FOR_HOST_ENTRY.match(line) or next
         dns[$2] = $1 unless $1.blank?
       end
