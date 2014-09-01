@@ -1,13 +1,9 @@
-$navbar-height: 55px;
+$navbar-height: 50px;
 $font-size-base: 13px;
-$navbar-inverse-bg: #616265;
-$navbar-inverse-color: #ffffff;
-$navbar-inverse-link-color: #ffffff;
-$navbar-inverse-link-hover-color: lighten(#000, 46.7%);
-$gemmared: #b10500;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome-sprockets";
 @import "font-awesome";
 
 body {
