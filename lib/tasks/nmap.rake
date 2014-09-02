@@ -49,7 +49,7 @@ namespace :NmsOnRails do
       if last_system and last_system.name == system
         return
       else
-        ip.systems.create!(name: system)
+        ip.systems.create!(name: system, date: Time.now)
       end
     end
 
@@ -61,9 +61,9 @@ namespace :NmsOnRails do
         HOST_DOWN_MATCH.match(res) and next
 
         if unknown?(res)
-          puts "NON TROVATO #{ip} con res #{res}"
-          # set_system(ip, '?')
-        elsif linux?(res)
+          puts "NMAP has not found #{ip}. Checking from open ports."
+        end
+        if linux?(res)
           set_system(ip, 'linux')
         elsif win7?(res)
           set_system(ip, 'win7')
@@ -74,6 +74,7 @@ namespace :NmsOnRails do
         elsif printer?(res)
           set_system(ip, 'printer')
         else
+          puts "SYSTEM NOT FOUND WITH res"
           puts res
         end 
         sleep 2
