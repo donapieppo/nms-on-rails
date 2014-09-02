@@ -1,3 +1,6 @@
+# rsync -av root@newton.ciram.unibo.it:/var/lib/arpwatch/arp.dat /home/tmp/ciram_arp.dat
+# rsync -av root@dmpuppet:/var/lib/arpwatch/arp.dat /home/tmp
+# i
 module NmsOnRails
   class Application < Rails::Application
     config.before_initialize do 
@@ -6,9 +9,9 @@ module NmsOnRails
       config.dns_domains = {'dm.unibo.it'    => '137.204.134.1', 
                             'ciram.unibo.it' => '137.204.132.20'}
       # Arpwatch
-      config.arpwatch_files = ['/var/lib/arpwatch/arp.dat', '/tmp/arp_ciram.dat']
+      config.arpwatch_files = ['/home/tmp/arp.dat', '/home/tmp/ciram_arp.dat']
       # Facts
-      config.facts_dir = "/var/lib/puppet/yaml/facts"
+      config.facts_dir = "/home/tmp/facts"
       # snmpwalk
       config.snmpwalkexe = '/usr/bin/snmpwalk'
       # nmap
