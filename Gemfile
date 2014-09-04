@@ -23,7 +23,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'angularjs-rails'
 
 gem 'puppet'
-gem 'simple_form'
+gem 'simple_form', git: "git@github.com:plataformatec/simple_form.git", branch: 'master'
 
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass'
