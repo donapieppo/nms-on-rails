@@ -38,6 +38,12 @@ When you connect for the first time you are asked
 for a network (name, description) and then for a range
 of ips for the new network.
 
+## Configuring browser for remote connections
+
+In order to connect to clients with ssh or rdesktop
+you have to associate .ssh and .rdp downloads to
+scripts like `doc/connect_rdp.rb` `doc/connect_ssh.rb`.
+
 ## Editing
 
 Double click on the name/description opens a window 
