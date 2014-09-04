@@ -13,4 +13,9 @@ class Info < ActiveRecord::Base
   def update_ip_last_info
     self.ip.update_last_info
   end
+
+  def to_s
+    self.name + " (#{self.dnsname})"
+  end
+
 end
