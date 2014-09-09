@@ -101,6 +101,8 @@ bundle exec rake NmsOnRails:snmp:snmpwalk
 ```
 updates mac-address with port on the switch (uses `snmpwalk -On -v 2c -c #{community} #{clean_ip} .1.3.6.1.2.1.1.5.0`)
 
+(On debian `apt-get install libsnmp-base libsnmp-mib-compiler-perl snmp-mibs-downloader` to have correct mibs)
+
 ### Nmap
 
 ```
