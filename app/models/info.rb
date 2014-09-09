@@ -15,7 +15,7 @@ class Info < ActiveRecord::Base
   end
 
   def to_s
-    self.name + " (#{self.dnsname})"
+    (self.name || "_undefined_") + " (#{self.dnsname})"
   end
 
 end
