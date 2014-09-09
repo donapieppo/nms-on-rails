@@ -1,3 +1,5 @@
+DEBUG=true
+
 namespace :NmsOnRails do
 namespace :snmp do
   desc "Snmpwalk switches"
@@ -9,8 +11,10 @@ namespace :snmp do
       clean_ip = Ip.clean!(switch.ip)
       
       shell_command = "snmpwalk -On -v 2c -c #{switch.community} #{clean_ip} BRIDGE-MIB::dot1dTpFdbPort"
+      DEBUG and p shell_command
 
       IO.popen(shell_command).readlines.each do |line|
+        # for my hp procurve switches
         # ".1.3.6.1.2.1.17.4.3.1.2.0.0.116.144.162.19 = INTEGER: 50\n"
         line =~ /(\d+?).(\d+?).(\d+?).(\d+?).(\d+?).(\d+?) = INTEGER: (\d+)?/ or raise line
         port_number = $7.to_i
@@ -19,13 +23,14 @@ namespace :snmp do
         
         # must be already in database
         next unless arp = Arp.where(:mac => mac).first
+        (puts "missing #{mac}" and next) unless arp
         # if already in same switch/port
-        port = Port.where(:switch_id => switch.id).where(:port => port_number).where(:mac => mac).first
+        port = switch.ports.where(:port => port_number).where(:mac => mac).first
         
         if port
           port.update_attribute(:last, Time.now) 
         else
-          # puts "create in #{switch.name} port #{port_number}"
+          DEBUG and puts "create in #{switch.name} port #{port_number}"
           Port.create!(:switch_id => switch.id, :port => port_number, :mac => mac, :start => Time.now, :last => Time.now)
         end
       end
