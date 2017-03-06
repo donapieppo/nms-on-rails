@@ -5,12 +5,15 @@ gem 'rails', '~> 5.1.0.beta1'
 gem 'mysql2'
 
 gem 'puma', '~> 3.7'
-gem 'sass-rails', github: "rails/sass-rails"
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker', github: "rails/webpacker"
 gem 'jbuilder', '~> 2.5'
 gem 'puppet'
-gem 'bootstrap-sass', '~> 3.2.0'
+
+gem 'jquery-rails'
+gem 'sass-rails', github: "rails/sass-rails"
+gem 'bootstrap-sass'
+
 gem 'font-awesome-sass'
 gem 'simple_form'
 
