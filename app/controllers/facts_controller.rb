@@ -1,9 +1,11 @@
 class FactsController < ApplicationController
-  respond_to :html
-  respond_to :json, :only => [:show]
+  #respond_to :html
+  #respond_to :json, :only => [:show]
+  respond_to :json
 
   def index
-    @facts = Fact.includes(:ip).all
+    @facts = Fact.includes(:ip => [:info, :arp]).order(:lsbdistrelease, 'ips.ip')
+    respond_with(@facts, :include => { :ip => { :include => [ :info, :arp ]}})
   end
 
   def show

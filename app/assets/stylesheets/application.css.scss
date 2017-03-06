@@ -1,0 +1,43 @@
+$navbar-height: 50px;
+$font-size-base: 13px;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+body {
+  padding-top: 50px;
+}
+
+table#main {
+  width: 100%;
+}
+
+.ip-reset {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.connect {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.error_label {
+  border: 1px solid red;
+}
+
+input[type=submit] {
+  @extend .btn;
+  @extend .btn-primary;
+}
+
+.form-horizontal input[type="submit"] {
+  @extend .col-sm-offset-3;
+  margin-bottom: 10px;
+} 
+
+

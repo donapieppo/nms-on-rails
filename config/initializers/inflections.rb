@@ -14,3 +14,9 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+# we choose os plural in oss
+#ActiveSupport::Inflector.inflections(:en) do |inflect|
+  #inflect.plural 'os', 'oss'
+  #inflect.singular 'oss', 'os'
+#end

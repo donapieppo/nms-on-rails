@@ -1,18 +1,11 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
-
-# Use sqlite3 as the database for Active Record
+gem 'rails', '4.1.5'
 gem 'mysql2'
 
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'thin'
 
-# Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -25,21 +18,24 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder', '~> 2.0'
+
+gem 'angularjs-rails'
+
+gem 'puppet'
+gem 'simple_form', git: "git@github.com:plataformatec/simple_form.git", branch: 'master'
+
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'font-awesome-sass'
+gem 'sass-rails', '~> 4.0.3'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
-gem 'angularjs-rails', :git => 'git://github.com/hiravgandhi/angularjs-rails.git'
-gem 'twitter-bootstrap-rails'
-gem 'puppet'
-gem 'simple_form'
-gem 'less-rails'
-
 # Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+# gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
 # gem 'unicorn'

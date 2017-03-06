@@ -1,40 +1,49 @@
 class IpsController < ApplicationController
-  # attr_accessible :ip
   respond_to :json
   respond_to :rdp, :ssh, :html, :only => :connect 
 
   def index
-    if params[:network_id]
-      network = Network.find(params[:network_id])
-      @ips = network.ips.order(:id).includes(:arp, :info, :fact)
-    elsif params[:search_string]
+    if params[:search_string]
       like_str = "%#{params[:search_string]}%"
       if params[:search_string] =~ /^[0-9\.]+$/
-        @ips = Ip.where('ip LIKE ?', like_str).order(:id).includes(:arp, :info)
+        @ips = Ip.where('ip LIKE ?', like_str).order(:id)
       elsif params[:search_string] =~ /\w{1,2}:\w{1,2}:\w{1,2}/
-        @ips = Ip.joins(:arps).where('arps.mac LIKE ?', like_str).order('ips.id').includes(:arp, :info)
+        @ips = Ip.joins(:arps).where('arps.mac LIKE ?', like_str).order('ips.id')
       else
-        @ips = Ip.joins(:info).where('infos.name LIKE ? OR infos.comment LIKE ?', like_str, like_str).order('ips.id').includes(:arp, :info)
+        @ips = Ip.joins(:info).where('infos.name LIKE ? OR infos.comment LIKE ?', like_str, like_str).order('ips.id')
       end
+    else 
+      network = params[:network_id] ? Network.find(params[:network_id]) : Network.first
+      @ips = network.ips.order(:id)
     end
-    respond_with(@ips, :include => [:info, :arp, :fact => { :only => [:id] }])
+    @ips = @ips.includes(:arp, :info, :fact, :system)
+    respond_with(@ips, :include => [:info, :arp, :system, :fact => { :only => [:id] }])
   end
 
   def show
-    @ip = Ip.includes(:info).find(params[:id])
+    @ip = Ip.includes(:info, :arp).find(params[:id])
     if ! @ip.info 
       @ip.info = @ip.infos.new
       @ip.info.save
       @ip.update_last_info
     end
     # @users_json = User.select([:id, :login]).all.inject(" {") {|t, u| t += "'#{u.id}':'#{u.login}', "} + "}"
-    respond_with(@ip)
+    respond_with(@ip, :include => {:info => {}, :arp => {}, :last_port => {:include => :switch}})
   end
 
   def update
     @ip = Ip.find(params[:id])
-    @ip.update_attribute(:conn_proto, params[:conn_proto])
-    respond_with(@ip)
+    if params[:conn_proto]
+      @ip.update_attribute(:conn_proto, params[:conn_proto])
+    # we overwrite FIXME
+    elsif params[:system]
+      system = @ip.last_system || @ip.systems.new
+      system.name = params[:system] == 'unset' ? nil : params[:system]
+      system.date = Time.now
+      system.save!
+    end
+    render json: 'ok'
+    # respond_with(@ip)
   end
 
   def notify
@@ -71,6 +80,15 @@ class IpsController < ApplicationController
       @network.ips.create!(:ip => "#{base}.#{i}")
     end
     redirect_to root_path
+  end
+
+  # in order to reset it is sufficient to create new arp and info
+  def reset
+    @ip = Ip.find(params[:id])
+    logger.info("RESETTING #{@ip.inspect} from #{@ip.info.inspect}")
+    @ip.infos.create!(name: '-') unless @ip.info.name == '-'
+    @ip.update_attributes(last_arp_id: nil, last_system_id: nil)
+    render json: 'ok'
   end
 
 end

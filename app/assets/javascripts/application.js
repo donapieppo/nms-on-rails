@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
+//= require bootstrap-sprockets
 //= require angular
 //= require angular-resource
 //= require angular-route
@@ -21,5 +21,7 @@
 //= require ./factories/info
 //= require ./factories/arp
 //= require ./factories/ip
+//= require ./factories/fact
+//= require ./factories/system
 //= require_tree ./directives 
 //= require_tree ./controllers 

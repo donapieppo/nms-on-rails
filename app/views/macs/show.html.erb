@@ -1,4 +1,6 @@
-<h2><%= @mac %>  </h2>
+<h1>History of <%= @mac %></h1>
+
+<h2>Ports</h2>
 
 <ul>
 <% @ports.each do |port| %>  
@@ -6,9 +8,12 @@
 <% end %>
 </ul>
 
-<ul>
+<h2>Ip</h2>
+
+<dl>
   <% @arps.each do |arp| %> 
-    <li><%= arp.ip.ip %> <%= l arp.date %>  </li>
+    <dt><%= arp.ip %> <%= l arp.date %> </dt>
+    <dd><%= arp.ip.last_info %></dd>
   <% end %>
-</ul>
+</dl>
 

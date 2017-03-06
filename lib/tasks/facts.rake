@@ -9,7 +9,8 @@ namespace :NmsOnRails do
       ActiveRecord::Base.connection.instance_variable_get(:@connection).query("DELETE FROM facts")
       Dir[NmsOnRails::Application.config.facts_dir + "/*.yaml"].each do |file|
         a = YAML::load_file(file)
-        if ip = Ip.find_by_ip(a.values['ipaddress_eth0'])
+        yaml_ip = a.values['ipaddress_eth0'].blank? ? a.values['ipaddress'] : a.values['ipaddress_eth0']
+        if ip = Ip.where(:ip => yaml_ip).first
           fact = ip.fact || ip.build_fact
           fact.processor      = a.values['processor0']
           fact.processorcount = a.values['processorcount']
@@ -23,7 +24,7 @@ namespace :NmsOnRails do
           fact.memorysize = ($2 == 'GB') ? ($1.to_f * 1024) : $1
           fact.save!
         else
-          puts "Missiong %50s with eth0 %15s" % [a.name, a.values['ipaddress_eth0']]
+          puts "Missing '%40s' with eth0 '%15s'" % [a.name, a.values['ipaddress_eth0']]
         end
       end
     end

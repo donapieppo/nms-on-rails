@@ -1,30 +1,48 @@
 class Ip < ActiveRecord::Base
-  has_many :arps
   has_many :infos
+  has_many :arps
+  has_many :systems
 
   has_one  :fact
 
   belongs_to :network
-  belongs_to :arp,  :foreign_key => :last_arp_id
-  belongs_to :info, :foreign_key => :last_info_id
+  belongs_to :arp,    :foreign_key => :last_arp_id
+  belongs_to :info,   :foreign_key => :last_info_id
+  belongs_to :system, :foreign_key => :last_system_id
 
-  IP_REGEXP = /\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/
-
-  validates :ip, :format => { :with => IP_REGEXP, :message => "wrong ip format" }
+  validates :ip, :format => { :with => NmsOnRails::REGEXP_FOR_IP, :message => "wrong ip format" }
   validates :conn_proto, :inclusion => { :in => %w(ssh rdp http), :message => "%{value} is not a valid protocol", :allow_nil => true }
 
+  def last_arp
+    self.arps.order('date desc').first
+  end
+
+  def last_info
+    self.infos.order('date desc').first
+  end
+
+  def last_system
+    self.systems.order('date desc').first
+  end
+
+  def last_port
+    last = self.last_arp
+    last ? Port.includes(:switch).where(:mac => last).order('last desc').first : nil
+  end
+
   def update_last_arp
-    last = self.arps.order('date desc').first
+    last = self.last_arp
     last and self.update_attribute(:last_arp_id, last.id)
   end
 
   def update_last_info
-    last = self.infos.order('date desc').first
+    last = self.last_info
     last and self.update_attribute(:last_info_id, last.id)
   end
 
-  def last_arp
-    self.arps.order('date desc').first
+  def update_last_system
+    last = self.last_system
+    last and self.update_attribute(:last_system_id, last.id)
   end
 
   def last_seen
@@ -33,8 +51,17 @@ class Ip < ActiveRecord::Base
   end
 
   def self.clean!(ip)
-    ip =~ IP_REGEXP or raise "wrong ip format #{ip.inspect}"
+    NmsOnRails::REGEXP_FOR_IP.match(ip) or raise "wrong ip format #{ip.inspect}"
     ip
   end
 
+  def clean_ip
+    NmsOnRails::REGEXP_FOR_IP.match(self.ip) or raise "wrong ip format #{self.ip.inspect}"
+    self.ip
+  end
+
+
+  def to_s
+    self.ip
+  end
 end

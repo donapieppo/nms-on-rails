@@ -13,37 +13,42 @@
      </dl>
   </div>
 </div>
-<div id="modaleditor" class="modal hide fade">
-  <div class="modal-header">
-    <a class="close" data-dismiss="modal">&times;</a>
-    <h3>Modifica {{ editable_ip.ip }}</h3>
-  </div>
-  <div class="modal-body">
-    <div id="ip-form">
-      <form ng-submit="submit_info(editable_ip, editable_info)">
-        <div class="clearfix">
-          <label>Nome</label>
-          <div class="input">
-            <input type="text" ng-model="editable_info.name" name="name" /><br/>
-          </div>
+<div id="modaleditor" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>Modifica {{ editable_ip.ip }}</h3>
+      </div>
+      <div class="modal-body">
+        <div id="ip-form">
+          <form ng-submit="submit_info(editable_ip, editable_info)">
+            <div class="clearfix">
+              <label>Nome</label>
+              <div class="input">
+                <input type="text" ng-model="editable_info.name" name="name" /><br/>
+              </div>
+            </div>
+            <div class="clearfix">
+              <label>Descrizione</label>
+              <div class="input">
+                <textarea id="info-comment" ng-model="editable_info.comment" name="comment"></textarea>
+              </div>
+            </div>
+            <div class="clearfix">
+              <div class="input">
+                <input type="submit" class="btn primary" value="invia"/>
+              </div>
+            </div>
+          </form>
         </div>
-        <div class="clearfix">
-          <label>Descrizione</label>
-          <div class="input">
-            <textarea id="info-comment" ng-model="editable_info.comment" name="comment"></textarea>
-          </div>
-        </div>
-        <div class="clearfix">
-          <div class="input">
-            <input type="submit" class="btn primary" value="invia"/>
-          </div>
-        </div>
-      </form>
+      </div>
+      <div class="modal-footer">
+        Ultima volta visto attivo {{ editable_ip.nmsarp().last_seen() }} giorni fa. <br/>
+        Dns: "{{ editable_ip.nmsinfo().dnsname }}". <br/>
+        Switch: {{ alldata.last_port.switch.name }}:{{ alldata.last_port.port}}"
+      </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    Ultima volta visto attivo {{ editable_ip.nmsarp().last_seen() }} giorni fa. <br/>
-    Dns: "{{ editable_ip.nmsinfo().dnsname }}".
   </div>
 </div>
 
@@ -51,13 +56,13 @@
   <thead>
     <tr>
       <th>ip</th>
+      <th>sys</th>
       <th>nome</th>
       <th>descrizione</th>
       <th>days</th>
       <th>dns</th>
       <th>mac</th>
       <th>dhcp</th>
-      <th>proto</th>
       <th></th>
     </tr>
   </thead>
@@ -66,14 +71,14 @@
       <td>
         <show_ip_actions localip="ip"></show_ip_menu>
       </td>
-      <td ng-init="nmsinfo = ip.nmsinfo(); nmsarp = ip.nmsarp()">{{ nmsinfo.name }}</td>
-      <td>{{ nmsinfo.comment }}</td>
+      <td><i class="fa fa-{{ nmssystem.icon() }}"></i></td>
+      <td ng-init="nmsinfo = ip.nmsinfo(); nmsarp = ip.nmsarp(); nmssystem = ip.nmssystem()">{{ nmsinfo.name }}</td>
+      <td>{{ nmsinfo.comment}}</td>
       <td>{{ nmsarp.last_seen() }} </td>
       <td>{{ nmsinfo.dnsname }} </td>
       <td><a href="{{BASEURL + '/macs/' + nmsarp.mac}}">{{ nmsarp.mac }}</a></td>
       <td>{{ nmsinfo.dhcp && 'dhcp' }}</td>
-      <td ng-click="toggle_protocol(ip)"><span class="protocol">{{ ip.conn_proto || '?' }}</span></td>
-      <td><i class="icon-info" ng-if="ip.fact.id" ng-click="show_facts(ip)"></i></td>
+      <td><i class="fa fa-info" ng-if="ip.fact.id" ng-click="show_facts(ip)"></i></td>
     </tr>
   </tbody>
 </table>

@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-NmsOnRails::Application.config.secret_key_base = '0910c101788e3939b2c038e0c0caaa60c5a3cfee30be2b1aa8c0e2855e678fe49eec5777782b4c81121081565b4a772b12ac41b1a76a668bd5ac42b906d57e97'
+NmsOnRails::Application.config.secret_key_base = 'bc1bc9b097464d29fb31c5764579f4e8403ecf1849247a42c7de417dd307c752de9c581decb1134346e006237cad8eb81721271da23c448484589f6064297fed'

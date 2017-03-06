@@ -45,12 +45,13 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "infos", ["ip_id", "date"], name: "ip_id", unique: true, using: :btree
 
   create_table "ips", force: true do |t|
-    t.string  "ip",           limit: 15, default: "", null: false
+    t.string  "ip",             limit: 15, default: "", null: false
     t.integer "last_arp_id"
     t.integer "last_info_id"
-    t.string  "conn_proto",   limit: 5
+    t.string  "conn_proto",     limit: 5
     t.boolean "notify"
     t.integer "network_id"
+    t.integer "last_system_id"
   end
 
   add_index "ips", ["ip"], name: "ip", unique: true, using: :btree
@@ -64,7 +65,8 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer  "switch_id"
     t.integer  "port"
     t.string   "mac",       limit: 17
-    t.datetime "date"
+    t.datetime "last"
+    t.datetime "start"
   end
 
   add_index "ports", ["mac"], name: "index_ports_on_mac", using: :btree
@@ -75,6 +77,14 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "name",      limit: 250
     t.string "community", limit: 100
   end
+
+  create_table "systems", force: true do |t|
+    t.integer   "ip_id", null: false
+    t.string    "name"
+    t.timestamp "date",  null: false
+  end
+
+  add_index "systems", ["ip_id"], name: "index_oss_on_ip_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string "login", limit: 15

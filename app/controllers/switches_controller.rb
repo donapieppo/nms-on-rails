@@ -12,9 +12,9 @@ class SwitchesController < ApplicationController
   end
 
   def create
-    @switch = Switch.new(params[:switch])
+    @switch = Switch.new(switch_params)
     if @switch.save
-      redirect_to switches_url
+      redirect_to switches_url, notice: "The switch was successfully created."
     else
       render :action => "new" 
     end
@@ -22,8 +22,8 @@ class SwitchesController < ApplicationController
 
   def update
     @switch = Switch.find(params[:id])
-    if @switch.update_attributes(params[:switch])
-      redirect_to(@switch, :notice => 'Switch was successfully updated.') 
+    if @switch.update_attributes(switch_params)
+      redirect_to @switch, :notice => 'The switch was successfully updated.'
     else
       render :action => "edit" 
     end
@@ -33,5 +33,11 @@ class SwitchesController < ApplicationController
     @switch = Switch.find(params[:id])
     @switch.destroy
     redirect_to switchs_url
+  end
+
+  private
+
+  def switch_params
+    params[:switch].permit(:name, :ip, :community)
   end
 end

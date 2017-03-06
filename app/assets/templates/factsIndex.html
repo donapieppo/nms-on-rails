@@ -1,0 +1,31 @@
+<table class="table-striped table-condensed">
+<thead>
+  <tr>
+    <th>ip</th>
+    <th>name</th>
+    <th>memorysize</th>
+    <th>lsbdistrelease</th>
+    <th>lsbdistid</th>
+    <th>#proc</th>
+    <th>processor</th>
+    <th>kernel</th>
+    <th>days</th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr ng-repeat="f in facts">
+    <td ng-init="ip = f.nmsip(); nmsinfo = ip.nmsinfo(); nmsarp = ip.nmsarp()">{{ ip.ip }}</td>
+    <td>{{ nmsinfo.name }}</td>
+    <td>{{ f.memorysize }}</td>
+    <td>{{ f.lsbdistrelease }}</td>
+    <td>{{ f.lsbdistid }}</td>
+    <td>{{ f.processorcount }}</td>
+    <td><small>{{ f.processor }}</small></td>
+    <td><small>{{ f.kernelrelease }}</small></td>
+    <td>{{ nmsarp.last_seen() }} </td>
+  </tr>
+</tbody>
+</table>
+
+

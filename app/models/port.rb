@@ -1,3 +1,4 @@
+# record the first and last time for mac address on switch/port
 class Port < ActiveRecord::Base
   belongs_to :switch
 
