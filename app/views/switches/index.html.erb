@@ -2,7 +2,7 @@
 
 <ul>
   <% @switches.each do |switch| %>  
-    <li><%= switch.name %>  (<%= switch.ip %>) </li>
+    <li><%= switch.name %> (<%= switch.ip %>) <%= link_to 'edit', edit_switch_path(switch) %>  </li>
   <% end %>
 </ul>
 
