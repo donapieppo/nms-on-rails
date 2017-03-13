@@ -9,6 +9,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'webpacker', github: "rails/webpacker"
 gem 'jbuilder', '~> 2.5'
 gem 'puppet'
+gem 'responders'
 
 gem 'jquery-rails'
 gem 'sass-rails', github: "rails/sass-rails"

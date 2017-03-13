@@ -17,7 +17,7 @@ class IpsController < ApplicationController
       @ips = network.ips.order(:id)
     end
     @ips = @ips.includes(:arp, :info, :fact, :system)
-    respond_with(@ips, :include => [:info, :arp, :system, :fact => { :only => [:id] }])
+    respond_with(@ips.limit(5), :include => [:info, :arp, :system, :fact => { :only => [:id] }])
   end
 
   def show

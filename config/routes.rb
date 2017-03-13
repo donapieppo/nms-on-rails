@@ -19,4 +19,6 @@ Rails.application.routes.draw do
 
   get 'macs/:address' => 'macs#show'
   root :to => 'home#index'
+
+  get 'test', to: "test#index", as: :test
 end
