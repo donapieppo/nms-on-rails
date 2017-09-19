@@ -1,4 +1,4 @@
-class System < ActiveRecord::Base
+class System < ApplicationRecord
   belongs_to :ip
 
   after_create :update_ip_last_system

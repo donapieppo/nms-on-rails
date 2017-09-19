@@ -1,4 +1,4 @@
-class Ip < ActiveRecord::Base
+class Ip < ApplicationRecord
   has_many :infos
   has_many :arps
   has_many :systems

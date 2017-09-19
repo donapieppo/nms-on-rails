@@ -1,6 +1,6 @@
 class IpsController < ApplicationController
-  respond_to :json
-  respond_to :rdp, :ssh, :html, :only => :connect 
+  # respond_to :json
+  # respond_to :rdp, :ssh, :html, only: :connect 
 
   def index
     if params[:search_string]
@@ -17,7 +17,8 @@ class IpsController < ApplicationController
       @ips = network.ips.order(:id)
     end
     @ips = @ips.includes(:arp, :info, :fact, :system)
-    respond_with(@ips, :include => [:info, :arp, :system, :fact => { :only => [:id] }])
+
+   render json: @ips, :include => [:info, :arp, :system, :fact => { :only => [:id] }]
   end
 
   def show
@@ -28,7 +29,7 @@ class IpsController < ApplicationController
       @ip.update_last_info
     end
     # @users_json = User.select([:id, :login]).all.inject(" {") {|t, u| t += "'#{u.id}':'#{u.login}', "} + "}"
-    respond_with(@ip, :include => {:info => {}, :arp => {}, :last_port => {:include => :switch}})
+    render json: @ip, :include => {:info => {}, :arp => {}, :last_port => {:include => :switch}}
   end
 
   def update

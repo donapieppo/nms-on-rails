@@ -1,4 +1,4 @@
-class Switch < ActiveRecord::Base
+class Switch < ApplicationRecord
   has_many :ports
 
   def to_s

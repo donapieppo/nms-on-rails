@@ -1,5 +1,5 @@
 # record the last seen association of mac address and ip
-class Arp < ActiveRecord::Base
+class Arp < ApplicationRecord
   belongs_to    :ip
 
   def to_s

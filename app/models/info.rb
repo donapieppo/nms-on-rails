@@ -1,4 +1,4 @@
-class Info < ActiveRecord::Base
+class Info < ApplicationRecord
   belongs_to :user
   belongs_to :ip
 
