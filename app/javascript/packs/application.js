@@ -1,7 +1,13 @@
 import Vue     from 'vue'
+import BootstrapVue from 'bootstrap-vue'
 import VueResource from 'vue-resource'
 import App     from './app.vue'
 import IpLilst from './iplist.vue'
+
+Vue.use(BootstrapVue);
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 console.log('Hello World from Webpacker')
 console.log('Hello World from Webpacker and Pietro 4c')
