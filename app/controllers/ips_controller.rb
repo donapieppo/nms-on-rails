@@ -16,7 +16,7 @@ class IpsController < ApplicationController
       network = params[:network_id] ? Network.find(params[:network_id]) : Network.first
       @ips = network.ips.order(:id)
     end
-    @ips = @ips.includes(:arp, :info, :fact, :system)
+    @ips = @ips.includes(:arp, :info, :fact, :system).limit(10)
 
    render json: @ips, :include => [:info, :arp, :system, :fact => { :only => [:id] }]
   end

@@ -2,23 +2,21 @@
 <html>
   <head>
     <title>NmsOnRails</title>
-    <%= javascript_pack_tag 'application' %>
-    <%#= stylesheet_pack_tag 'application' %>
+    <%= stylesheet_link_tag "application", media: "all" %>
     <%= csrf_meta_tags %>
   </head>
   <body>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-
-          <%= link_to 'NMS on Rails', root_path, :class => "navbar-brand" %>
+          <%= link_to 'NMS on Rails', root_path, class: "navbar-brand" %>
         </div>
         <ul class="nav navbar-nav">
           <% Network.all.each do |net| %>  
-            <li><%= link_to net, root_path(:anchor => net.id) %></li>
+            <li><%= link_to net, root_path(anchor: net.id) %></li>
           <% end %>
         </ul>
-        <%= form_tag '', :class => "navbar-form pull-right", :id => 'search' do %>
+        <%= form_tag '', class: "navbar-form pull-right", id: 'search' do %>
           <input id="search_input" type="text" name="search_string" class="search-query" placeholder="Search" ng-model="search_string" />  
           <a href="" ng-click="search_string=''; "><i class="icon-remove"></i></a>
         <% end %>
@@ -34,5 +32,7 @@
     <div class="container">
       <%= yield %>
     </div>
+
+    <%= javascript_pack_tag 'application' %>
   </body>
 </html>
