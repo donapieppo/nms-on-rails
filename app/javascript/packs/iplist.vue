@@ -2,11 +2,15 @@
 <div id="iplist">
   <b-modal id="ipeditor" ref="ipeditor" title="Edit me" @ok="handleOk">
     <b-form v-if="editedIp" @submit.stop.prevent="handleSubmit">
-      <b-form-input    type="text" v-model="editedIp.info.name" label="Name"></b-form-input>
-      <b-form-textarea type="text" v-model="editedIp.info.comment" label="Description"></b-form-textarea>
+      <b-form-group label="name">
+        <b-form-input    type="text" v-model="editedIp.info.name" label="Name"></b-form-input>
+      </b-form-group>
+      <b-form-group label="comment" placeholder="Something about eva">
+        <b-form-textarea type="text" v-model="editedIp.info.comment" label="Description"></b-form-textarea>
+      </b-form-group>
     </b-form>
   </b-modal>
-  <table class="table-striped table-condensed">
+  <table class="table table-sm table-striped">
     <thead>
       <tr>
         <th>ip</th>
@@ -21,8 +25,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="ip in ips" :key="ip.id">
-        <td>{{ ip.ip }}</td>
+      <tr v-for="ip in ips" v-bind:key="ip.id">
+        <td><ipactions v-bind:ip="ip"></ipactions></td>
         <td><i v-bind:class="system_icon(ip)"></i></td>
         <td @dblclick="startEdit(ip)">{{ip.info.name}}</td>
         <td @dblclick="startEdit(ip)">{{ ip.info.comment}}</td>
@@ -38,7 +42,15 @@
 </template>
 
 <script>
+import IpActions from './ipactions.vue'
+
+const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+console.log(csrf_token)
+
 export default {
+  components: {
+    IpActions
+  },
   data: function () {
     return {
       editedIp: null, 
@@ -53,9 +65,7 @@ export default {
     fetchIpsList: function() {
       this.$http.get('/nms-on-rails/ips.json').then(response => {
         this.ips = response.body
-      }, response => 
-      {
-      })
+      }, response => {})
     },
     startEdit: function(ip) {
       console.log("show edit modal")
@@ -73,8 +83,12 @@ export default {
     },
     handleSubmit() {
       this.$refs.ipeditor.hide()
-      console.log("SUBMIT")
-    }
+      var info = this.editedIp.info
+
+      this.$http.put('/nms-on-rails/infos/' + info.id, 
+                     { name: info.name, comment: info.comment }, 
+                     { headers: {'X-CSRF-Token': csrf_token} }).then(response => {}, response => {})
+    },
   }
 }
 </script>

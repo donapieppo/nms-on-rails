@@ -1,28 +1,21 @@
-import Vue     from 'vue'
+import Vue          from 'vue'
+import VueResource  from 'vue-resource'
+
+import Popper       from 'popper.js'
 import BootstrapVue from 'bootstrap-vue'
-import VueResource from 'vue-resource'
-import App     from './app.vue'
-import IpLilst from './iplist.vue'
+
+import Menu      from './menu.vue'
+import IpLilst   from './iplist.vue'
+import IpActions from './ipactions.vue'
 
 Vue.use(BootstrapVue);
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-console.log('Hello World from Webpacker')
-console.log('Hello World from Webpacker and Pietro 4c')
+console.log('Hello from NMS on Rails')
 
 Vue.use(VueResource);
-
-Vue.http.interceptors.push({
-  request: function (request) {
-    Vue.http.headers.common['X-CSRF-Token'] = $('[name="csrf-token"]').attr('content');
-    return request;
-  },
-  response: function (response) {
-    return response;
-  }
-});
 
 Vue.prototype.last_seen = function(ip) {
   const one_day = 86400000
@@ -47,6 +40,8 @@ Vue.prototype.system_icon = function(ip) {
   }
 }
 
-const app = new Vue(App).$mount('#app')
-const iplist = new Vue(IpLilst).$mount('#iplist')
+const menu      = new Vue(Menu).$mount('#menu')
+const iplist    = new Vue(IpLilst).$mount('#iplist')
+Vue.component('ipactions', IpActions);
+
 
