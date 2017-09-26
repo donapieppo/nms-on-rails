@@ -6,16 +6,14 @@ import BootstrapVue from 'bootstrap-vue'
 
 import Menu      from './menu.vue'
 import IpLilst   from './iplist.vue'
-import IpActions from './ipactions.vue'
-
-Vue.use(BootstrapVue);
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 console.log('Hello from NMS on Rails')
 
-Vue.use(VueResource);
+Vue.use(BootstrapVue)
+Vue.use(VueResource)
 
 Vue.prototype.last_seen = function(ip) {
   const one_day = 86400000
@@ -42,6 +40,4 @@ Vue.prototype.system_icon = function(ip) {
 
 const menu      = new Vue(Menu).$mount('#menu')
 const iplist    = new Vue(IpLilst).$mount('#iplist')
-Vue.component('ipactions', IpActions);
-
 
