@@ -18,7 +18,7 @@ class IpsController < ApplicationController
     end
     @ips = @ips.includes(:arp, :info, :fact, :system).limit(10)
 
-   render json: @ips, :include => [:info, :arp, :system, :fact => { :only => [:id] }]
+   render json: @ips, include: [:info, :arp, :system, fact: { only: [:id] }]
   end
 
   def show
@@ -78,7 +78,7 @@ class IpsController < ApplicationController
     @network = Network.find(params[:network_id])
     base = "#{params[:n1].to_i}.#{params[:n2].to_i}.#{params[:n3].to_i}"
     (params[:start].to_i ... params[:end].to_i).each do |i|
-      @network.ips.create!(:ip => "#{base}.#{i}")
+      @network.ips.create!(ip: "#{base}.#{i}")
     end
     redirect_to root_path
   end

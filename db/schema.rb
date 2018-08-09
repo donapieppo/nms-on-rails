@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "systems", ["ip_id"], name: "index_oss_on_ip_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string "login", limit: 15
+    t.string "login", limit: 150
     t.text   "gecos"
   end
 

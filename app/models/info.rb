@@ -1,6 +1,6 @@
 class Info < ApplicationRecord
-  belongs_to :user
   belongs_to :ip
+  belongs_to :user, optional: true
 
   # validates :name, :format => { :with => /\A[a-zA-Z]+\z/, :message => "Only letters allowed" }
   before_save  :set_date

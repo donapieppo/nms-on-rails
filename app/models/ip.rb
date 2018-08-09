@@ -6,12 +6,12 @@ class Ip < ApplicationRecord
   has_one  :fact
 
   belongs_to :network
-  belongs_to :arp,    :foreign_key => :last_arp_id
-  belongs_to :info,   :foreign_key => :last_info_id
-  belongs_to :system, :foreign_key => :last_system_id
+  belongs_to :arp,    foreign_key: :last_arp_id, optional: true
+  belongs_to :info,   foreign_key: :last_info_id, optional: true
+  belongs_to :system, foreign_key: :last_system_id, optional: true
 
-  validates :ip, :format => { :with => NmsOnRails::REGEXP_FOR_IP, :message => "wrong ip format" }
-  validates :conn_proto, :inclusion => { :in => %w(ssh rdp http), :message => "%{value} is not a valid protocol", :allow_nil => true }
+  validates :ip, format: { with: NmsOnRails::REGEXP_FOR_IP, message: "wrong ip format" }
+  validates :conn_proto, inclusion: { in: %w(ssh rdp http), message: "%{value} is not a valid protocol", allow_nil: true }
 
   def last_arp
     self.arps.order('date desc').first
@@ -27,7 +27,7 @@ class Ip < ApplicationRecord
 
   def last_port
     last = self.last_arp
-    last ? Port.includes(:switch).where(:mac => last).order('last desc').first : nil
+    last ? Port.includes(:switch).where(mac: last).order('last desc').first : nil
   end
 
   def update_last_arp
@@ -59,7 +59,6 @@ class Ip < ApplicationRecord
     NmsOnRails::REGEXP_FOR_IP.match(self.ip) or raise "wrong ip format #{self.ip.inspect}"
     self.ip
   end
-
 
   def to_s
     self.ip

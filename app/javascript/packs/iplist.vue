@@ -1,42 +1,33 @@
 <template>
-<div id="iplist">
-  <ip-editor :ip="editedIp" :modalShow="modalShow" v-on:handleSubmit="handleSubmit" ></ip-editor>
-  <table class="table table-sm table-striped">
-    <thead>
-      <tr>
-        <th>ip</th>
-        <th>sys</th>
-        <th>nome</th>
-        <th>descrizione</th>
-        <th>days</th>
-        <th>dns</th>
-        <th>mac</th>
-        <th>dhcp</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="ip in ips" v-bind:key="ip.id">
-        <td><ip-actions v-bind:ip="ip"></ip-actions></td>
-        <td><i v-bind:class="system_icon(ip)"></i></td>
-        <td v-bind:class="ip.error_ok" @dblclick="startEdit(ip)">{{ip.info.name}}</td>
-        <td v-bind:class="ip.error_ok" @dblclick="startEdit(ip)">{{ip.info.comment}}</td>
-        <td>{{ last_seen(ip) }}</td>
-        <td>{{ ip.info.dnsname }}</td>
-        <td>{{ ip.arp.mac }}</td>
-        <td>{{ ip.info.dhcp && 'dhcp' }}</td>
-        <td><i class="fa fa-info" ng-if="ip.fact.id" ng-click="show_facts(ip)"></i></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <b-container>
+    <ip-editor :ip="editedIp" :modalShow="modalShow" v-on:handleSubmit="handleSubmit"></ip-editor>
+    <b-row v-for="ip in ips" v-bind:key="ip.id">
+      <b-col cols="3">
+        <ip-actions v-bind:ip="ip"></ip-actions>
+        <span v-html="systemIcon(ip)"></span>
+      </b-col>
+      <b-col cols="6" v-bind:class="ip.result_status_class" @dblclick="startEdit(ip)">
+        {{ip.info.name}} /
+        {{ip.info.comment}} 
+        <span>last_seen(ip)</span>
+      </b-col>
+      <b-col cols="3">
+        {{ ip.info && ip.info.dnsname }}
+        {{ ip.arp && ip.arp.mac }}
+        {{ ip.info && ip.info.dhcp && 'dhcp' }}
+        <i class="fa fa-info" ng-if="ip.fact.id" ng-click="show_facts(ip)"></i>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 import IpActions from './ipactions.vue'
 import IpEditor  from './ipeditor.vue'
 
-const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+console.log('Hello World from IpList');
+
+const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content') 
 
 export default {
   components: {
@@ -54,7 +45,7 @@ export default {
   },
   methods: {
     fetchIpsList: function() {
-      this.$http.get('/nms-on-rails/ips.json').then(response => {
+      this.$http.get('/ips.json').then(response => {
         this.ips = response.body
       }, response => {})
     },
@@ -62,26 +53,29 @@ export default {
       console.log("show edit modal")
       this.modalShow = true
       this.editedIp = ip
-      console.log(ip.info.name)
     }, 
     handleSubmit: function() {
       console.log('iplist: handle submit')
       this.modalShow = false
       var info = this.editedIp.info
 
-      this.$http.put('/nms-on-rails/infos/' + info.id, 
+      this.$http.put('/infos/' + info.id, 
                      { name: info.name, comment: info.comment }, 
                      { headers: {'X-CSRF-Token': csrf_token} })
                 .then(response => {
                   console.log("OK on " + this.editedIp.ip )
-                  this.editedIp.error_ok = 'alert alert-success'
+                  this.editedIp.result_status_class = 'alert alert-success'
                 }, response => {
                   console.log("ERRO on " + this.editedIp.ip )
-                  this.editedIp.error_ok = 'alert alert-danger'
+                  this.editedIp.result_status_class = 'alert alert-danger'
                 })
+    },
+    systemIcon: function(ip) {
+      return('<i class="fab fa-linux"></i>')
     },
   }
 }
+
 </script>
 
 <style scoped>

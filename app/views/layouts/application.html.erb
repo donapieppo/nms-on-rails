@@ -3,14 +3,15 @@
   <head>
     <title>NmsOnRails</title>
     <%= csrf_meta_tags %>
-  </head>
-  <body>
-    <div id='menu' root_path='<%= root_path %>' networks='<%#= Network.all.pluck(:name).to_json.html_safe %>'></div>
-
-    <div class="container">
-      <%= yield %>
-    </div>
 
     <%= javascript_pack_tag 'application' %>
+    <%= stylesheet_pack_tag 'application' %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  </head>
+  <body>
+    <div id='menu' root_path='<%= root_path %>' networks='<%= Network.all.pluck(:name).to_json.html_safe %>'>
+      Menu
+    </div>
+    <%= yield %>
   </body>
 </html>

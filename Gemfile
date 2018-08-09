@@ -10,7 +10,8 @@ gem 'mini_racer'
 
 gem 'puppet'
 gem 'simple_form'
-gem 'font-awesome-sass'
+#gem 'font-awesome-sass'
+#gem "font-awesome-rails"
 #gem 'bootstrap-sass'
 
 # Use CoffeeScript for .coffee assets and views

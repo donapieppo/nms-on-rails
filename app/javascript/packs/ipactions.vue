@@ -13,6 +13,8 @@
 </template>
 
 <script>
+console.log('Hello World from IpActions');
+
 module.exports = {
   props: ['ip'],
   data: function () {

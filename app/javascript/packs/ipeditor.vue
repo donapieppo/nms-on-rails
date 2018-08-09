@@ -1,5 +1,5 @@
 <template>
-  <b-modal :visible="modalShow" id="ipeditor" ref="ipeditor" title="Edit me" @ok="endEdit">
+  <b-modal v-model="modalShow" title="Modifica assegnazione ip" @ok="endEdit">
     <b-form v-if="ip" @submit.stop.prevent="endEdit">
       <b-form-group label="name">
         <b-form-input    type="text" v-model="ip.info.name" label="Name"></b-form-input>
