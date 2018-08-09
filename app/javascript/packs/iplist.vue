@@ -1,15 +1,6 @@
 <template>
 <div id="iplist">
-  <b-modal id="ipeditor" ref="ipeditor" title="Edit me" @ok="handleOk">
-    <b-form v-if="editedIp" @submit.stop.prevent="handleSubmit">
-      <b-form-group label="name">
-        <b-form-input    type="text" v-model="editedIp.info.name" label="Name"></b-form-input>
-      </b-form-group>
-      <b-form-group label="comment" placeholder="Something about eva">
-        <b-form-textarea type="text" v-model="editedIp.info.comment" label="Description"></b-form-textarea>
-      </b-form-group>
-    </b-form>
-  </b-modal>
+  <ip-editor :ip="editedIp" :modalShow="modalShow" v-on:handleSubmit="handleSubmit" ></ip-editor>
   <table class="table table-sm table-striped">
     <thead>
       <tr>
@@ -26,10 +17,10 @@
     </thead>
     <tbody>
       <tr v-for="ip in ips" v-bind:key="ip.id">
-        <td><ipactions v-bind:ip="ip"></ipactions></td>
+        <td><ip-actions v-bind:ip="ip"></ip-actions></td>
         <td><i v-bind:class="system_icon(ip)"></i></td>
-        <td @dblclick="startEdit(ip)">{{ip.info.name}}</td>
-        <td @dblclick="startEdit(ip)">{{ ip.info.comment}}</td>
+        <td v-bind:class="ip.error_ok" @dblclick="startEdit(ip)">{{ip.info.name}}</td>
+        <td v-bind:class="ip.error_ok" @dblclick="startEdit(ip)">{{ip.info.comment}}</td>
         <td>{{ last_seen(ip) }}</td>
         <td>{{ ip.info.dnsname }}</td>
         <td>{{ ip.arp.mac }}</td>
@@ -43,19 +34,19 @@
 
 <script>
 import IpActions from './ipactions.vue'
+import IpEditor  from './ipeditor.vue'
 
 const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-console.log(csrf_token)
 
 export default {
   components: {
-    IpActions
+    IpActions, IpEditor
   },
   data: function () {
     return {
       editedIp: null, 
-      editedValue: "",
-      ips: []
+      ips: [],
+      modalShow: false
     }
   },
   created: function() {
@@ -69,25 +60,25 @@ export default {
     },
     startEdit: function(ip) {
       console.log("show edit modal")
+      this.modalShow = true
       this.editedIp = ip
-      this.editedValue = ip.info.name
-      this.$refs.ipeditor.show()
       console.log(ip.info.name)
     }, 
-    doneEdit: function(ip) {
-      this.editedIp = null
-    },
-    handleOk(e) {
-      e.cancel();
-      this.handleSubmit()
-    },
-    handleSubmit() {
-      this.$refs.ipeditor.hide()
+    handleSubmit: function() {
+      console.log('iplist: handle submit')
+      this.modalShow = false
       var info = this.editedIp.info
 
       this.$http.put('/nms-on-rails/infos/' + info.id, 
                      { name: info.name, comment: info.comment }, 
-                     { headers: {'X-CSRF-Token': csrf_token} }).then(response => {}, response => {})
+                     { headers: {'X-CSRF-Token': csrf_token} })
+                .then(response => {
+                  console.log("OK on " + this.editedIp.ip )
+                  this.editedIp.error_ok = 'alert alert-success'
+                }, response => {
+                  console.log("ERRO on " + this.editedIp.ip )
+                  this.editedIp.error_ok = 'alert alert-danger'
+                })
     },
   }
 }
