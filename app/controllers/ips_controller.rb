@@ -1,6 +1,6 @@
 class IpsController < ApplicationController
-  respond_to :json
-  respond_to :rdp, :ssh, :html, :only => :connect 
+  # respond_to :json
+  # respond_to :rdp, :ssh, :html, :only => :connect 
 
   def index
     if params[:search_string]
@@ -17,7 +17,10 @@ class IpsController < ApplicationController
       @ips = network.ips.order(:id)
     end
     @ips = @ips.includes(:arp, :info, :fact, :system)
-    respond_with(@ips, :include => [:info, :arp, :system, :fact => { :only => [:id] }])
+    respond_to do |format|
+      format.json { render json: client_json(@ips.limit(5)) }
+      # .to_json( include: [:info, :arp, :system, :fact => { :only => [:id] }] ) }
+    end
   end
 
   def show
@@ -28,14 +31,14 @@ class IpsController < ApplicationController
       @ip.update_last_info
     end
     # @users_json = User.select([:id, :login]).all.inject(" {") {|t, u| t += "'#{u.id}':'#{u.login}', "} + "}"
-    respond_with(@ip, :include => {:info => {}, :arp => {}, :last_port => {:include => :switch}})
+    # respond_with(@ip, :include => {:info => {}, :arp => {}, :last_port => {:include => :switch}})
   end
 
   def update
     @ip = Ip.find(params[:id])
     if params[:conn_proto]
       @ip.update_attribute(:conn_proto, params[:conn_proto])
-    # we overwrite FIXME
+      # we overwrite FIXME
     elsif params[:system]
       system = @ip.last_system || @ip.systems.new
       system.name = params[:system] == 'unset' ? nil : params[:system]
@@ -91,4 +94,18 @@ class IpsController < ApplicationController
     render json: 'ok'
   end
 
+  def client_json(ips)
+    ips.map do |ip|
+      {
+        id: ip.id,
+        ip: ip.ip, 
+        name: ip.info.name,
+        comment: ip.info.comment,
+        last_seen: (ip.arp ? ip.arp.date : 0), 
+        dnsname: ip.info.dnsname, 
+        arp: (ip.arp ? ip.arp.mac : '-'),
+        os: (ip.system ? ip.system.name : '-')
+      }
+    end
+  end
 end
