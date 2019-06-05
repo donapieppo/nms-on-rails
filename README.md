@@ -2,7 +2,7 @@ NMS on Rails
 =================
 
 A basic Network Management System built with
-Ruby on Rails, Angularjs (and Bootstrap style)
+Ruby on Rails, React and material-ui
 in early stage.
 
 Provides basic integration to:
