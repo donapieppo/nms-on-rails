@@ -11,7 +11,7 @@ import Icon from '@material-ui/core/Icon';
 import Chip from '@material-ui/core/Chip';
 import Title from './Title';
 
-import ModalIpEdit from './ModalEdit'
+import ModalIpEditor from './ModalIpEditor'
 import { osIcon, lastSeenDays, lastSeenColor, railsUpdate } from './nmsUtils'
 
 const useStyles = makeStyles(theme => ({
@@ -60,7 +60,7 @@ export default function IpList2() {
 
   return (
     <React.Fragment>
-      <ModalIpEdit edited_ip={edited_ip} onSubmit={onSubmit} onCancelEditing={onCancelEditing} />
+      <ModalIpEditor edited_ip={edited_ip} onSubmit={onSubmit} onCancelEditing={onCancelEditing} />
       <Title>Recent Orders</Title>
       <Table size="small">
         <TableHead>
