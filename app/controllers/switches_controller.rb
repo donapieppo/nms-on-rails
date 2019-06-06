@@ -16,16 +16,16 @@ class SwitchesController < ApplicationController
     if @switch.save
       redirect_to switches_url, notice: "The switch was successfully created."
     else
-      render :action => "new" 
+      render action: "new" 
     end
   end
 
   def update
     @switch = Switch.find(params[:id])
     if @switch.update_attributes(switch_params)
-      redirect_to @switch, :notice => 'The switch was successfully updated.'
+      redirect_to switches_url, notice: 'The switch was successfully updated.'
     else
-      render :action => "edit" 
+      render action: "edit" 
     end
   end
 

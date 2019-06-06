@@ -1,6 +1,6 @@
-<%= horizontal_form_for @switch do |switch| %>  
-  <%= switch.input :name %>  
-  <%= switch.input :ip %>  
-  <%= switch.input :community %>  
-  <%= switch.button :submit, :class => 'btn' %>  
+<%= form_for @switch do |switch| %>  
+  <%= switch.text_field :name %>  
+  <%= switch.text_field :ip %>  
+  <%= switch.text_field :community %>  
+  <%= switch.submit %>  
 <% end %>
