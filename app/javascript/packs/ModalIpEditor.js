@@ -18,7 +18,7 @@ const FormCsrfInput = () => {
   )
 }
 
-export default const ModalIpEditor = (props) => {
+export default function ModalIpEditor(props) {
   const [ipName, setIpName] = useState()
   const [ipComment, setIpComment] = useState()
 
