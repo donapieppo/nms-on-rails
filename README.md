@@ -8,7 +8,7 @@ in early stage.
 Provides basic integration to:
 
 * arpwatch (http://ee.lbl.gov/)
-* puppet (https://github.com/puppetlabs/puppet)
+* salt (https://github.com/saltstack/salt)
 * wakeonlan
 * bind (reads domain with dig domani.net axfr) 
 * nmap (tries to discover operating system)
@@ -38,6 +38,8 @@ When you connect for the first time you are asked
 for a network (name, description) and then for a range
 of ips for the new network.
 
+To use tasks please install:
+
 ```console
 apt-get install dnsutils 
 ```
@@ -46,47 +48,38 @@ apt-get install dnsutils
 
 In order to connect to clients with ssh or rdesktop
 you have to associate .ssh and .rdp downloads to
-scripts like `doc/connect_rdp.rb` `doc/connect_ssh.rb`.
+scripts like `doc/connect_rdp.rb` `doc/connect_ssh.rb`
+(see your client browser file associations).
 
 ## Editing
 
 Double click on the name/description opens a window 
 for editing.
 
-Click on the name opens a submenu for actions.
+Click on the icon opens a submenu for choosing 
+system (linux/windows/ios/printer)
 
-Click on the 'proto' switches connection protocol
-between ssh/rdp/http.
+Click on the action icon open a men.
 
 ## Rake
 
 ```console
- bundle exec rake -T NmsOnRails
+ bundle exec rake -T nms_on_rails
 ```
 shows all the possible tasks.
 
 The database can be populated with data from arpwatch and
-puppet. Usually with cron jobs.
+salt. Usually with cron jobs.
 
 ### Arpwatch
 
 ```console
-bundle exec rake NmsOnRails:arpwatch
+bundle exec rake nms_on_rails:arpwatch
 ```
 
 reads arpwatch data (directly from arpwatch files as listed in config/initializers/nms-on-rails.rb) 
 and updates the database. 
 Accordingly the web interface shows how many days ago the ip was used and the last mac address.
-
-### Puppet
-
-```
-bundle exec rake NmsOnRails:facts:load
-```
-
-reads puppet data (facts in puppet language) and updates the database.
-Provides information about the hardware and operating
-system of the computers managed with puppet.
 
 ### Bind
 
@@ -106,6 +99,16 @@ bundle exec rake NmsOnRails:snmp:snmpwalk
 updates mac-address with port on the switch (uses `snmpwalk -On -v 2c -c #{community} #{clean_ip} .1.3.6.1.2.1.1.5.0`)
 
 (On debian `apt-get install libsnmp-base libsnmp-mib-compiler-perl snmp-mibs-downloader` to have correct mibs)
+
+### Salt
+
+```
+bundle exec rake NmsOnRails:facts:load
+```
+
+reads salt data (facts in puppet language) and updates the database.
+Provides information about the hardware and operating
+system of the computers managed with salt.
 
 ### Nmap
 
