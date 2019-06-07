@@ -41,6 +41,14 @@ export default function IpList() {
     return railsUpdate('/nms-on-rails/infos/1', {name: newName, comment: newComment}) 
   }
 
+  const resetSystem = (ip) => {
+    console.log(`Reset ${ip.ip}`)
+    updateIps(ips.map((_ip, i) => ( 
+      ip.id === _ip.id ? { ..._ip, name: '-', comment: '-', last_seen: 0, system: 'undef' } : _ip 
+    )))
+    return railsUpdate(`ips/${ip.id}/reset.json`, {})
+  }
+
   const updateSystem = (ip, s) => {
     console.log("Update system -> " + s)
     updateIps(ips.map((_ip, i) => ( 
@@ -100,7 +108,7 @@ export default function IpList() {
                 <Chip variant="outlined" color={lastSeenColor(ip)} label={lastSeenDays(ip)} />
               </TableCell>
               <TableCell align="right">
-                <IpActions ip={ip} />
+                <IpActions ip={ip} resetSystem={resetSystem} />
               </TableCell>
             </TableRow>
           ))}
