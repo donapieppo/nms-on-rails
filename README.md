@@ -10,7 +10,7 @@ Provides basic integration to:
 * arpwatch (http://ee.lbl.gov/)
 * puppet (https://github.com/puppetlabs/puppet)
 * wakeonlan
-* bind (reads domain with dig domani.net axfr)
+* bind (reads domain with dig domani.net axfr) 
 * nmap (tries to discover operating system)
 
 and gives simple web interface to manage informations
@@ -37,6 +37,10 @@ edit it and then fire rails.
 When you connect for the first time you are asked 
 for a network (name, description) and then for a range
 of ips for the new network.
+
+```console
+apt-get install dnsutils 
+```
 
 ## Configuring browser for remote connections
 
