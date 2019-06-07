@@ -18,7 +18,7 @@ class IpsController < ApplicationController
     end
     @ips = @ips.includes(:arp, :info, :fact, :system)
     respond_to do |format|
-      format.json { render json: client_json(@ips.limit(5)) }
+      format.json { render json: client_json(@ips.limit(15)) }
       # .to_json( include: [:info, :arp, :system, :fact => { :only => [:id] }] ) }
     end
   end
@@ -104,7 +104,7 @@ class IpsController < ApplicationController
         last_seen: (ip.arp ? ip.arp.date : 0), 
         dnsname: ip.info.dnsname, 
         arp: (ip.arp ? ip.arp.mac : '-'),
-        os: (ip.system ? ip.system.name : '-')
+        system: (ip.system ? ip.system.name : 'undef')
       }
     end
   end
