@@ -1,6 +1,6 @@
-<%= simple_form_for @network do |network| %>  
-  <%= network.input :name %>  
-  <%= network.input :description %>  
+<%= form_for @network do |network| %>  
+  <%= network.text_field :name %>  
+  <%= network.text_field :description %>  
   <%= network.submit %>  
 <% end %>
 
