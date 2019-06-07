@@ -44,6 +44,11 @@ export default function IpActions(props) {
     window.open(`ips/${props.ip.id}/wake.wol`)
   }
 
+  const handleReset = () => {
+    setAnchorEl(null);
+    props.resetSystem(props.ip)
+  }
+
   return (
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
@@ -58,6 +63,7 @@ export default function IpActions(props) {
       >
         <MenuItem onClick={handleConnect}><Icon>cast</Icon> Connect</MenuItem>
         <MenuItem onClick={handleWakeUp}><Icon>notification_important</Icon> Wake Up</MenuItem>
+        <MenuItem onClick={handleReset} color="red"><Icon>delete</Icon> Reset</MenuItem>
       </Menu>
     </div>
   );
