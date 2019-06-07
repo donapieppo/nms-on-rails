@@ -1,0 +1,100 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ApplicationCable	app/channels/application_cable/channel.rb	/^module ApplicationCable$/;"	m
+ApplicationCable	app/channels/application_cable/connection.rb	/^module ApplicationCable$/;"	m
+ApplicationController	app/controllers/application_controller.rb	/^class ApplicationController < ActionController::Base$/;"	c
+ApplicationHelper	app/helpers/application_helper.rb	/^module ApplicationHelper$/;"	m
+ApplicationJob	app/jobs/application_job.rb	/^class ApplicationJob < ActiveJob::Base$/;"	c
+ApplicationMailer	app/mailers/application_mailer.rb	/^class ApplicationMailer < ActionMailer::Base$/;"	c
+ApplicationRecord	app/models/application_record.rb	/^class ApplicationRecord < ActiveRecord::Base$/;"	c
+Arp	app/models/arp.rb	/^class Arp < ApplicationRecord$/;"	c
+Channel	app/channels/application_cable/channel.rb	/^  class Channel < ActionCable::Channel::Base$/;"	c	class:ApplicationCable
+Connection	app/channels/application_cable/connection.rb	/^  class Connection < ActionCable::Connection::Base$/;"	c	class:ApplicationCable
+Fact	app/models/fact.rb	/^class Fact < ApplicationRecord$/;"	c
+FactsController	app/controllers/facts_controller.rb	/^class FactsController < ApplicationController$/;"	c
+HomeController	app/controllers/home_controller.rb	/^class HomeController < ApplicationController$/;"	c
+Info	app/models/info.rb	/^class Info < ApplicationRecord$/;"	c
+InfosController	app/controllers/infos_controller.rb	/^class InfosController < ApplicationController$/;"	c
+Ip	app/models/ip.rb	/^class Ip < ApplicationRecord$/;"	c
+IpsController	app/controllers/ips_controller.rb	/^class IpsController < ApplicationController$/;"	c
+MacsController	app/controllers/macs_controller.rb	/^class MacsController < ApplicationController$/;"	c
+Network	app/models/network.rb	/^class Network < ApplicationRecord$/;"	c
+NetworksController	app/controllers/networks_controller.rb	/^class NetworksController < ApplicationController$/;"	c
+Port	app/models/port.rb	/^class Port < ApplicationRecord$/;"	c
+Switch	app/models/switch.rb	/^class Switch < ApplicationRecord$/;"	c
+SwitchesController	app/controllers/switches_controller.rb	/^class SwitchesController < ApplicationController$/;"	c
+System	app/models/system.rb	/^class System < ApplicationRecord$/;"	c
+User	app/models/user.rb	/^class User < ApplicationRecord$/;"	c
+UsersController	app/controllers/users_controller.rb	/^class UsersController < ApplicationController$/;"	c
+children	app/javascript/packs/Title.js	/^Title.propTypes = {$/;"	p	class:Title.propTypes
+clean	app/models/ip.rb	/^  def self.clean!(ip)$/;"	F	class:Ip
+clean_ip	app/models/ip.rb	/^  def clean_ip$/;"	f	class:Ip
+client_json	app/controllers/ips_controller.rb	/^  def client_json(ips)$/;"	f	class:IpsController
+conn	app/controllers/infos_controller.rb	/^  def conn$/;"	f	class:InfosController
+connect	app/controllers/ips_controller.rb	/^  def connect$/;"	f	class:IpsController
+create	app/controllers/infos_controller.rb	/^  def create$/;"	f	class:InfosController
+create	app/controllers/ips_controller.rb	/^  def create$/;"	f	class:IpsController
+create	app/controllers/networks_controller.rb	/^  def create$/;"	f	class:NetworksController
+create	app/controllers/switches_controller.rb	/^  def create$/;"	f	class:SwitchesController
+create	app/controllers/users_controller.rb	/^  def create$/;"	f	class:UsersController
+createData	app/javascript/packs/dashboard/Chart.js	/^function createData(time, amount) {$/;"	f
+destroy	app/controllers/switches_controller.rb	/^  def destroy$/;"	f	class:SwitchesController
+destroy	app/controllers/users_controller.rb	/^  def destroy$/;"	f	class:UsersController
+edit	app/controllers/switches_controller.rb	/^  def edit$/;"	f	class:SwitchesController
+edit	app/controllers/users_controller.rb	/^  def edit$/;"	f	class:UsersController
+handleClick	app/javascript/packs/IpActions.js	/^  function handleClick(event) {$/;"	f
+handleClick	app/javascript/packs/IpSystem.js	/^  function handleClick(event) {$/;"	f
+handleClose	app/javascript/packs/IpActions.js	/^  function handleClose(event) {$/;"	f
+handleClose	app/javascript/packs/IpSystem.js	/^  function handleClose(event) {$/;"	f
+handleConnect	app/javascript/packs/IpActions.js	/^  function handleConnect() {$/;"	f
+handleWakeUp	app/javascript/packs/IpActions.js	/^  function handleWakeUp() {$/;"	f
+hostname	app/models/switch.rb	/^  def hostname$/;"	f	class:Switch
+index	app/controllers/facts_controller.rb	/^  def index$/;"	f	class:FactsController
+index	app/controllers/home_controller.rb	/^  def index$/;"	f	class:HomeController
+index	app/controllers/ips_controller.rb	/^  def index$/;"	f	class:IpsController
+index	app/controllers/networks_controller.rb	/^  def index$/;"	f	class:NetworksController
+index	app/controllers/switches_controller.rb	/^  def index$/;"	f	class:SwitchesController
+index	app/controllers/users_controller.rb	/^  def index$/;"	f	class:UsersController
+ips	app/javascript/packs/OLD/IpList.js	/^    this.state = {$/;"	p	class:state
+last_arp	app/models/ip.rb	/^  def last_arp$/;"	f	class:Ip
+last_info	app/models/ip.rb	/^  def last_info$/;"	f	class:Ip
+last_port	app/models/ip.rb	/^  def last_port$/;"	f	class:Ip
+last_seen	app/models/ip.rb	/^  def last_seen$/;"	f	class:Ip
+last_system	app/models/ip.rb	/^  def last_system$/;"	f	class:Ip
+new	app/controllers/ips_controller.rb	/^  def new$/;"	f	class:IpsController
+new	app/controllers/networks_controller.rb	/^  def new$/;"	f	class:NetworksController
+new	app/controllers/switches_controller.rb	/^  def new$/;"	f	class:SwitchesController
+new	app/controllers/users_controller.rb	/^  def new$/;"	f	class:UsersController
+notify	app/controllers/ips_controller.rb	/^  def notify$/;"	f	class:IpsController
+number_of_ports	app/models/switch.rb	/^  def number_of_ports$/;"	f	class:Switch
+osIcon	app/javascript/packs/IpSystem.js	/^  function osIcon() {$/;"	f
+pippo	app/controllers/home_controller.rb	/^  def pippo$/;"	f	class:HomeController
+read_yaml	app/models/fact.rb	/^  def read_yaml$/;"	f	class:Fact
+reset	app/controllers/ips_controller.rb	/^  def reset$/;"	f	class:IpsController
+setSystem	app/javascript/packs/IpSystem.js	/^  function setSystem(e) {$/;"	f
+set_date	app/models/info.rb	/^  def set_date$/;"	f	class:Info
+show	app/controllers/facts_controller.rb	/^  def show$/;"	f	class:FactsController
+show	app/controllers/ips_controller.rb	/^  def show$/;"	f	class:IpsController
+show	app/controllers/macs_controller.rb	/^  def show$/;"	f	class:MacsController
+show	app/controllers/users_controller.rb	/^  def show$/;"	f	class:UsersController
+switch_params	app/controllers/switches_controller.rb	/^  def switch_params$/;"	f	class:SwitchesController
+to_s	app/models/arp.rb	/^  def to_s$/;"	f	class:Arp
+to_s	app/models/info.rb	/^  def to_s$/;"	f	class:Info
+to_s	app/models/ip.rb	/^  def to_s$/;"	f	class:Ip
+to_s	app/models/network.rb	/^  def to_s$/;"	f	class:Network
+to_s	app/models/port.rb	/^  def to_s$/;"	f	class:Port
+to_s	app/models/switch.rb	/^  def to_s$/;"	f	class:Switch
+update	app/controllers/infos_controller.rb	/^  def update$/;"	f	class:InfosController
+update	app/controllers/ips_controller.rb	/^  def update$/;"	f	class:IpsController
+update	app/controllers/switches_controller.rb	/^  def update$/;"	f	class:SwitchesController
+update	app/controllers/users_controller.rb	/^  def update$/;"	f	class:UsersController
+update_ip_last_info	app/models/info.rb	/^  def update_ip_last_info$/;"	f	class:Info
+update_ip_last_system	app/models/system.rb	/^  def update_ip_last_system$/;"	f	class:System
+update_last_arp	app/models/ip.rb	/^  def update_last_arp$/;"	f	class:Ip
+update_last_info	app/models/ip.rb	/^  def update_last_info$/;"	f	class:Ip
+update_last_system	app/models/ip.rb	/^  def update_last_system$/;"	f	class:Ip
+wake	app/controllers/ips_controller.rb	/^  def wake$/;"	f	class:IpsController
