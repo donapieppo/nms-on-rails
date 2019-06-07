@@ -1,10 +1,6 @@
 const one_day = 86400000
 const today   = new Date()
 
-export const osIcon = (ip) => {
-  return 'print'
-}
-
 export const lastSeenDate = (ip) => {
   return(new Date (ip.last_seen))
 }
@@ -34,6 +30,8 @@ const railsHeaders = () => {
 }
 
 export const railsUpdate = (url, h) => {
+  console.log("Called railsUpdate with:" + url + " and")
+  console.log(h)
   return fetch(url, { 
     headers: railsHeaders(), 
     method: 'PUT', 

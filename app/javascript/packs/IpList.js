@@ -1,18 +1,19 @@
 /* eslint-disable no-script-url */
-import React, { useState, useEffect } from 'react';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Icon from '@material-ui/core/Icon';
-import Chip from '@material-ui/core/Chip';
-import Title from './Title';
+import React, { useState, useEffect } from 'react'
+import Link from '@material-ui/core/Link'
+import { makeStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Icon from '@material-ui/core/Icon'
+import Chip from '@material-ui/core/Chip'
+import IpActions from './IpActions'
+import IpSystem from './IpSystem'
 
 import ModalIpEditor from './ModalIpEditor'
-import { osIcon, lastSeenDays, lastSeenColor, railsUpdate } from './nmsUtils'
+import { lastSeenDays, lastSeenColor, railsUpdate } from './nmsUtils'
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function IpList2() {
+export default function IpList() {
   const [ips, updateIps] = useState([])
   const [edited_ip, setEditedIp] = useState({name: '', comment: ''})
 
@@ -40,6 +41,14 @@ export default function IpList2() {
     return railsUpdate('/nms-on-rails/infos/1', {name: newName, comment: newComment}) 
   }
 
+  const updateSystem = (ip, s) => {
+    console.log("Update system -> " + s)
+    updateIps(ips.map((_ip, i) => ( 
+      ip.id === _ip.id ? { ..._ip, system: s } : _ip 
+    )))
+    return railsUpdate(`ips/${ip.id}.json`, { system: s})
+  }
+
   const startEditingIp = (e, ip) => {  
     console.log("EDITING: ", ip)
     setEditedIp(ip)
@@ -49,8 +58,8 @@ export default function IpList2() {
     console.log(`SUBMITTED ipName=${ipName} ipComment=${ipComment}`)
     setEditedIp({ name: '', comment: '' })
     updateIps(ips.map((_ip, i) => ( 
-        edited_ip.id === _ip.id ? { ..._ip, name: ipName, comment: ipComment } : _ip 
-      )))
+      edited_ip.id === _ip.id ? { ..._ip, name: ipName, comment: ipComment } : _ip 
+    )))
     updateInfo(ipName, ipComment)
   }
 
@@ -61,7 +70,6 @@ export default function IpList2() {
   return (
     <React.Fragment>
       <ModalIpEditor edited_ip={edited_ip} onSubmit={onSubmit} onCancelEditing={onCancelEditing} />
-      <Title>Recent Orders</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -72,15 +80,16 @@ export default function IpList2() {
             <TableCell align="right">DNS</TableCell>
             <TableCell align="right">MAC</TableCell>
             <TableCell align="right">Giorni</TableCell>
+            <TableCell align="right">Azioni</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {ips.map(ip => (
-            <TableRow key={ip.id} onDoubleClick={e => startEditingIp(e, ip)}>
-              <TableCell><Icon>{osIcon(ip)}</Icon></TableCell>
+            <TableRow key={ip.id}>
+              <TableCell><IpSystem ip={ip} updateSystem={updateSystem} /></TableCell>
               <TableCell align="right">{ip.ip}</TableCell>
-              <TableCell>{ip.name}</TableCell>
-              <TableCell>{ip.comment}</TableCell>
+              <TableCell onDoubleClick={e => startEditingIp(e, ip)}>{ip.name.toUpperCase()}</TableCell>
+              <TableCell onDoubleClick={e => startEditingIp(e, ip)}>{ip.comment}</TableCell>
               <TableCell align="right">
                 <small>{ip.dnsname}</small>
               </TableCell>
@@ -89,6 +98,9 @@ export default function IpList2() {
               </TableCell>
               <TableCell align="right">
                 <Chip variant="outlined" color={lastSeenColor(ip)} label={lastSeenDays(ip)} />
+              </TableCell>
+              <TableCell align="right">
+                <IpActions ip={ip} />
               </TableCell>
             </TableRow>
           ))}

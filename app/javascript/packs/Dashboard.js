@@ -20,18 +20,6 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { MenuItems } from './MenuItems';
 import IpList from './IpList';
 
-function MadeWithLove() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI
-      </Link>
-      {' team.'}
-    </Typography>
-  );
-}
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -139,7 +127,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            NmsOnRails
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -184,7 +172,6 @@ export default function Dashboard() {
             </Grid>
           </Grid>
         </Container>
-        <MadeWithLove />
       </main>
     </div>
   );
