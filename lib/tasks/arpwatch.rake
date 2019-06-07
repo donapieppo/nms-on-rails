@@ -2,7 +2,7 @@
 # 00:d8:61:30:5f:f3 137.204.1.1 1557829916    eth0
 namespace :nms_on_rails do
   def read_arpfile(file)
-    debug = 1 
+    debug = true
     File.open(file, "r").each do |line|
       mac_address, ip_address, last_time = line.split
       ip = Ip.find_by_ip(ip_address) or next
@@ -11,12 +11,12 @@ namespace :nms_on_rails do
       arp = ip.arps.where(mac: mac_address).order("date DESC").first
       if arp
         if arp.date.to_i < last_time.to_i
-          debug == 1 and puts "updating \t#{ip.ip}\t#{arp.mac}\t#{last_time}"
+          puts "updating \t#{ip.ip}\t#{arp.mac}\t#{last_time}" if debug
           arp.update_attribute(:date, Time.at(last_time.to_i))
           ip.update_last_arp
         end
       else
-        debug == 1 and puts "adding \t#{ip_address}\t#{mac_address}\t#{last_time}"
+        puts "adding \t#{ip_address}\t#{mac_address}\t#{last_time}" if debug
         arp = ip.arps.create!(mac: mac_address, date: Time.at(last_time.to_i))
         ip.update_last_arp
       end
