@@ -38,7 +38,7 @@ export default function ModalIpEditor(props) {
 
   return (
     <div>
-      <Dialog open={props.edited_ip.name !== ''} aria-labelledby="form-dialog-title">
+      <Dialog open={props.edited_ip.name !== ''} onClose={props.onCancelEditing} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Modifica dati ip {props.edited_ip.ip}</DialogTitle>
         <DialogContent>
           <DialogContentText>
