@@ -1,6 +1,10 @@
 class SwitchesController < ApplicationController
   def index
     @switches = Switch.all
+    respond_to do |format|
+      format.html
+      format.json { render json: client_json(@switches) }
+    end
   end
 
   def new
@@ -39,5 +43,16 @@ class SwitchesController < ApplicationController
 
   def switch_params
     params[:switch].permit(:name, :ip, :community)
+  end
+
+  def client_json(switches)
+    switches.map do |switch|
+      {
+        id: switch.id,
+        ip: switch.ip, 
+        name: switch.name,
+        community: switch.community
+      }
+    end
   end
 end
