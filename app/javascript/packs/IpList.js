@@ -1,6 +1,5 @@
 /* eslint-disable no-script-url */
 import React, { useState, useEffect } from 'react'
-import Link from '@material-ui/core/Link'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -78,6 +77,7 @@ export default function IpList() {
   return (
     <React.Fragment>
       <ModalIpEditor edited_ip={edited_ip} onSubmit={onSubmit} onCancelEditing={onCancelEditing} />
+      <h2>Ips</h2>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -114,11 +114,6 @@ export default function IpList() {
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="javascript:;">
-          See more orders
-        </Link>
-      </div>
     </React.Fragment>
   );
 }
