@@ -36,8 +36,8 @@ export default function IpList() {
     })
   }, [])
 
-  const updateInfo = (newName, newComment) => {
-    return railsUpdate('/nms-on-rails/infos/1', {name: newName, comment: newComment}) 
+  const updateInfo = (edited_ip, newName, newComment) => {
+    return railsUpdate(`infos/${edited_ip.info_id}.json`, {name: newName, comment: newComment}) 
   }
 
   const resetSystem = (ip) => {
@@ -67,7 +67,7 @@ export default function IpList() {
     updateIps(ips.map((_ip, i) => ( 
       edited_ip.id === _ip.id ? { ..._ip, name: ipName, comment: ipComment } : _ip 
     )))
-    updateInfo(ipName, ipComment)
+    updateInfo(edited_ip, ipName, ipComment)
   }
 
   const onCancelEditing = () => {
