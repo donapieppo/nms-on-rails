@@ -98,6 +98,7 @@ class IpsController < ApplicationController
     ips.map do |ip|
       {
         id: ip.id,
+        info_id: ip.info.id, 
         ip: ip.ip, 
         name: ip.info.name,
         comment: ip.info.comment,
