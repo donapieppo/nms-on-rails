@@ -41,7 +41,7 @@ of ips for the new network.
 To use tasks please install:
 
 ```console
-apt-get install dnsutils 
+apt-get install dnsutils snmp-mibs-downloader snmp
 ```
 
 ## Configuring browser for remote connections
