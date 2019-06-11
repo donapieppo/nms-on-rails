@@ -1,9 +1,10 @@
 require 'resolv'
 
-namespace :NmsOnRails do
+namespace :nms_on_rails do
 namespace :dns do
   desc "Read DNS direct"
-  task :update => :environment do
+  task update: :environment do
+    debug = true
     # to be filled with ip as key and name as value
     # TODO CNAMES or multiple domain name for single ip
     dns = Hash.new
@@ -23,16 +24,16 @@ namespace :dns do
       # if has info we update (even with null)
       if ip.info
         ip.info.update_attribute(:dnsname, dns[ip.ip])
-        puts "updated #{ip.ip} with #{dns[ip.ip]}"
+        puts "updated #{ip.ip} with #{dns[ip.ip]}" if debug
       elsif dns[ip.ip]
-        Info.create!(:ip_id => ip.id, :dnsname => dns[ip.ip])
-        puts "created info for #{ip.ip} with #{dns[ip.ip]}"
+        ip.infos.create!(dnsname: dns[ip.ip])
+        puts "created info for #{ip.ip} with #{dns[ip.ip]}" if debug
       end
     end
   end
 
   desc "Read DNS reverse"
-  task :update_reverse => :environment do
+  task update_reverse: :environment do
     res = Resolv.new()
     Info.all.each do |info|
       sleep 1
@@ -42,9 +43,9 @@ namespace :dns do
         next
       end
       (thisname == info.dnsname) and next
-      puts "#{thisname} in place of #{info.dnsname}"
-      info.dnsname = thisname
-      info.save
+      puts "Check #{thisname} in place of #{info.dnsname}"
+      # info.dnsname = thisname
+      # info.save
     end
   end
 end

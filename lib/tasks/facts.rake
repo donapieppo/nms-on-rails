@@ -1,4 +1,4 @@
-require 'puppet'
+# require 'puppet'
 
 namespace :NmsOnRails do
   namespace :facts do
