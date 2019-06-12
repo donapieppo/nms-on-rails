@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(version: 0) do
   create_table "switches", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "ip", limit: 20
     t.string "name", limit: 250
+    t.string "description"
+    t.string "model"
     t.string "community", limit: 100
   end
 
