@@ -167,7 +167,7 @@ export default function Dashboard() {
           </div>
           <Divider />
           <List>
-           <MenuItems handleNetworkIdChange={handleNetworkIdChange} />
+           <MenuItems handleNetworkIdChange={handleNetworkIdChange} network_id={network_id}/>
           </List>
         </Drawer>
         <main className={classes.content} spacing={3}>
