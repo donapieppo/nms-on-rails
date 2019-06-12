@@ -29,7 +29,7 @@ export default function IpActions(props) {
         proto = "ssh"; break;
       case "printer":
         proto = "html"; break;
-      case "win7":
+      case "win":
         proto = "rdp"; break;
       default:
         proto = "html"
