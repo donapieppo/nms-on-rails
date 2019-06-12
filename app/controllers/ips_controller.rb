@@ -5,7 +5,9 @@ class IpsController < ApplicationController
   def index
     if params[:search_string]
       like_str = "%#{params[:search_string]}%"
-      if params[:search_string] =~ /^[0-9\.]+$/
+      if params[:search_string] =~ /^[0-9]{2}$/
+        @ips = Ip.where('ip LIKE ?', "%.#{params[:search_string]}").order(:id)
+      elsif params[:search_string] =~ /^[0-9\.]+$/
         @ips = Ip.where('ip LIKE ?', like_str).order(:id)
       elsif params[:search_string] =~ /\w{1,2}:\w{1,2}:\w{1,2}/
         @ips = Ip.joins(:arps).where('arps.mac LIKE ?', like_str).order('ips.id')
@@ -97,12 +99,12 @@ class IpsController < ApplicationController
     ips.map do |ip|
       {
         id: ip.id,
-        info_id: ip.info.id, 
+        info_id: (ip.info ? ip.info.id : nil), 
         ip: ip.ip, 
-        name: ip.info.name,
-        comment: ip.info.comment,
+        name: (ip.info ? ip.info.name : nil),
+        comment: (ip.info ? ip.info.comment : nil),
         last_seen: (ip.arp ? ip.arp.date : 0), 
-        dnsname: ip.info.dnsname, 
+        dnsname: (ip.info ? ip.info.dnsname : nil), 
         arp: (ip.arp ? ip.arp.mac : '-'),
         system: (ip.system ? ip.system.name : 'undef')
       }
