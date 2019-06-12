@@ -171,7 +171,7 @@ export default function Dashboard() {
           </List>
         </Drawer>
         <main className={classes.content} spacing={3}>
-          <Container maxWidth="lg" className={classes.container}>
+          <Container maxWidth="xl" className={classes.container}>
             <Paper className={classes.paper}>
               <IpList search_string={search_string} network_id={network_id}  />
             </Paper>
