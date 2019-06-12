@@ -162,8 +162,7 @@ export default function Dashboard() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                  <Route exact path="/nms-on-rails/" component={IpList} />
-                  <Route path="/nms-on-rails/switches" component={SwitchList} />
+                  <IpList />
                 </Paper>
               </Grid>
               <Grid item xs={12} md={8} lg={9}>
@@ -183,3 +182,6 @@ export default function Dashboard() {
     </div>
   );
 }
+
+
+
