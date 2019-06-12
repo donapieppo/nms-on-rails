@@ -1,6 +1,11 @@
 <%= form_for @switch do |switch| %>  
+  <%= switch.label "Name" %>  
   <%= switch.text_field :name %>  
+  <%= switch.label "Ip" %>  
   <%= switch.text_field :ip %>  
+  <%= switch.label "Community" %>  
   <%= switch.text_field :community %>  
+  <%= switch.label "Model name" %>  
+  <%= switch.text_field :model %>  
   <%= switch.submit %>  
 <% end %>
