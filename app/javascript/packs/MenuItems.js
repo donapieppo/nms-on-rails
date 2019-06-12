@@ -27,13 +27,13 @@ export default function MenuItems(props) {
       <ListItemIcon>
         <DeviceHub />
       </ListItemIcon>
-      <a href="/nms-on-rails/networks">Networks</a>
+      <a href="networks">Networks</a>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <DeviceHub />
       </ListItemIcon>
-      <a href="/nms-on-rails/switches">Switches</a>
+      <a href="switches">Switches</a>
     </ListItem>
   </div>
   )
