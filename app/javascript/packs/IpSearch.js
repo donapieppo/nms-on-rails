@@ -49,7 +49,9 @@ export default function IpSearch(props) {
   const handleInputChange = (e) => {
     var search_string = e.target.value
     console.log(search_string)
-    if (search_string.length > 1) {
+    if (search_string.length == 0) {
+      props.handleSearchStringChange('')
+    } else if (search_string.length > 1) {
       props.handleSearchStringChange(search_string)
     }
   }
