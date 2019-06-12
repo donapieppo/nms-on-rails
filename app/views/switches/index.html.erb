@@ -2,8 +2,12 @@
 
 <ul>
   <% @switches.each do |switch| %>  
-    <li><%= switch.name %> (<%= switch.ip %>) <%= link_to 'edit', edit_switch_path(switch) %>  </li>
+    <li>
+      <%= switch.name %> (<%= switch.ip %>) 
+      <%= link_to 'edit', edit_switch_path(switch) %> -
+      <%= link_to 'delete', switch_path(switch), method: :delete, data: {confirm: 'Are you sure?'}  %>  
+    </li>
   <% end %>
 </ul>
 
-<%= link_to "new switch", new_switch_path, :class => 'btn' %>  
+<%= link_to "new switch", new_switch_path %> - <%= link_to 'home', root_path %>  
