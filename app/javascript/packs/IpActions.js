@@ -52,7 +52,7 @@ export default function IpActions(props) {
   return (
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        <Icon>settings</Icon>
+        <Icon size="small">settings</Icon>
       </Button>
       <Menu
         id={`actions_${props.ip.id}`}

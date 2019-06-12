@@ -32,8 +32,8 @@ export default function IpSystem(props) {
 
   return (
     <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        <img src={systemImage()}/>
+      <Button size="small" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        <img src={systemImage()} width="28" />
       </Button>
       <Menu
         id={`actions_${props.ip.id}`}

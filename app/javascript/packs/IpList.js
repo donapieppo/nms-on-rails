@@ -106,7 +106,7 @@ export default function IpList(props) {
                 <small>{ip.arp ? ip.arp : '-'}</small>
               </TableCell>
               <TableCell align="right">
-                <Chip variant="outlined" color={lastSeenColor(ip)} label={lastSeenDays(ip)} />
+                <Chip size="small" variant="outlined" color={lastSeenColor(ip)} label={lastSeenDays(ip)} />
               </TableCell>
               <TableCell align="right">
                 <IpActions ip={ip} resetSystem={resetSystem} />
