@@ -20,21 +20,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function IpList() {
+export default function IpList(props) {
   const [ips, updateIps] = useState([])
   const [edited_ip, setEditedIp] = useState({name: '', comment: ''})
 
   const classes = useStyles()
 
   useEffect(() => {
-    fetch('ips.json').then(res => {
+    fetch(`ips.json?search_string=${props.search_string}`).then(res => {
       console.log("fetching 'ips.json'")
       return (res.json());
     }).then(res => {
       console.log('primo ip scaricato: ', res[0])
       updateIps(res)
     })
-  }, [])
+  }, [props.search_string])
 
   const updateInfo = (edited_ip, newName, newComment) => {
     return railsUpdate(`infos/${edited_ip.info_id}.json`, {name: newName, comment: newComment}) 

@@ -10,7 +10,6 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -20,6 +19,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { MenuItems } from './MenuItems';
 import IpList from './IpList';
 import SwitchList from './SwitchList';
+import IpSearch from './IpSearch';
 
 const drawerWidth = 240;
 
@@ -104,7 +104,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
+
   const [open, setOpen] = React.useState(true);
+  const [search_string, setSearchString] = React.useState('');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -113,6 +115,12 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleSearchStringChange = (s) => {
+    console.log("handleSearchStringChange in Dashboard")
+    console.log(s)
+    setSearchString(s)
+  }
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -134,11 +142,7 @@ export default function Dashboard() {
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
               NmsOnRails
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <IpSearch handleSearchStringChange={handleSearchStringChange} />
           </Toolbar>
         </AppBar>
         <Drawer
@@ -162,7 +166,7 @@ export default function Dashboard() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                  <IpList />
+                  <IpList search_string={search_string} network_id="1"  />
                 </Paper>
               </Grid>
               <Grid item xs={12} md={8} lg={9}>
