@@ -38,10 +38,9 @@ class IpsController < ApplicationController
     @ip = Ip.find(params[:id])
     if params[:conn_proto]
       @ip.update_attribute(:conn_proto, params[:conn_proto])
-      # we overwrite FIXME
     elsif params[:system]
       system = @ip.last_system || @ip.systems.new
-      system.name = params[:system] == 'unset' ? nil : params[:system]
+      system.name = (params[:system] == 'unset') ? nil : params[:system]
       system.date = Time.now
       system.save!
     end
