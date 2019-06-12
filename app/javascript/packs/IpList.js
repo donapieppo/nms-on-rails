@@ -97,7 +97,7 @@ export default function IpList(props) {
             <TableRow key={ip.id}>
               <TableCell><IpSystem ip={ip} updateSystem={updateSystem} /></TableCell>
               <TableCell align="right">{ip.ip}</TableCell>
-              <TableCell onDoubleClick={e => startEditingIp(e, ip)}>{ip.name ? ip.name.toUpperCase() : '-'}</TableCell>
+              <TableCell onDoubleClick={e => startEditingIp(e, ip)} style={{fontWeight: 500}}>{ip.name}</TableCell>
               <TableCell onDoubleClick={e => startEditingIp(e, ip)}>{ip.comment}</TableCell>
               <TableCell align="right">
                 <small>{ip.dnsname}</small>
