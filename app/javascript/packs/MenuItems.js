@@ -21,7 +21,13 @@ export const MenuItems = (
       <ListItemIcon>
         <DeviceHub />
       </ListItemIcon>
-      <Link to="/nms-on-rails/switches">Switches</Link>
+      <a href="/nms-on-rails/networks">Networks</a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <DeviceHub />
+      </ListItemIcon>
+      <a href="/nms-on-rails/switches">Switches</a>
     </ListItem>
   </div>
 );
