@@ -27,6 +27,7 @@ export default function IpList(props) {
   const classes = useStyles()
 
   useEffect(() => {
+    updateIps([])
     fetch(`networks/${props.network_id}/ips.json?search_string=${props.search_string}`).then(res => {
       console.log("fetching 'ips.json'")
       return (res.json());
