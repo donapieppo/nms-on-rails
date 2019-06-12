@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { MenuItems } from './MenuItems';
+import MenuItems from './MenuItems';
 import IpList from './IpList';
 import SwitchList from './SwitchList';
 import IpSearch from './IpSearch';
@@ -106,6 +106,7 @@ export default function Dashboard() {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
+  const [network_id, setNetworkId] = React.useState(1);
   const [search_string, setSearchString] = React.useState('');
 
   const handleDrawerOpen = () => {
@@ -115,6 +116,13 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleNetworkIdChange = (e) => {
+    console.log("handleNetworkIdChange in Dashboard with id:")
+    console.log(e.currentTarget.dataset.network)
+    setNetworkId(e.currentTarget.dataset.network)
+    setSearchString('')
+  }
 
   const handleSearchStringChange = (s) => {
     console.log("handleSearchStringChange in Dashboard")
@@ -158,28 +166,15 @@ export default function Dashboard() {
             </IconButton>
           </div>
           <Divider />
-          <List>{MenuItems}</List>
+          <List>
+           <MenuItems handleNetworkIdChange={handleNetworkIdChange} />
+          </List>
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
+        <main className={classes.content} spacing={3}>
           <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                  <IpList search_string={search_string} network_id="1"  />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper className={fixedHeightPaper}>
-      CIAO
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper className={fixedHeightPaper}>
-      Ciao
-                </Paper>
-              </Grid>
-            </Grid>
+            <Paper className={classes.paper}>
+              <IpList search_string={search_string} network_id={network_id}  />
+            </Paper>
           </Container>
         </main>
       </Router>

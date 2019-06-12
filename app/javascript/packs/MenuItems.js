@@ -9,13 +9,24 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import ListIcon from '@material-ui/icons/List';
 import DeviceHub from '@material-ui/icons/DeviceHub';
 
-export const MenuItems = (
+import Button from '@material-ui/core/Button';
+
+export default function MenuItems(props) {
+  return (
   <div>
     <ListItem button>
       <ListItemIcon>
         <ListIcon />
       </ListItemIcon>
-      <Link to="/nms-on-rails/">Mappa Ip</Link>
+    </ListItem>
+    <ListItem>
+      <Button variant="contained" color="primary" onClick={props.handleNetworkIdChange} data-network='1'>137.204.134.</Button>
+    </ListItem>
+    <ListItem>
+      <Button variant="contained" color="primary" onClick={props.handleNetworkIdChange} data-network='2'>137.204.135.</Button><br/>
+    </ListItem>
+    <ListItem>
+      <Button variant="contained" color="primary" onClick={props.handleNetworkIdChange} data-network='3'>137.204.132.</Button>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
@@ -30,5 +41,6 @@ export const MenuItems = (
       <a href="/nms-on-rails/switches">Switches</a>
     </ListItem>
   </div>
-);
+  )
+}
 
