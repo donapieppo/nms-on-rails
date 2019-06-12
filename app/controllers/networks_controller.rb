@@ -13,7 +13,11 @@ class NetworksController < ApplicationController
       flash[:notice] = 'Network created'
       redirect_to new_network_ip_path(@network)
     else
-      render :action => :new
+      render action: :new
     end
+  end
+
+  def edit
+    @network = Network.find(params[:id])
   end
 end

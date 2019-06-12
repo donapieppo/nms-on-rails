@@ -4,7 +4,8 @@
   <% @networks.each do |network| %>
     <li>
       <%= network.name %> (<%= network.description %>) 
-      <%= link_to 'add ips'.html_safe, new_network_ip_path(network) %>
+      <%= link_to 'edit', edit_network_path(network) %>
+      <%= link_to 'add ips', new_network_ip_path(network) %>
     </li>
   <% end %>
 </ul>

@@ -1,5 +1,7 @@
 <%= form_for @network do |network| %>  
+  <%= network.label :name %>  
   <%= network.text_field :name %>  
+  <%= network.label :description %>  
   <%= network.text_field :description %>  
   <%= network.submit %>  
 <% end %>
