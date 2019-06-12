@@ -1,4 +1,6 @@
 class SwitchesController < ApplicationController
+  before_action :get_switch,  only: [:show, :edit, :update, :destroy]
+
   def index
     @switches = Switch.all
     respond_to do |format|
@@ -12,7 +14,6 @@ class SwitchesController < ApplicationController
   end
 
   def edit
-    @switch = Switch.find(params[:id])
   end
 
   def create
@@ -25,7 +26,6 @@ class SwitchesController < ApplicationController
   end
 
   def update
-    @switch = Switch.find(params[:id])
     if @switch.update_attributes(switch_params)
       redirect_to switches_url, notice: 'The switch was successfully updated.'
     else
@@ -34,15 +34,18 @@ class SwitchesController < ApplicationController
   end
 
   def destroy
-    @switch = Switch.find(params[:id])
     @switch.destroy
-    redirect_to switchs_url
+    redirect_to switches_path
   end
 
   private
 
   def switch_params
     params[:switch].permit(:name, :ip, :community)
+  end
+
+  def get_switch
+    @switch = Switch.find(params[:id])
   end
 
   def client_json(switches)
