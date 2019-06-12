@@ -19,7 +19,7 @@ export default function SwitchList() {
       <div>
         {switches.map(s => (
           <div key={s.id}>
-          {s.ip} - {s.name}
+            {s.name} - {s.ip} - {s.name}
           </div>
         ))}
       </div>
