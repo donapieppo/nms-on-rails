@@ -3,7 +3,7 @@ class IpsController < ApplicationController
   # respond_to :rdp, :ssh, :html, :only => :connect 
 
   def index
-    if params[:search_string]
+    if params[:search_string] and params[:search_string].size > 1
       like_str = "%#{params[:search_string]}%"
       if params[:search_string] =~ /^[0-9]{2}$/
         @ips = Ip.where('ip LIKE ?', "%.#{params[:search_string]}").order(:id)
