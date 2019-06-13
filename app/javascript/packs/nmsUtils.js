@@ -11,7 +11,7 @@ export const lastSeenDays = (ip) => {
 }
 
 export const lastSeenColor = (ip) => {
-  if (lastSeenDays(ip) < 30) {
+  if (lastSeenDays(ip) < 60) {
     return 'primary'
   } else {
     return 'secondary'
