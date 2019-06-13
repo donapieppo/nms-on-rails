@@ -8,38 +8,21 @@ import Icon from '@material-ui/core/Icon';
 
 import { railsUpdate } from './nmsUtils';
 
-export default function IpSystem(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
-
-  function handleClose(event) {
-    setAnchorEl(null);
-  }
+export default function SystemEditor(props) {
 
   function handleSetSystem(event) {
-    setAnchorEl(null);
     const s = event.currentTarget.dataset.system
     console.log(`handleSetSystem for ${props.ip.ip} -> ${s}`)
     props.updateSystem(props.ip, s)
   }
 
-  function systemImage() {
-    return props.ip.system + '.png'
-  }
-
   return (
     <div>
-      <Button size="small" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        <img src={systemImage()} width="28" />
-      </Button>
       <Menu
-        id={`actions_${props.ip.id}`}
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
+        keepMounted={true}
+        anchorEl={props.anchor_el}
+        open={Boolean(props.ip)}
+        onClose={props.handleCloseSystem}
       >
         <MenuItem onClick={handleSetSystem} data-system="linux"><img src='linux.png' alt='linux'/></MenuItem>
         <MenuItem onClick={handleSetSystem} data-system="win"><img src='win.png' alt='win'/></MenuItem>
@@ -49,5 +32,6 @@ export default function IpSystem(props) {
     </div>
   );
 }
+
 
 

@@ -8,23 +8,18 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Icon from '@material-ui/core/Icon'
 import Chip from '@material-ui/core/Chip'
-import IpActions from './IpActions'
-import IpSystem from './IpSystem'
+import Button from '@material-ui/core/Button';
 
+import IpActions from './IpActions'
+import SystemEditor from './SystemEditor'
 import ModalIpEditor from './ModalIpEditor'
 import { lastSeenDays, lastSeenColor, railsUpdate } from './nmsUtils'
-
-const useStyles = makeStyles(theme => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
-  },
-}));
 
 export default function IpList(props) {
   const [ips, updateIps] = useState([])
   const [edited_ip, setEditedIp] = useState({name: '', comment: ''})
-
-  const classes = useStyles()
+  const [edited_system_ip, setEditedSystemIp] = useState()
+  const [anchor_el, setAnchorEl] = useState(document)
 
   useEffect(() => {
     updateIps([])
@@ -49,7 +44,19 @@ export default function IpList(props) {
     return railsUpdate(`ips/${ip.id}/reset.json`, {})
   }
 
+  const startEditingIp = (e, ip) => {  
+    console.log("EDITING: ", ip)
+    setEditedIp(ip)
+  }
+
+  const startEditingSystem = (e, ip) => {  
+    console.log("System EDITING: ", ip)
+    setAnchorEl(e.currentTarget)
+    setEditedSystemIp(ip)
+  }
+
   const updateSystem = (ip, s) => {
+    setEditedSystemIp(null)
     console.log("Update system -> " + s)
     updateIps(ips.map((_ip, i) => ( 
       ip.id === _ip.id ? { ..._ip, system: s } : _ip 
@@ -57,12 +64,11 @@ export default function IpList(props) {
     return railsUpdate(`ips/${ip.id}.json`, { system: s})
   }
 
-  const startEditingIp = (e, ip) => {  
-    console.log("EDITING: ", ip)
-    setEditedIp(ip)
+  const handleCloseSystem = () => {
+    setEditedSystemIp(null)
   }
 
-  const onSubmit = (ipName, ipComment) => {
+  const onEditingSubmit = (ipName, ipComment) => {
     console.log(`SUBMITTED ipName=${ipName} ipComment=${ipComment}`)
     setEditedIp({ name: '', comment: '' })
     updateIps(ips.map((_ip, i) => ( 
@@ -71,13 +77,18 @@ export default function IpList(props) {
     updateInfo(edited_ip, ipName, ipComment)
   }
 
-  const onCancelEditing = () => {
+  const onEditingCancel = () => {
     setEditedIp({ name: '', comment: '' })
+  }
+
+  function systemImage(ip) {
+    return ip.system + '.png'
   }
 
   return (
     <React.Fragment>
-      <ModalIpEditor edited_ip={edited_ip} onSubmit={onSubmit} onCancelEditing={onCancelEditing} />
+      <ModalIpEditor ip={edited_ip} onSubmit={onEditingSubmit} onCancel={onEditingCancel} />
+      <SystemEditor ip={edited_system_ip} anchor_el={anchor_el} updateSystem={updateSystem} handleCloseSystem={handleCloseSystem} />
       <h2>Ips</h2>
       <Table size="small">
         <TableHead>
@@ -95,7 +106,7 @@ export default function IpList(props) {
         <TableBody>
           {ips.map(ip => (
             <TableRow key={ip.id}>
-              <TableCell><IpSystem ip={ip} updateSystem={updateSystem} /></TableCell>
+              <TableCell><img src={systemImage(ip)} width="28" onClick={e => startEditingSystem(e, ip)} /></TableCell>
               <TableCell align="right">{ip.ip}</TableCell>
               <TableCell onDoubleClick={e => startEditingIp(e, ip)} style={{fontWeight: 500}}>{ip.name}</TableCell>
               <TableCell onDoubleClick={e => startEditingIp(e, ip)}>{ip.comment}</TableCell>

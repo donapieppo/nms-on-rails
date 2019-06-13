@@ -31,15 +31,15 @@ export default function ModalIpEditor(props) {
   }
 
   const onSubmit = (e) => {
-    const newName    = ipName || props.edited_ip.name
-    const newComment = ipComment || props.edited_ip.comment
+    const newName    = ipName || props.ip.name
+    const newComment = ipComment || props.ip.comment
     props.onSubmit(newName, newComment)
   }
 
   return (
     <div>
-      <Dialog open={props.edited_ip.name !== ''} onClose={props.onCancelEditing} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Modifica dati ip {props.edited_ip.ip}</DialogTitle>
+      <Dialog open={props.ip.name !== ''} onClose={props.onCancel} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Modifica dati ip {props.ip.ip}</DialogTitle>
         <DialogContent>
           <DialogContentText>
           </DialogContentText>
@@ -48,7 +48,7 @@ export default function ModalIpEditor(props) {
             margin="dense"
             label="Name"
             name="name"
-            defaultValue={props.edited_ip.name}
+            defaultValue={props.ip.name}
             onChange={handleIpNameChange}
             fullWidth
           />
@@ -56,13 +56,13 @@ export default function ModalIpEditor(props) {
             margin="dense"
             label="Comment"
             name="comment"
-            defaultValue={props.edited_ip.comment}
+            defaultValue={props.ip.comment}
             onChange={handleIpCommentChange}
             fullWidth
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onCancelEditing}>Cancel</Button>
+          <Button onClick={props.onCancel}>Cancel</Button>
           <Button onClick={onSubmit} color="primary">Save</Button>
         </DialogActions>
       </Dialog>
