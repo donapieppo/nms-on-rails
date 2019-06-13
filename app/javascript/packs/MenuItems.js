@@ -23,6 +23,9 @@ export default function MenuItems(props) {
     <ListItem>
       <Button variant="contained" color={props.network_id == 3 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='3'>137.204.132.</Button>
     </ListItem>
+    <ListItem>
+      <Button variant="contained" color={props.network_id == 4 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='4'>130.136.160.</Button>
+    </ListItem>
     <ListItem button>
       <ListItemIcon>
         <DeviceHub />
