@@ -8,16 +8,8 @@ import Icon from '@material-ui/core/Icon';
 
 import { railsUpdate } from './nmsUtils';
 
-export default function IpActions(props) {
+export default function ModalActions(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  }
-
-  const handleClose = (event) => {
-    setAnchorEl(null);
-  }
 
   const handleConnect = () => {
     setAnchorEl(null);
@@ -46,19 +38,15 @@ export default function IpActions(props) {
 
   const handleReset = () => {
     setAnchorEl(null);
-    props.resetSystem(props.ip)
+    props.resetAll(props.ip)
   }
 
   return (
     <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        <Icon size="small">settings</Icon>
-      </Button>
       <Menu
-        id={`actions_${props.ip.id}`}
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
+        anchorEl={props.anchor_el}
+        open={Boolean(props.ip)}
+        onClose={props.handleClose}
       >
         <MenuItem onClick={handleConnect}><Icon>cast</Icon> Connect</MenuItem>
         <MenuItem onClick={handleWakeUp}><Icon>notification_important</Icon> Wake Up</MenuItem>

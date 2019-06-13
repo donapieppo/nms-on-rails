@@ -18,6 +18,11 @@ export const lastSeenColor = (ip) => {
   }
 }
 
+export const systemImage = (ip) => {
+  return ip.system + '.png'
+}
+
+
 const csrfToken = () => {
   return document.querySelector("meta[name='csrf-token']").getAttribute("content")
 }

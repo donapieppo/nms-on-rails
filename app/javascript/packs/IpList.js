@@ -10,15 +10,16 @@ import Icon from '@material-ui/core/Icon'
 import Chip from '@material-ui/core/Chip'
 import Button from '@material-ui/core/Button';
 
-import IpActions from './IpActions'
-import SystemEditor from './SystemEditor'
+import ModalActions from './ModalActions'
+import ModalSystemEditor from './ModalSystemEditor'
 import ModalIpEditor from './ModalIpEditor'
-import { lastSeenDays, lastSeenColor, railsUpdate } from './nmsUtils'
+import { lastSeenDays, lastSeenColor, railsUpdate, systemImage } from './nmsUtils'
 
 export default function IpList(props) {
   const [ips, updateIps] = useState([])
   const [edited_ip, setEditedIp] = useState({name: '', comment: ''})
   const [edited_system_ip, setEditedSystemIp] = useState()
+  const [actions_ip, setActionsIp] = useState()
   const [anchor_el, setAnchorEl] = useState(document)
 
   useEffect(() => {
@@ -36,36 +37,10 @@ export default function IpList(props) {
     return railsUpdate(`infos/${edited_ip.info_id}.json`, {name: newName, comment: newComment}) 
   }
 
-  const resetSystem = (ip) => {
-    console.log(`Reset ${ip.ip}`)
-    updateIps(ips.map((_ip, i) => ( 
-      ip.id === _ip.id ? { ..._ip, name: '-', comment: '-', last_seen: 0, system: 'undef' } : _ip 
-    )))
-    return railsUpdate(`ips/${ip.id}/reset.json`, {})
-  }
-
+  // EDITING 
   const startEditingIp = (e, ip) => {  
     console.log("EDITING: ", ip)
     setEditedIp(ip)
-  }
-
-  const startEditingSystem = (e, ip) => {  
-    console.log("System EDITING: ", ip)
-    setAnchorEl(e.currentTarget)
-    setEditedSystemIp(ip)
-  }
-
-  const updateSystem = (ip, s) => {
-    setEditedSystemIp(null)
-    console.log("Update system -> " + s)
-    updateIps(ips.map((_ip, i) => ( 
-      ip.id === _ip.id ? { ..._ip, system: s } : _ip 
-    )))
-    return railsUpdate(`ips/${ip.id}.json`, { system: s})
-  }
-
-  const handleCloseSystem = () => {
-    setEditedSystemIp(null)
   }
 
   const onEditingSubmit = (ipName, ipComment) => {
@@ -81,14 +56,49 @@ export default function IpList(props) {
     setEditedIp({ name: '', comment: '' })
   }
 
-  function systemImage(ip) {
-    return ip.system + '.png'
+  // ACTIONS
+  const openActions = (e, ip) => {
+    console.log("Open Actions for ", ip)
+    setAnchorEl(e.currentTarget)
+    setActionsIp(ip)
+  }
+
+  const resetAll = (ip) => {
+    setActionsIp(null)
+    console.log(`Reset ${ip.ip}`)
+    updateIps(ips.map((_ip, i) => ( 
+      ip.id === _ip.id ? { ..._ip, name: '-', comment: '-', last_seen: 0, system: 'undef' } : _ip 
+    )))
+    return railsUpdate(`ips/${ip.id}/reset.json`, {})
+  }
+
+  // SYSTEM
+  const startEditingSystem = (e, ip) => {  
+    console.log("System EDITING: ", ip)
+    setAnchorEl(e.currentTarget)
+    setEditedSystemIp(ip)
+  }
+
+  const updateSystem = (ip, s) => {
+    setEditedSystemIp(null)
+    console.log("Update system -> " + s)
+    updateIps(ips.map((_ip, i) => ( 
+      ip.id === _ip.id ? { ..._ip, system: s } : _ip 
+    )))
+    return railsUpdate(`ips/${ip.id}.json`, { system: s})
+  }
+
+  // COMMON TO ALL MODAL 
+  const handleModalClose = () => {
+    setActionsIp(null)
+    setEditedSystemIp(null)
   }
 
   return (
     <React.Fragment>
       <ModalIpEditor ip={edited_ip} onSubmit={onEditingSubmit} onCancel={onEditingCancel} />
-      <SystemEditor ip={edited_system_ip} anchor_el={anchor_el} updateSystem={updateSystem} handleCloseSystem={handleCloseSystem} />
+      <ModalSystemEditor ip={edited_system_ip} anchor_el={anchor_el} updateSystem={updateSystem} handleClose={handleModalClose} />
+      <ModalActions ip={actions_ip} anchor_el={anchor_el} resetAll={resetAll} handleClose={handleModalClose} />
       <h2>Ips</h2>
       <Table size="small">
         <TableHead>
@@ -106,7 +116,11 @@ export default function IpList(props) {
         <TableBody>
           {ips.map(ip => (
             <TableRow key={ip.id}>
-              <TableCell><img src={systemImage(ip)} width="28" onClick={e => startEditingSystem(e, ip)} /></TableCell>
+              <TableCell>
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={e => startEditingSystem(e, ip)}>
+                  <img src={systemImage(ip)} width="28"/>
+                </Button>
+              </TableCell>
               <TableCell align="right">{ip.ip}</TableCell>
               <TableCell onDoubleClick={e => startEditingIp(e, ip)} style={{fontWeight: 500}}>{ip.name}</TableCell>
               <TableCell onDoubleClick={e => startEditingIp(e, ip)}>{ip.comment}</TableCell>
@@ -120,7 +134,9 @@ export default function IpList(props) {
                 <Chip size="small" variant="outlined" color={lastSeenColor(ip)} label={lastSeenDays(ip)} />
               </TableCell>
               <TableCell align="right">
-                <IpActions ip={ip} resetSystem={resetSystem} />
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={e => openActions(e, ip)}>
+                  <Icon size="small">settings</Icon>
+                </Button>
               </TableCell>
             </TableRow>
           ))}

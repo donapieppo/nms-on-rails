@@ -4,11 +4,8 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
-import Icon from '@material-ui/core/Icon';
 
-import { railsUpdate } from './nmsUtils';
-
-export default function SystemEditor(props) {
+export default function ModalSystemEditor(props) {
 
   function handleSetSystem(event) {
     const s = event.currentTarget.dataset.system
@@ -22,7 +19,7 @@ export default function SystemEditor(props) {
         keepMounted={true}
         anchorEl={props.anchor_el}
         open={Boolean(props.ip)}
-        onClose={props.handleCloseSystem}
+        onClose={props.handleModalClose}
       >
         <MenuItem onClick={handleSetSystem} data-system="linux"><img src='linux.png' alt='linux'/></MenuItem>
         <MenuItem onClick={handleSetSystem} data-system="win"><img src='win.png' alt='win'/></MenuItem>
