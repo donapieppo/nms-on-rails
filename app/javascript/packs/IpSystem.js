@@ -38,7 +38,6 @@ export default function IpSystem(props) {
       <Menu
         id={`actions_${props.ip.id}`}
         anchorEl={anchorEl}
-        keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
