@@ -16,10 +16,10 @@ export default function ModalSystemEditor(props) {
   return (
     <div>
       <Menu
-        keepMounted={true}
+        keepMounted
         anchorEl={props.anchor_el}
         open={Boolean(props.ip)}
-        onClose={props.handleModalClose}
+        onClose={props.handleClose}
       >
         <MenuItem onClick={handleSetSystem} data-system="linux"><img src='linux.png' alt='linux'/></MenuItem>
         <MenuItem onClick={handleSetSystem} data-system="win"><img src='win.png' alt='win'/></MenuItem>

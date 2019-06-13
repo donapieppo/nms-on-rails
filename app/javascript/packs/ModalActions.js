@@ -9,10 +9,8 @@ import Icon from '@material-ui/core/Icon';
 import { railsUpdate } from './nmsUtils';
 
 export default function ModalActions(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
   const handleConnect = () => {
-    setAnchorEl(null);
+    props.handleClose();
     var proto
     switch (props.ip.system) {
       case "linux":
@@ -31,19 +29,20 @@ export default function ModalActions(props) {
   }
 
   const handleWakeUp = () => {
-    setAnchorEl(null);
+    props.handleClose();
     console.log(`Wake up ${props.ip.ip}`)
     window.open(`ips/${props.ip.id}/wake.wol`)
   }
 
   const handleReset = () => {
-    setAnchorEl(null);
+    props.handleClose();
     props.resetAll(props.ip)
   }
 
   return (
     <div>
       <Menu
+        keepMounted
         anchorEl={props.anchor_el}
         open={Boolean(props.ip)}
         onClose={props.handleClose}

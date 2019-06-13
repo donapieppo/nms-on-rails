@@ -25,7 +25,7 @@ export default function IpList(props) {
   useEffect(() => {
     updateIps([])
     fetch(`networks/${props.network_id}/ips.json?search_string=${props.search_string}`).then(res => {
-      console.log("fetching 'ips.json'")
+      console.log(`fetching networks/${props.network_id}/ips.json?search_string=${props.search_string}`)
       return (res.json());
     }).then(res => {
       console.log('primo ip scaricato: ', res[0])
