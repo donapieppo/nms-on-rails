@@ -1,75 +1,92 @@
-# require 'puppet'
+require 'msgpack'
 
-namespace :NmsOnRails do
+namespace :nms_on_rails do
   namespace :facts do
 
     desc "Load facts from yams"
-    task :load => :environment do
+    task load: :environment do
       # FIXME (now start from clean database)
       ActiveRecord::Base.connection.instance_variable_get(:@connection).query("DELETE FROM facts")
-      Dir[NmsOnRails::Application.config.facts_dir + "/*.yaml"].each do |file|
-        a = YAML::load_file(file)
-        yaml_ip = a.values['ipaddress_eth0'].blank? ? a.values['ipaddress'] : a.values['ipaddress_eth0']
-        if ip = Ip.where(:ip => yaml_ip).first
-          fact = ip.fact || ip.build_fact
-          fact.processor      = a.values['processor0']
-          fact.processorcount = a.values['processorcount']
-          fact.lsbdistrelease = a.values['lsbdistrelease']
-          fact.lsbdistid      = a.values['lsbdistid']
-          fact.kernelrelease  = a.values['kernelrelease']
-          fact.date           = a.values[:_timestamp]
-          # memorysize: 1.97 GB
-          # memorysize: 874.00 MB
-          a.values['memorysize'] =~ /(\d+\.?\d*)\s(\w\w)/ or raise "memorysize=#{a.values['memorysize']}"
-          fact.memorysize = ($2 == 'GB') ? ($1.to_f * 1024) : $1
-          fact.save!
-        else
-          puts "Missing '%40s' with eth0 '%15s'" % [a.name, a.values['ipaddress_eth0']]
+      Dir.glob(NmsOnRails::Application.config.facts_dir + '/*/data.p') do |file|
+        File.open(file) do |io|
+          u = MessagePack::Unpacker.new(io)
+          u.each do |obj|
+            grains = obj['grains']
+            _ip = grains['ipv4'][1]
+            if ip = Ip.where(ip: _ip).first
+              fact = ip.fact || ip.build_fact
+              fact.host           = grains['host']
+              fact.ssd            = grains['SSDs'].to_s
+              fact.productname    = grains['productname']
+              fact.processor      = grains['cpu_model']
+              fact.processorcount = grains['num_cpus']
+              fact.lsbdistrelease = grains['lsb_distrib_release']
+              fact.lsbdistid      = grains['osrelease']
+              fact.kernelrelease  = grains['kernelrelease']
+              fact.date           = grains[:_timestamp]
+              fact.memorysize     = grains['mem_total']
+              fact.save!
+            else
+              puts "Missing '%40s' with eth0 '%15s'" % [grains['host'], grains['ipv4']]
+            end
+          end
         end
       end
     end
   end
 end
 
-#<Puppet::Node::Facts:0x7f932f4aca30 @name="nap.pippo.com", 
-#  @values={"swapfree"=>"1.86 GB", 
-#           "processorcount"=>"2", 
-#           "kernel"=>"Linux", 
-#           "netmask"=>"255.255.255.0", 
-#           "uniqueid"=>"cc89cf86", 
-#           "operatingsystemrelease"=>"5.0.8", 
-#           "fqdn"=>"nap.pippo.com", 
-#           "lsbmajdistrelease"=>"5", 
-#           "clientversion"=>"0.24.5", 
-#           "memorysize"=>"985.95 MB", 
-#           "virtual"=>"physical", 
-#           :_timestamp=>Wed Mar 16 15:38:44 +0100 2011, 
-#           "hardwaremodel"=>"i686", 
-#           "kernelrelease"=>"2.6.26-2-686", 
-#           "domain"=>"dm.pippo.com", 
-#           "netmask_eth0"=>"255.255.255.0", 
-#           "id"=>"root", 
-#           "type"=>"Unknown", 
-#           "hardwareisa"=>"unknown", 
-#           "lsbdistrelease"=>"5.0.8", 
-#           "processor0"=>"Intel(R) Core(TM)2 CPU          6300  @ 1.86GHz",
-#           "memoryfree"=>"490.70 MB",
-#           "interfaces"=>"eth0", 
-#           "lsbdistdescription"=>"Debian GNU/Linux 5.0.8 (lenny)", 
-#           "kernelversion"=>"2.6.26", 
-#           "processor1"=>"Intel(R) Core(TM)2 CPU          6300  @ 1.86GHz", 
-#           "lsbdistcodename"=>"lenny", 
-#           "puppetversion"=>"0.24.5", 
-#           "hostname"=>"nap", 
-#           "ipaddress_eth0"=>"192.204.134.207", 
-#           "macaddress_eth0"=>"00:16:76:d6:78:b0", 
-#           "facterversion"=>"1.5.1", 
-#           "ipaddress"=>"192.204.134.207", 
-#           "macaddress"=>"00:16:76:d6:78:b0", 
-#           "swapsize"=>"1.86 GB", 
-#           "operatingsystem"=>"Debian", 
-#           "rubyversion"=>"1.8.7", 
-#           "lsbdistid"=>"Debian", 
-#           "architecture"=>"i386"
-
-
+# {"grains"=>
+#  { "biosversion"=>"2.11.0", 
+#    "kernel"=>"Linux", 
+#    "domain"=>"dm.unibo.it"
+#     "kernelrelease"=>"4.9.0-9-amd64"
+#     "serialnumber"=>"JXL7CS2"
+#     "ip_interfaces"=>{"lo"=>["127.0.0.1", "::1"], "enp0s31f6"=>["137.204.134.52"]}
+#     "mem_total"=>32071 
+#     "host"=>"str963-fablil"
+#     "SSDs"=>["nvme0n1"]
+#     "id"=>"str963-fablil"
+#     "osrelease"=>"9.9"
+#     "uuid"=>"4c4c4544-0058-4c10-8037-cac04f435332"
+#     "num_cpus"=>8, 
+#     "hwaddr_interfaces"=>{"lo"=>"00:00:00:00:00:00", "enp0s31f6"=>"54:bf:64:7f:f4:5b"}
+#     "ip6_interfaces"=>{"lo"=>["::1"], "enp0s31f6"=>[]}, 
+#     "ip4_interfaces"=>{"lo"=>["127.0.0.1"], "enp0s31f6"=>["137.204.134.52"]}, 
+#     "lsb_distrib_description"=>"Debian GNU/Linux 9.9 (stretch)"
+#     "osfullname"=>"Debian"
+#     "ipv4"=>["127.0.0.1", "137.204.134.52"], 
+#     "dns"=>{"domain"=>"dm.unibo.it"
+#             "sortlist"=>[]
+#             "nameservers"=>["137.204.25.213", "137.204.25.77", "137.204.25.71"], 
+#             "ip4_nameservers"=>["137.204.25.213", "137.204.25.77", "137.204.25.71"], 
+#             "search"=>["dm.unibo.it"], 
+#             "ip6_nameservers"=>[], 
+#             "options"=>[]}, 
+#     "ipv6"=>["::1"]
+#     "localhost"=>"str963-fablil"
+#     "lsb_distrib_id"=>"Debian"
+#     "username"=>"root"
+#     "fqdn_ip4"=>["137.204.134.52"], 
+#     "nodename"=>"str963-fablil"
+#     "lsb_distrib_release"=>"9.9"
+#     "server_id"=>1186780619, 
+#     "osmajorrelease"=>"9"
+#     "os_family"=>"Debian"
+#     "oscodename"=>"stretch"
+#     "osfinger"=>"Debian-9"
+#     "num_gpus"=>1, 
+#     "disks"=>["sdb", "sr0", "sda"], 
+#     "cpu_model"=>"Intel(R) Xeon(R) CPU E3-1245 v5 @ 3.50GHz"
+#     "fqdn"=>"str963-fablil.dm.unibo.it"
+#     "biosreleasedate"=>"07/18/2018"
+#     "productname"=>"Precision Tower 3620"
+#     "osarch"=>"amd64"
+#     "cpuarch"=>"x86_64"
+#     "lsb_distrib_codename"=>"stretch"
+#     "osrelease_info"=>[9, 9]
+#     "locale_info"=>{"detectedencoding"=>"UTF-8"
+#                     "defaultlanguage"=>"it_IT"
+#                     "defaultencoding"=>"UTF-8"}, 
+#     "gpus"=>[{"model"=>"HD Graphics P530", "vendor"=>"intel"}], 
+#
