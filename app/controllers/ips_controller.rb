@@ -20,7 +20,7 @@ class IpsController < ApplicationController
     end
     @ips = @ips.includes(:arp, :info, :fact, :system)
     respond_to do |format|
-      format.json { render json: client_json(@ips.limit(15)) }
+      format.json { render json: client_json(@ips.limit(255)) }
       # .to_json( include: [:info, :arp, :system, :fact => { :only => [:id] }] ) }
     end
   end
