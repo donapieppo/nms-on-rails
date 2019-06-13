@@ -21,12 +21,15 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "facts", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "ip_id", null: false, unsigned: true
+    t.string "host", limit: 200
     t.integer "memorysize"
     t.string "processor", limit: 50
     t.integer "processorcount"
     t.string "lsbdistrelease", limit: 20
     t.string "lsbdistid", limit: 20
     t.string "kernelrelease", limit: 100
+    t.string "productname", limit: 200
+    t.string "ssd", limit: 200
     t.timestamp "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
