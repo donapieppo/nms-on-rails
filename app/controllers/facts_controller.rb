@@ -5,7 +5,10 @@ class FactsController < ApplicationController
 
   def index
     @facts = Fact.includes(:ip => [:info, :arp]).order(:lsbdistrelease, 'ips.ip')
-    respond_with(@facts, :include => { :ip => { :include => [ :info, :arp ]}})
+    respond_to do |format|
+      format.html
+      format.json { render json: client_json(@facts) }
+    end
   end
 
   def show
@@ -17,5 +20,10 @@ class FactsController < ApplicationController
     respond_with(@fact)
   end
 
+  private 
+
+  def client_json(facts)
+    facts.to_json
+  end
 end
 
