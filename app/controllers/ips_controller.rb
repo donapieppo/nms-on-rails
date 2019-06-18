@@ -18,7 +18,7 @@ class IpsController < ApplicationController
       network = params[:network_id] ? Network.find(params[:network_id]) : Network.first
       @ips = network.ips.order(:id)
     end
-    @ips = @ips.includes(:arp, :info, :fact, :system)
+    @ips = @ips.includes(:arp, :info, :fact)
     respond_to do |format|
       format.json { render json: client_json(@ips.limit(255)) }
       # .to_json( include: [:info, :arp, :system, :fact => { :only => [:id] }] ) }
@@ -41,10 +41,9 @@ class IpsController < ApplicationController
     if params[:conn_proto]
       @ip.update_attribute(:conn_proto, params[:conn_proto])
     elsif params[:system]
-      system = @ip.last_system || @ip.systems.new
-      system.name = (params[:system] == 'unset') ? nil : params[:system]
-      system.date = Time.now
-      system.save!
+      info = @ip.last_info || @ip.infos.new
+      info.system = (params[:system] == 'unset') ? nil : params[:system]
+      info.save
     end
     render json: 'ok'
     # respond_with(@ip)
@@ -91,7 +90,7 @@ class IpsController < ApplicationController
     @ip = Ip.find(params[:id])
     logger.info("RESETTING #{@ip.inspect} from #{@ip.info.inspect}")
     @ip.infos.create!(name: '-') unless @ip.info.name == '-'
-    @ip.update_attributes(last_arp_id: nil, last_system_id: nil)
+    @ip.update_attributes(last_arp_id: nil)
     render json: 'ok'
   end
 
@@ -106,7 +105,7 @@ class IpsController < ApplicationController
         last_seen: (ip.arp ? ip.arp.date : 0), 
         dnsname: (ip.info ? ip.info.dnsname : nil), 
         arp: (ip.arp ? ip.arp.mac : '-'),
-        system: (ip.system ? ip.system.name : 'undef')
+        system: (ip.info && ip.info.system) ? ip.info.system : 'undef'
       }
     end
   end

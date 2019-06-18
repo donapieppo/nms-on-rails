@@ -1,14 +1,12 @@
 class Ip < ApplicationRecord
   has_many :infos
   has_many :arps
-  has_many :systems
 
   has_one  :fact
 
   belongs_to :network
   belongs_to :arp,    foreign_key: :last_arp_id, optional: true
   belongs_to :info,   foreign_key: :last_info_id, optional: true
-  belongs_to :system, foreign_key: :last_system_id, optional: true
 
   validates :ip, format: { with: NmsOnRails::REGEXP_FOR_IP, message: "wrong ip format" }
   validates :conn_proto, inclusion: { in: %w(ssh rdp http), message: "%{value} is not a valid protocol", allow_nil: true }
@@ -22,7 +20,7 @@ class Ip < ApplicationRecord
   end
 
   def last_system
-    self.systems.order('date desc').first
+    self.last_info.system
   end
 
   def last_port
@@ -38,11 +36,6 @@ class Ip < ApplicationRecord
   def update_last_info
     last = self.last_info
     last and self.update_attribute(:last_info_id, last.id)
-  end
-
-  def update_last_system
-    last = self.last_system
-    last and self.update_attribute(:last_system_id, last.id)
   end
 
   def last_seen
