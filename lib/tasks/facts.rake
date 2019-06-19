@@ -18,13 +18,13 @@ namespace :nms_on_rails do
               fact.host           = grains['host']
               fact.ssd            = grains['SSDs'].to_s
               fact.productname    = grains['productname']
-              fact.processor      = grains['cpu_model'].gsub('Core(TM)', '')
+              fact.processor      = grains['cpu_model'].gsub('Core(TM)', '').gsub('CPU', '')
               fact.processorcount = grains['num_cpus']
-              fact.lsbdistrelease = grains['lsb_distrib_release']
+              fact.lsbdistrelease = grains['lsb_distrib_id']
               fact.lsbdistid      = grains['osrelease']
               fact.kernelrelease  = grains['kernelrelease']
               fact.date           = grains[:_timestamp]
-              fact.memorysize     = (grains['mem_total'].to_i / 1000).to_i
+              fact.memorysize     = (grains['mem_total'].to_f / 1000).round
               fact.save!
             else
               puts "Missing '%40s' with eth0 '%15s'" % [grains['host'], grains['ipv4']]
