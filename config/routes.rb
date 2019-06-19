@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   resources :facts
   resources :infos 
 
-  resources :switches
+  resources :switches do
+    get :connect, on: :member
+  end
 
   get 'macs/:address' => 'macs#show'
   root to: 'home#index'

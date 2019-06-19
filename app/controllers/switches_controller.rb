@@ -1,5 +1,5 @@
 class SwitchesController < ApplicationController
-  before_action :get_switch,  only: [:show, :edit, :update, :destroy]
+  before_action :get_switch,  only: [:show, :edit, :update, :destroy, :connect]
 
   def index
     @switches = Switch.all
@@ -36,6 +36,14 @@ class SwitchesController < ApplicationController
   def destroy
     @switch.destroy
     redirect_to switches_path
+  end
+
+  def connect
+    respond_to do |format|
+      format.html { redirect_to "http://#{@switch.ip}" }
+      format.rdp { }
+      format.ssh { }
+    end
   end
 
   private
