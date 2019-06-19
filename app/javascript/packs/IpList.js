@@ -11,6 +11,7 @@ import Chip from '@material-ui/core/Chip'
 import Button from '@material-ui/core/Button';
 
 import ModalActions from './ModalActions'
+// import ModalFacts from './ModalFacts'
 import ModalSystemEditor from './ModalSystemEditor'
 import ModalIpEditor from './ModalIpEditor'
 import { lastSeenDays, lastSeenColor, railsUpdate, systemImage } from './nmsUtils'
@@ -20,6 +21,7 @@ export default function IpList(props) {
   const [edited_ip, setEditedIp] = useState({name: '', comment: ''})
   const [edited_system_ip, setEditedSystemIp] = useState()
   const [actions_ip, setActionsIp] = useState()
+  // const [facts_ip, setFactsIp] = useState()
   const [anchor_el, setAnchorEl] = useState(document)
 
   useEffect(() => {
@@ -88,10 +90,18 @@ export default function IpList(props) {
     return railsUpdate(`ips/${ip.id}.json`, { system: s})
   }
 
+  // FACTS
+  // const openFacts = (e, ip) => {
+  //   console.log("Open Facts for ", ip)
+  //   setAnchorEl(e.currentTarget)
+  //   setFactsIp(ip)
+  // }
+
   // COMMON TO ALL MODAL 
   const handleModalClose = () => {
     setActionsIp(null)
     setEditedSystemIp(null)
+    // setFactsIp(null)
   }
 
   return (
@@ -123,7 +133,10 @@ export default function IpList(props) {
               </TableCell>
               <TableCell align="right">{ip.ip}</TableCell>
               <TableCell onDoubleClick={e => startEditingIp(e, ip)} style={{fontWeight: 500}}>{ip.name}</TableCell>
-              <TableCell onDoubleClick={e => startEditingIp(e, ip)}>{ip.comment}</TableCell>
+              <TableCell onDoubleClick={e => startEditingIp(e, ip)}>
+                {ip.comment}<br/>
+                <small>{ ip.fact ? `${ip.fact['lsbdistrelease']} ${ip.fact['lsbdistid']} - ${ip.fact['processorcount']} ${ip.fact['processor']} - ${parseInt(ip.fact['memorysize'])}GB` : '' }</small>
+              </TableCell>
               <TableCell align="right">
                 <small>{ip.dnsname}</small>
               </TableCell>
