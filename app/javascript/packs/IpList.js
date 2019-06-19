@@ -11,7 +11,6 @@ import Chip from '@material-ui/core/Chip'
 import Button from '@material-ui/core/Button';
 
 import ModalActions from './ModalActions'
-// import ModalFacts from './ModalFacts'
 import ModalSystemEditor from './ModalSystemEditor'
 import ModalIpEditor from './ModalIpEditor'
 import { lastSeenDays, lastSeenColor, railsUpdate, systemImage } from './nmsUtils'
@@ -21,7 +20,6 @@ export default function IpList(props) {
   const [edited_ip, setEditedIp] = useState({name: '', comment: ''})
   const [edited_system_ip, setEditedSystemIp] = useState()
   const [actions_ip, setActionsIp] = useState()
-  // const [facts_ip, setFactsIp] = useState()
   const [anchor_el, setAnchorEl] = useState(document)
 
   useEffect(() => {
@@ -74,6 +72,16 @@ export default function IpList(props) {
     return railsUpdate(`ips/${ip.id}/reset.json`, {})
   }
 
+  const starIp = (ip) => {
+    setActionsIp(null)
+    console.log(`Star ${ip.ip}`)
+    updateIps(ips.map((_ip, i) => ( 
+      ip.id === _ip.id ? { ..._ip, starred: ! _ip.starred } : _ip 
+    )))
+    return railsUpdate(`ips/${ip.id}/star.json`, {})
+  }
+
+
   // SYSTEM
   const startEditingSystem = (e, ip) => {  
     console.log("System EDITING: ", ip)
@@ -108,7 +116,7 @@ export default function IpList(props) {
     <React.Fragment>
       <ModalIpEditor ip={edited_ip} onSubmit={onEditingSubmit} onCancel={onEditingCancel} />
       <ModalSystemEditor ip={edited_system_ip} anchor_el={anchor_el} updateSystem={updateSystem} handleClose={handleModalClose} />
-      <ModalActions ip={actions_ip} anchor_el={anchor_el} resetAll={resetAll} handleClose={handleModalClose} />
+      <ModalActions ip={actions_ip} anchor_el={anchor_el} starIp={starIp} resetAll={resetAll} handleClose={handleModalClose} />
       <h2>Ips</h2>
       <Table size="small">
         <TableHead>
@@ -125,7 +133,7 @@ export default function IpList(props) {
         </TableHead>
         <TableBody>
           {ips.map(ip => (
-            <TableRow key={ip.id}>
+            <TableRow key={ip.id} style={{borderLeft: ip.starred ? '2px solid red' : ''}}>
               <TableCell>
                 <Button aria-controls="simple-menu" aria-haspopup="true" onClick={e => startEditingSystem(e, ip)}>
                   <img src={systemImage(ip)} width="28"/>

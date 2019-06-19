@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :ips do
     put :notify,  on: :member
     put :reset,   on: :member
+    put :star,    on: :member
     get :connect, on: :member
     get :wake,    on: :member
     resource :infos

@@ -54,6 +54,12 @@ class IpsController < ApplicationController
     respond_with(@ip.notify)
   end
 
+  def star
+    @ip = Ip.find(params[:id])
+    @ip.update_attribute(:starred, ! @ip.starred)
+    respond_with(@ip.starred)
+  end
+
   # TODO http e' un link semplice
   def connect
     @ip = Ip.find(params[:id])
@@ -105,6 +111,7 @@ class IpsController < ApplicationController
         dnsname: (ip.info ? ip.info.dnsname : nil), 
         arp: (ip.arp ? ip.arp.mac : '-'),
         system: (ip.info && ip.info.system) ? ip.info.system : 'undef',
+        starred: ip.starred, 
         fact: (ip.fact ? ip.fact : nil)
       }
     end
