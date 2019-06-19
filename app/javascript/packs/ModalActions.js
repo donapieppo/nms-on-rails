@@ -34,6 +34,11 @@ export default function ModalActions(props) {
     window.open(`ips/${props.ip.id}/wake.wol`)
   }
 
+  const handleStar = () => {
+    props.handleClose();
+    props.starIp(props.ip)
+  }
+
   const handleReset = () => {
     props.handleClose();
     props.resetAll(props.ip)
@@ -49,6 +54,7 @@ export default function ModalActions(props) {
       >
         <MenuItem onClick={handleConnect}><Icon>cast</Icon> Connect</MenuItem>
         <MenuItem onClick={handleWakeUp}><Icon>notification_important</Icon> Wake Up</MenuItem>
+        <MenuItem onClick={handleStar}><Icon>star</Icon> Star</MenuItem>
         <MenuItem onClick={handleReset} color="red"><Icon>delete</Icon> Reset</MenuItem>
       </Menu>
     </div>
