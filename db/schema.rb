@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer "ip_id", default: 0, null: false, unsigned: true
     t.timestamp "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.text "name"
+    t.string "system", limit: 100
     t.text "dnsname"
     t.text "comment"
     t.integer "user_id", default: 0, null: false, unsigned: true
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer "last_info_id", unsigned: true
     t.string "conn_proto", limit: 5
     t.boolean "notify"
+    t.boolean "starred"
     t.integer "network_id"
     t.integer "last_system_id", unsigned: true
     t.index ["ip"], name: "ip", unique: true
@@ -76,13 +78,6 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "description"
     t.string "model"
     t.string "community", limit: 100
-  end
-
-  create_table "systems", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "ip_id", null: false, unsigned: true
-    t.string "name"
-    t.timestamp "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.index ["ip_id"], name: "index_oss_on_ip_id"
   end
 
   create_table "users", id: :integer, default: 0, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
