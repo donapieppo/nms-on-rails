@@ -21,13 +21,13 @@ export default function MenuItems(props) {
       <Button variant="contained" color={props.network_id == 2 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='2'>137.204.135.</Button><br/>
     </ListItem>
     <ListItem>
-      <Button variant="contained" color={props.network_id == 3 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='3'>137.204.132.</Button>
+      <Button variant="contained" color={props.network_id == 3 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='3'>Saragozza</Button>
     </ListItem>
     <ListItem>
-      <Button variant="contained" color={props.network_id == 4 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='4'>130.136.160.</Button>
+      <Button variant="contained" color={props.network_id == 4 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='4'>Lab</Button>
     </ListItem>
     <ListItem>
-      <Button variant="contained" color={props.network_id == 4 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='5'>Biblio</Button>
+      <Button variant="contained" color={props.network_id == 5 ? "primary" : "default"} onClick={props.handleNetworkIdChange} data-network='5'>Biblio</Button>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
