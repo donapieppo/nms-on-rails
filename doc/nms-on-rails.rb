@@ -13,6 +13,8 @@ module NmsOnRails
       config.snmpwalkexe = '/usr/bin/snmpwalk'
       # nmap
       config.nmapexe = '/usr/bin/nmap'
+      # dhcp
+      config.dhcp_files = ['tmp/132_net_static', 'tmp/134_net_static', 'tmp/135_net_static']
     end
   end
 end
