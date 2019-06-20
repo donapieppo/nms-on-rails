@@ -148,7 +148,7 @@ export default function IpList(props) {
               <TableCell align="right">
                 <small>{ip.dnsname}</small>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" style={{backgroundColor: ip.dhcp ? '#eee' : ''}}>
                 <small>{ip.arp ? ip.arp : '-'}</small>
               </TableCell>
               <TableCell align="right">
