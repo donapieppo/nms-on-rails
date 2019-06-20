@@ -15,7 +15,15 @@ import ModalSystemEditor from './ModalSystemEditor'
 import ModalIpEditor from './ModalIpEditor'
 import { lastSeenDays, lastSeenColor, railsUpdate, systemImage } from './nmsUtils'
 
+const useStyles = makeStyles(theme => ({
+  onDhcp: {
+    backgroundColor: '#fee',
+  }
+}))
+
 export default function IpList(props) {
+  const classes = useStyles();
+
   const [ips, updateIps] = useState([])
   const [edited_ip, setEditedIp] = useState({name: null, comment: null})
   const [edited_system_ip, setEditedSystemIp] = useState()
@@ -145,10 +153,10 @@ export default function IpList(props) {
                 {ip.comment}<br/>
                 <small>{ ip.fact ? `${ip.fact['lsbdistrelease']} ${ip.fact['lsbdistid']} - ${ip.fact['processorcount']} ${ip.fact['processor']} - ${parseInt(ip.fact['memorysize'])}GB` : '' }</small>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" size="small">
                 <small>{ip.dnsname}</small>
               </TableCell>
-              <TableCell align="right" style={{backgroundColor: ip.dhcp ? '#eee' : ''}}>
+              <TableCell align="right" className={ip.dhcp ? classes.onDhcp : ''} size="small">
                 <small>{ip.arp ? ip.arp : '-'}</small>
               </TableCell>
               <TableCell align="right">
