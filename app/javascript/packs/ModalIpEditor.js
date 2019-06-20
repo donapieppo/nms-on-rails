@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
@@ -22,6 +22,11 @@ export default function ModalIpEditor(props) {
   const [ipName, setIpName] = useState()
   const [ipComment, setIpComment] = useState()
 
+  useEffect(() => {
+    setIpName(props.ip.name)
+    setIpComment(props.ip.comment)
+  }, [props.ip])
+
   const handleIpNameChange = (e) => {
     setIpName(e.target.value)
   }
@@ -31,14 +36,14 @@ export default function ModalIpEditor(props) {
   }
 
   const onSubmit = (e) => {
-    const newName    = ipName || props.ip.name
-    const newComment = ipComment || props.ip.comment
+    const newName    = ipName 
+    const newComment = ipComment 
     props.onSubmit(newName, newComment)
   }
 
   return (
     <div>
-      <Dialog open={props.ip.name !== ''} onClose={props.onCancel} aria-labelledby="form-dialog-title">
+      <Dialog open={props.ip.name !== null} onClose={props.onCancel} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Modifica dati ip {props.ip.ip}</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -48,7 +53,7 @@ export default function ModalIpEditor(props) {
             margin="dense"
             label="Name"
             name="name"
-            defaultValue={props.ip.name}
+            defaultValue={ipName}
             onChange={handleIpNameChange}
             fullWidth
           />
@@ -56,7 +61,7 @@ export default function ModalIpEditor(props) {
             margin="dense"
             label="Comment"
             name="comment"
-            defaultValue={props.ip.comment}
+            defaultValue={ipComment}
             onChange={handleIpCommentChange}
             fullWidth
           />

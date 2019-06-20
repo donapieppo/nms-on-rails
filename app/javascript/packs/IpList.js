@@ -17,7 +17,7 @@ import { lastSeenDays, lastSeenColor, railsUpdate, systemImage } from './nmsUtil
 
 export default function IpList(props) {
   const [ips, updateIps] = useState([])
-  const [edited_ip, setEditedIp] = useState({name: '', comment: ''})
+  const [edited_ip, setEditedIp] = useState({name: null, comment: null})
   const [edited_system_ip, setEditedSystemIp] = useState()
   const [actions_ip, setActionsIp] = useState()
   const [anchor_el, setAnchorEl] = useState(document)
@@ -45,7 +45,7 @@ export default function IpList(props) {
 
   const onEditingSubmit = (ipName, ipComment) => {
     console.log(`SUBMITTED ipName=${ipName} ipComment=${ipComment}`)
-    setEditedIp({ name: '', comment: '' })
+    setEditedIp({ name: null, comment: null })
     updateIps(ips.map((_ip, i) => ( 
       edited_ip.id === _ip.id ? { ..._ip, name: ipName, comment: ipComment } : _ip 
     )))
@@ -53,7 +53,7 @@ export default function IpList(props) {
   }
 
   const onEditingCancel = () => {
-    setEditedIp({ name: '', comment: '' })
+    setEditedIp({ name: null, comment: null })
   }
 
   // ACTIONS
@@ -133,7 +133,7 @@ export default function IpList(props) {
         </TableHead>
         <TableBody>
           {ips.map(ip => (
-            <TableRow key={ip.id} style={{borderLeft: ip.starred ? '2px solid red' : ''}}>
+            <TableRow key={ip.id} style={{borderLeft: ip.starred ? '4px solid red' : ''}}>
               <TableCell>
                 <Button aria-controls="simple-menu" aria-haspopup="true" onClick={e => startEditingSystem(e, ip)}>
                   <img src={systemImage(ip)} width="28"/>
