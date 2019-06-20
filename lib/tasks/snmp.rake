@@ -7,7 +7,7 @@ namespace :nms_on_rails do
 namespace :snmp do
   desc "Snmpwalk switches"
   task snmpwalk: :environment do
-    debug = true
+    debug = false
     Switch.all.each do |switch|
       puts "Trying with #{switch.inspect}" if debug
       # in my hp procurve last two ports are not end ports

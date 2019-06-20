@@ -2,7 +2,7 @@
 # 00:d8:61:30:5f:f3 137.204.1.1 1557829916    eth0
 namespace :nms_on_rails do
   def read_arpfile(file)
-    debug = true
+    debug = false
     puts "opening #{file}" if debug
     File.open(file, "r").each do |line|
       mac_address, ip_address, last_time = line.split

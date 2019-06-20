@@ -4,7 +4,7 @@ namespace :nms_on_rails do
 namespace :dns do
   desc "Read DNS direct"
   task update: :environment do
-    debug = true
+    debug = false
     # to be filled with ip as key and name as value
     # TODO CNAMES or multiple domain name for single ip
     dns = Hash.new
