@@ -105,6 +105,7 @@ class IpsController < ApplicationController
         id: ip.id,
         info_id: (ip.info ? ip.info.id : nil), 
         ip: ip.ip, 
+        dhcp: ip.dhcp,
         name: (ip.info ? ip.info.name : nil),
         comment: (ip.info ? ip.info.comment : nil),
         last_seen: (ip.arp ? ip.arp.date : 0), 

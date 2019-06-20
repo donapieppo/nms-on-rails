@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 0) do
     t.text "dnsname"
     t.text "comment"
     t.integer "user_id", default: 0, null: false, unsigned: true
-    t.boolean "dhcp"
     t.index ["ip_id", "date"], name: "ip_id", unique: true
   end
 
@@ -49,6 +48,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "ip", limit: 15, default: "", null: false
     t.integer "last_arp_id", unsigned: true
     t.integer "last_info_id", unsigned: true
+    t.boolean "dhcp"
     t.string "conn_proto", limit: 5
     t.boolean "notify"
     t.boolean "starred"
