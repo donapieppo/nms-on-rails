@@ -1,18 +1,29 @@
 require 'msgpack'
 
+def get_ip_from_grains(grains)
+  # if ip not in /etc/hosts it is 127.0.1.1
+  ip = grains['fqdn_ip4'].first
+  if ip == '127.0.0.1' or ip == '127.0.1.1'
+    grains["ip4_interfaces"].each do |interface, _ip|
+      next if interface == 'lo'
+      ip = _ip
+    end
+  end
+  return ip
+end
+
 namespace :nms_on_rails do
   namespace :facts do
 
     desc "Load facts from yams"
     task load: :environment do
-      # FIXME (now start from clean database)
       ActiveRecord::Base.connection.instance_variable_get(:@connection).query("DELETE FROM facts")
       Dir.glob(NmsOnRails::Application.config.facts_dir + '/*/data.p') do |file|
         File.open(file) do |io|
           u = MessagePack::Unpacker.new(io)
           u.each do |obj|
             grains = obj['grains']
-            _ip = grains['ipv4'][1]
+            _ip = get_ip_from_grains(grains)
             if ip = Ip.where(ip: _ip).first
               fact = ip.fact || ip.build_fact
               fact.host           = grains['host']
@@ -20,14 +31,14 @@ namespace :nms_on_rails do
               fact.productname    = grains['productname']
               fact.processor      = grains['cpu_model'].gsub('Core(TM)', '').gsub('CPU', '')
               fact.processorcount = grains['num_cpus']
-              fact.lsbdistrelease = grains['lsb_distrib_id']
+              fact.lsbdistrelease = grains['os_family']
               fact.lsbdistid      = grains['osrelease']
               fact.kernelrelease  = grains['kernelrelease']
               fact.date           = grains[:_timestamp]
               fact.memorysize     = (grains['mem_total'].to_f / 1000).round
               fact.save!
             else
-              puts "Missing '%40s' with eth0 '%15s'" % [grains['host'], grains['ipv4']]
+              puts "Missing '%13s' with eth0 '%s' - '%s'" % [grains['host'], grains['fqdn_ip4'], grains['ip4_interfaces']]
             end
           end
         end
