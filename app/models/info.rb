@@ -6,6 +6,8 @@ class Info < ApplicationRecord
   before_save  :set_date
   after_create :update_ip_last_info
 
+  scope :actual_printers, -> { group(:ip_id).order('date desc').where(system: "printer") }
+
   def set_date
     self.date = Time.now
   end
