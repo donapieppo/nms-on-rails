@@ -106,18 +106,20 @@ export default function IpList(props) {
     return railsUpdate(`ips/${ip.id}.json`, { system: s})
   }
 
-  // FACTS
-  // const openFacts = (e, ip) => {
-  //   console.log("Open Facts for ", ip)
-  //   setAnchorEl(e.currentTarget)
-  //   setFactsIp(ip)
-  // }
-
   // COMMON TO ALL MODAL 
   const handleModalClose = () => {
     setActionsIp(null)
     setEditedSystemIp(null)
-    // setFactsIp(null)
+  }
+
+  const factString = (ip) => {
+    if (ip.fact && ip.system === 'printer') {
+      return (`${ip.fact['productname']}`)
+    } else if (ip.fact && ip.system == 'linux') {
+      return (`${ip.fact['lsbdistrelease']} ${ip.fact['lsbdistid']} - ${ip.fact['processorcount']} ${ip.fact['processor']} - ${parseInt(ip.fact['memorysize'])}GB`)
+    } else {
+      return ('')
+    }
   }
 
   return (
@@ -151,7 +153,7 @@ export default function IpList(props) {
               <TableCell onDoubleClick={e => startEditingIp(e, ip)} style={{fontWeight: 500}}>{ip.name}</TableCell>
               <TableCell onDoubleClick={e => startEditingIp(e, ip)}>
                 {ip.comment}<br/>
-                <small>{ ip.fact ? `${ip.fact['lsbdistrelease']} ${ip.fact['lsbdistid']} - ${ip.fact['processorcount']} ${ip.fact['processor']} - ${parseInt(ip.fact['memorysize'])}GB` : '' }</small>
+                <small>{ factString(ip) }</small>
               </TableCell>
               <TableCell align="right" size="small">
                 <small>{ip.dnsname}</small>
