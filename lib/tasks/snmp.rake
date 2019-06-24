@@ -73,3 +73,12 @@ namespace :nms_on_rails do
     end
   end
 end
+
+# .1.3.6.1.2.1.1.5.0 = STRING: "lp-segsci-color"
+# .1.3.6.1.2.1.1.5.0 = STRING: "lp-tecnici.dm.unibo.it"
+# .1.3.6.1.2.1.1.6.0 = STRING: "Sala Prestiti"
+# .1.3.6.1.2.1.2.2.1.6.1 = Hex-STRING: 00 17 C8 6B D2 1E 
+# .1.3.6.1.2.1.4.20.1.1.137.204.135.244 = IpAddress: 137.204.135.244
+#  .1.3.6.1.2.1.25.3.2.1.3.1 = STRING: "ECOSYS P3050dn"
+#  .1.3.6.1.2.1.25.3.2.1.3.1 = STRING: "EPSON WF-8090 Series"
+
