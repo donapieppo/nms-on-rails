@@ -1,14 +1,12 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.0.rc1'
-# Use mysql as the database for Active Record
+gem 'rails', '~> 6.0.0'
 gem 'mysql2', '>= 0.4.4'
-# Use Puma as the app server
-gem 'puma', '~> 3.11'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
+gem 'sassc-rails'
 gem 'webpacker', '~> 4.0'
+gem 'puma', '~> 3.11'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
