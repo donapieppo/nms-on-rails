@@ -75,22 +75,13 @@ namespace :nms_on_rails do
     desc "Read switches infos with snmp"
     task switches_info: :environment do
       Switch.find_each do |s|
-        SNMP::Manager.open(host: s.ip, retries: 0) do |manager|
-          response = manager.get([
-            '1.3.6.1.2.1.1.5.0', 
-            '1.3.6.1.2.1.25.3.2.1.3.1'
-          ])
-
-          p response
-          # response.each_varbind do |vb|
-          #   case vb.name.to_s
-          #   when 'SNMPv2-MIB::sysName.0'
-          #     fact.host = vb.value
-          #   when 'SNMPv2-SMI::mib-2.25.3.2.1.3.1'
-          #     fact.productname = vb.value
-          #   end
-          # end
-          puts "\n-----------------------"
+        SNMP::Manager.open(host: s.ip, community: s.community, retries: 0) do |manager|
+          response = manager.get('1.3.6.1.2.1.1.1.0')
+          # only first
+          response.each_varbind do |vb|
+            p vb.value
+            s.update_attribute(:model, vb.value)
+          end
         rescue SNMP::RequestTimeout
         end
       end
