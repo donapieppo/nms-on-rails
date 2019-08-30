@@ -7,6 +7,8 @@
       <%= link_to 'connect', connect_switch_path(switch, format: :ssh) %> -
       <%= link_to 'edit', edit_switch_path(switch) %> -
       <%= link_to 'delete', switch_path(switch), method: :delete, data: {confirm: 'Are you sure?'}  %>  
+      <br/>
+      <small><%= switch.model %></small>
     </li>
   <% end %>
 </ul>
