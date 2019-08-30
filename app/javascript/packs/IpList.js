@@ -37,7 +37,11 @@ export default function IpList(props) {
       return (res.json());
     }).then(res => {
       console.log('primo ip scaricato: ', res[0])
-      updateIps(res)
+      const res_hash = res.reduce((r, ip) => {
+        r[ip.id] = ip
+        return r
+      }, {})
+      updateIps(res_hash)
     })
   }, [props.search_string, props.network_id])
 
@@ -54,9 +58,9 @@ export default function IpList(props) {
   const onEditingSubmit = (ipName, ipComment) => {
     console.log(`SUBMITTED ipName=${ipName} ipComment=${ipComment}`)
     setEditedIp({ name: null, comment: null })
-    updateIps(ips.map((_ip, i) => ( 
-      edited_ip.id === _ip.id ? { ..._ip, name: ipName, comment: ipComment } : _ip 
-    )))
+    ips[edited_ip.id]['name'] = ipName
+    ips[edited_ip.id]['comment'] = ipComment 
+    updateIps(ips)
     updateInfo(edited_ip, ipName, ipComment)
   }
 
@@ -74,18 +78,16 @@ export default function IpList(props) {
   const resetAll = (ip) => {
     setActionsIp(null)
     console.log(`Reset ${ip.ip}`)
-    updateIps(ips.map((_ip, i) => ( 
-      ip.id === _ip.id ? { ..._ip, name: '-', comment: '-', last_seen: 0, system: 'undef' } : _ip 
-    )))
+    ips[ip.id] = { ...ip, name: '-', comment: '-', last_seen: 0, system: 'undef' }
+    updateIps(ips)
     return railsUpdate(`ips/${ip.id}/reset.json`, {})
   }
 
   const starIp = (ip) => {
     setActionsIp(null)
     console.log(`Star ${ip.ip}`)
-    updateIps(ips.map((_ip, i) => ( 
-      ip.id === _ip.id ? { ..._ip, starred: ! _ip.starred } : _ip 
-    )))
+    ips[ip.id]['starred'] = ! ip.starred 
+    updateIps(ips)
     return railsUpdate(`ips/${ip.id}/star.json`, {})
   }
 
@@ -100,9 +102,8 @@ export default function IpList(props) {
   const updateSystem = (ip, s) => {
     setEditedSystemIp(null)
     console.log("Update system -> " + s)
-    updateIps(ips.map((_ip, i) => ( 
-      ip.id === _ip.id ? { ..._ip, system: s } : _ip 
-    )))
+    ips[ip.id]['system'] = s 
+    updateIps(ips)
     return railsUpdate(`ips/${ip.id}.json`, { system: s})
   }
 
@@ -121,6 +122,8 @@ export default function IpList(props) {
       return ('')
     }
   }
+
+  var ip
 
   return (
     <React.Fragment>
@@ -142,30 +145,32 @@ export default function IpList(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {ips.map(ip => (
-            <TableRow key={ip.id} style={{borderLeft: ip.starred ? '4px solid red' : ''}}>
+          {Object.keys(ips).map( (k) => (
+            <TableRow key={k} style={{borderLeft: ips[k].starred ? '4px solid red' : ''}}>
               <TableCell>
-                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={e => startEditingSystem(e, ip)}>
-                  <img src={systemImage(ip)} width="28"/>
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={e => startEditingSystem(e, ips[k])}>
+                  <img src={systemImage(ips[k])} width="28"/>
                 </Button>
               </TableCell>
-              <TableCell align="right">{ip.ip}</TableCell>
-              <TableCell onDoubleClick={e => startEditingIp(e, ip)} style={{fontWeight: 500}}>{ip.name}</TableCell>
-              <TableCell onDoubleClick={e => startEditingIp(e, ip)}>
-                {ip.comment}<br/>
-                <small>{ factString(ip) }</small>
+              <TableCell align="right">{ips[k].ip}</TableCell>
+              <TableCell onDoubleClick={e => startEditingIp(e, ips[k])} style={{fontWeight: 500}}>
+                {ips[k].name}
+              </TableCell>
+              <TableCell onDoubleClick={e => startEditingIp(e, ips[k])}>
+                {ips[k].comment}<br/>
+                <small>{ factString(ips[k]) }</small>
               </TableCell>
               <TableCell align="right" size="small">
-                <small>{ip.dnsname}</small>
+                <small>{ips[k].dnsname}</small>
               </TableCell>
-              <TableCell align="right" className={ip.dhcp ? classes.onDhcp : ''} size="small">
-                <small>{ip.arp ? ip.arp : '-'}</small>
-              </TableCell>
-              <TableCell align="right">
-                <Chip size="small" variant="outlined" color={lastSeenColor(ip)} label={lastSeenDays(ip)} />
+              <TableCell align="right" className={ips[k].dhcp ? classes.onDhcp : ''} size="small">
+                <small>{ips[k].arp ? ips[k].arp : '-'}</small>
               </TableCell>
               <TableCell align="right">
-                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={e => openActions(e, ip)}>
+                <Chip size="small" variant="outlined" color={lastSeenColor(ips[k])} label={lastSeenDays(ips[k])} />
+              </TableCell>
+              <TableCell align="right">
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={e => openActions(e, ips[k])}>
                   <Icon size="small">settings</Icon>
                 </Button>
               </TableCell>
