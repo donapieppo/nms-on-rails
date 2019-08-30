@@ -11,7 +11,7 @@ Provides basic integration to:
 * salt (https://github.com/saltstack/salt)
 * wakeonlan
 * bind (reads domain with dig domani.net axfr) 
-* nmap (tries to discover operating system)
+* snmp
 
 and gives simple web interface to manage informations
 about your network ips and to connect to clients using
@@ -23,22 +23,19 @@ Clone the repository, "bundle install" everything and
 configure the database (`config/database.yml`, for example
 copy from `doc/database.yml`) as for a common rails project.
 
-Then you can load the database schema
+Copy the example configuration file 
+`doc/nms-on-rails.rb` to 
+`config/initializers/nms-on-rails.rb`, 
+edit it and then 
 
 ```console
-bundle exec rake db:schema:load
+bin/setup
 ```
-
-copy the example configuration file 
-`doc/nms-on-rails.rb.proto` to 
-`config/initializers/nms-on-rails.rb`, 
-edit it and then fire rails.
-
 When you connect for the first time you are asked 
 for a network (name, description) and then for a range
 of ips for the new network.
 
-To use tasks please install:
+To use some tasks you may need to install:
 
 ```console
 apt-get install dnsutils snmp-mibs-downloader snmp
@@ -59,12 +56,12 @@ for editing.
 Click on the icon opens a submenu for choosing 
 system (linux/windows/ios/printer)
 
-Click on the action icon open a men.
+Click on the action icon open a menu.
 
 ## Rake
 
 ```console
- bundle exec rake -T nms_on_rails
+ bundle exec rake -T nms
 ```
 shows all the possible tasks.
 
@@ -74,17 +71,17 @@ salt. Usually with cron jobs.
 ### Arpwatch
 
 ```console
-bundle exec rake nms_on_rails:arpwatch
+bundle exec rake nms-on-rails:arpwatch
 ```
 
 reads arpwatch data (directly from arpwatch files as listed in config/initializers/nms-on-rails.rb) 
 and updates the database. 
-Accordingly the web interface shows how many days ago the ip was used and the last mac address.
+Accordingly the web interface shows how many days ago the ip was seen and the last mac address.
 
 ### Bind
 
 ``` 
-bundle exec rake NmsOnRails:dns:update
+bundle exec rake nms-on-rails:dns:update
 ```
 
 reads domain records with axfr query (the dns server has to answer
@@ -94,7 +91,7 @@ reads domain records with axfr query (the dns server has to answer
 ### Snmp
 
 ```
-bundle exec rake NmsOnRails:snmp:snmpwalk
+bundle exec rake nms-on-rails:snmp:snmpwalk
 ```
 updates mac-address with port on the switch (uses `snmpwalk -On -v 2c -c #{community} #{clean_ip} .1.3.6.1.2.1.1.5.0`)
 
@@ -103,17 +100,23 @@ updates mac-address with port on the switch (uses `snmpwalk -On -v 2c -c #{commu
 ### Salt
 
 ```
-bundle exec rake NmsOnRails:facts:load
+bundle exec rake nms-on-rails:facts:load
 ```
 
-reads salt data (facts in puppet language) and updates the database.
+reads salt (salt stack) data (facts in puppet language) and updates the database.
 Provides information about the hardware and operating
 system of the computers managed with salt.
+
+### Snmp for printers
+
+```
+bundle exec rake nms-on-rails:snmp:printers
+```
 
 ### Nmap
 
 ```
-bundle exec rake NmsOnRails:nmap:system
+bundle exec rake nms-on-rails:nmap:system
 ```
 
 uses `/usr/bin/sudo /usr/bin/nmap -F --max-os-tries 1 -n -O ` to read operating system from the pcs. 
@@ -128,7 +131,7 @@ The user should have sudo privileges.
 * last_info_id: is the association to the last info (name, dns...). Some fields in infos table are set by user.
 * conn_proto: can be ssh/rdp/http (used to connect to the pc with a click)
 * notify: boolean you set when you whant to be notified when the pc in reachable.
-* network_id
+* network_inms-on-rails
 
 Ips has **one_to_many** relation with the **arps**, **infos**, **systems** and **facts** tables.
 
