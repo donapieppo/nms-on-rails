@@ -1,0 +1,21 @@
+version: '2'
+services:
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_DATABASE=nms
+      - MYSQL_ROOT_PASSWORD=verysecuresecret
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - SECRET_KEY_BASE_SEMINARIA=2d32568r5e0e6b0f8adf3r01e09054b87fdaf8117eta673b901bd0ccdc24e12cf0ac3c948d7537befb929db833ef91b16ee90a494cd20cb6906541f9b6659761dkdkdk
+      - BLOCCHI_DATABASE_PASSWORD=verysecuresecret
+
+
