@@ -62,7 +62,8 @@ class SwitchesController < ApplicationController
         id: switch.id,
         ip: switch.ip, 
         name: switch.name,
-        community: switch.community
+        description: switch.description,
+        model: switch.model
       }
     end
   end
