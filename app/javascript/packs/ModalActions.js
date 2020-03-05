@@ -44,6 +44,12 @@ export default function ModalActions(props) {
     props.resetAll(props.ip)
   }
 
+  // str963-guest02         2c:41:38:94:97:9a    137.204.135.64 # Str963-guest02 win 10 sett 2016
+  const handleDhcp = () => {
+    var d = new Date();
+    alert(`${props.ip.name}     xx:xx:xx:xx:xx:xx    ${props.ip.ip} # ${props.ip.comment} - ${d.toDateString()}`);
+  }
+
   return (
     <div>
       <Menu
@@ -56,6 +62,8 @@ export default function ModalActions(props) {
         <MenuItem onClick={handleWakeUp}><Icon>notification_important</Icon> Wake Up</MenuItem>
         <MenuItem onClick={handleStar}><Icon>star</Icon> Star</MenuItem>
         <MenuItem onClick={handleReset} color="red"><Icon>delete</Icon> Reset</MenuItem>
+        <MenuItem> --- </MenuItem>
+        <MenuItem onClick={handleDhcp} color="red"> Dhcp String</MenuItem>
       </Menu>
     </div>
   );
