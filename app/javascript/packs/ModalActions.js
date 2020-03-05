@@ -63,7 +63,7 @@ export default function ModalActions(props) {
         <MenuItem onClick={handleStar}><Icon>star</Icon> Star</MenuItem>
         <MenuItem onClick={handleReset} color="red"><Icon>delete</Icon> Reset</MenuItem>
         <MenuItem> --- </MenuItem>
-        <MenuItem onClick={handleDhcp} color="red"> Dhcp String</MenuItem>
+        <MenuItem onClick={handleDhcp} color="red"><Icon>file_copy</Icon> Dhcp String</MenuItem>
       </Menu>
     </div>
   );
