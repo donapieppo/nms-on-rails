@@ -13,13 +13,19 @@ import Button from '@material-ui/core/Button';
 import ModalActions from './ModalActions'
 import ModalSystemEditor from './ModalSystemEditor'
 import ModalIpEditor from './ModalIpEditor'
-import { lastSeenDays, lastSeenColor, railsUpdate, systemImage } from './nmsUtils'
+import { lastSeenDays, lastSeenColor, railsUpdate, systemImage, factString } from './nmsUtils'
 
 const useStyles = makeStyles(theme => ({
   onDhcp: {
     backgroundColor: '#fee',
   }
 }))
+
+function TableCellName({name}) {
+  return (
+    <TableCell>{name}</TableCell>
+  );
+}
 
 export default function IpList(props) {
   const classes = useStyles();
@@ -113,16 +119,6 @@ export default function IpList(props) {
     setEditedSystemIp(null)
   }
 
-  const factString = (ip) => {
-    if (ip.fact && ip.system === 'printer') {
-      return (`${ip.fact['productname']}`)
-    } else if (ip.fact && ip.system == 'linux') {
-      return (`${ip.fact['lsbdistrelease']} ${ip.fact['lsbdistid']} - ${ip.fact['processorcount']} ${ip.fact['processor']} - ${parseInt(ip.fact['memorysize'])}GB`)
-    } else {
-      return ('')
-    }
-  }
-
   var ip
 
   return (
@@ -136,7 +132,7 @@ export default function IpList(props) {
           <TableRow>
             <TableCell></TableCell>
             <TableCell align="right">Ip</TableCell>
-            <TableCell>Nome</TableCell>
+            <TableCellName name="NOME"></TableCellName>
             <TableCell>Descrizione</TableCell>
             <TableCell align="right">DNS</TableCell>
             <TableCell align="right">MAC</TableCell>

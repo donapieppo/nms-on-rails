@@ -45,3 +45,13 @@ export const railsUpdate = (url, h) => {
   })
 }
 
+export const factString = (ip) => {
+  if (ip.fact && ip.system === 'printer') {
+    return (`${ip.fact['productname']}`)
+  } else if (ip.fact && ip.system == 'linux') {
+    return (`${ip.fact['lsbdistrelease']} ${ip.fact['lsbdistid']} - ${ip.fact['processorcount']} ${ip.fact['processor']} - ${parseInt(ip.fact['memorysize'])}GB`)
+  } else {
+    return ('')
+  }
+}
+
