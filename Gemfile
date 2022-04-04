@@ -12,7 +12,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
 
-
+gem "snmp"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
