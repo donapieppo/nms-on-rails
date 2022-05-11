@@ -53,7 +53,7 @@ export default function ModalIpEditor(props) {
             margin="dense"
             label="Name"
             name="name"
-            defaultValue={ipName}
+            defaultValue={props.ip.name}
             onChange={handleIpNameChange}
             fullWidth
           />
@@ -61,7 +61,7 @@ export default function ModalIpEditor(props) {
             margin="dense"
             label="Comment"
             name="comment"
-            defaultValue={ipComment}
+            defaultValue={props.ip.comment}
             onChange={handleIpCommentChange}
             fullWidth
           />
