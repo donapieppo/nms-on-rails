@@ -1,6 +1,5 @@
 /* eslint-disable no-script-url */
 import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -15,15 +14,7 @@ import ModalSystemEditor from './ModalSystemEditor'
 import ModalIpEditor from './ModalIpEditor'
 import { lastSeenDays, lastSeenColor, railsUpdate, systemImage } from './nmsUtils'
 
-const useStyles = makeStyles(theme => ({
-  onDhcp: {
-    backgroundColor: '#fee',
-  }
-}))
-
 export default function IpList(props) {
-  const classes = useStyles();
-
   const [ips, updateIps] = useState([])
   const [edited_ip, setEditedIp] = useState({name: null, comment: null})
   const [edited_system_ip, setEditedSystemIp] = useState()
@@ -165,7 +156,7 @@ export default function IpList(props) {
               <TableCell align="right" size="small">
                 <small>{ips[k].dnsname}</small>
               </TableCell>
-              <TableCell align="right" className={ips[k].dhcp ? classes.onDhcp : ''} size="small">
+              <TableCell align="right" className={ips[k].dhcp ? '' : ''} size="small">
                 <small>{ips[k].arp ? ips[k].arp : '-'}</small>
               </TableCell>
               <TableCell align="right">
