@@ -15,10 +15,40 @@ end
 namespace :nms_on_rails do
   namespace :facts do
 
+    # /home/rails/nms-on-rails/tmp/minions
+    desc "Show host facts"
+    task show_host: :environment do
+      p ENV['host']
+      p Rails::application.config.facts_dir + "/#{ENV['host']}/data.p"
+      Dir.glob(Rails::application.config.facts_dir + "/#{ENV['host']}/data.p") do |file|
+        File.open(file) do |io|
+          u = MessagePack::Unpacker.new(io)
+          u.each do |obj|
+            grains = obj['grains']
+            p get_ip_from_grains(grains)
+            p grains
+          end
+        end
+      end
+    end
+
+    desc "List macs from grains"
+    task list_macs: :environment do
+      Dir.glob(Rails::application.config.facts_dir + "/tove*/data.p") do |file|
+        File.open(file) do |io|
+          u = MessagePack::Unpacker.new(io)
+          u.each do |obj|
+            puts obj['grains']['hwaddr_interfaces'].values.filter{|h| h != "00:00:00:00:00:00"}.first
+          end
+        end
+      end
+    end
+
+
     desc "Load facts from yams"
     task load: :environment do
       ActiveRecord::Base.connection.instance_variable_get(:@connection).query("DELETE FROM facts")
-      Dir.glob(NmsOnRails::Application.config.facts_dir + '/*/data.p') do |file|
+      Dir.glob(Rails::Application.config.facts_dir + '/*/data.p') do |file|
         File.open(file) do |io|
           u = MessagePack::Unpacker.new(io)
           u.each do |obj|
