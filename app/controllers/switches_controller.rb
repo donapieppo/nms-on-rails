@@ -26,7 +26,7 @@ class SwitchesController < ApplicationController
   end
 
   def update
-    if @switch.update_attributes(switch_params)
+    if @switch.update(switch_params)
       redirect_to switches_url, notice: 'The switch was successfully updated.'
     else
       render action: "edit" 

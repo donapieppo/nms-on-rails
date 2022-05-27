@@ -95,7 +95,7 @@ class IpsController < ApplicationController
     @ip = Ip.find(params[:id])
     logger.info("RESETTING #{@ip.inspect} from #{@ip.info.inspect}")
     @ip.infos.create!(name: '-') unless @ip.info.name == '-'
-    @ip.update_attributes(last_arp_id: nil, starred: nil)
+    @ip.update(last_arp_id: nil, starred: nil)
     render json: 'ok'
   end
 
